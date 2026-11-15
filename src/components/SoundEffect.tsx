@@ -7,7 +7,8 @@ export type SfxName =
   | "sus"
   | "goofy_horn"
   | "error_buzzer"
-  | "meme_bonk";
+  | "meme_bonk"
+  | "boing";
 
 /**
  * One-shot sound effect placed at a frame (relative to the parent Sequence).

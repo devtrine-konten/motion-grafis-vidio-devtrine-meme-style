@@ -204,10 +204,10 @@ export const Scene02PlotTwist: React.FC = () => {
         ]}
       />
 
-      <Sfx name="sus" at={12} volume={0.85} duration={18} />
+      {/* <Sfx name="sus" at={12} volume={0.85} duration={18} /> */}
       <Sfx name="meme_bonk" at={46} volume={0.85} duration={16} />
-      <Sfx name="vine_boom" at={108} volume={0.9} duration={20} />
-      <Sfx name="goofy_horn" at={166} volume={0.85} duration={20} />
+      {/* <Sfx name="vine_boom" at={108} volume={0.9} duration={20} /> */}
+      <Sfx name="meme_bonk" at={166} volume={0.85} duration={20} />
     </Background>
   );
 };

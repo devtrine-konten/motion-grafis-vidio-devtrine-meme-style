@@ -190,9 +190,9 @@ export const Scene01Hook: React.FC = () => {
         ]}
       />
 
-      <Sfx name="vine_boom" at={24} volume={0.9} duration={20} />
-      <Sfx name="sus" at={42} volume={0.85} duration={18} />
-      <Sfx name="meme_bonk" at={78} volume={0.85} duration={16} />
+      <Sfx name="vine_boom" at={20} volume={0.9} duration={20} />
+      {/* <Sfx name="sus" at={42} volume={0.85} duration={18} /> */}
+      <Sfx name="sus" at={78} volume={0.85} duration={16} />
       <Sfx name="error_buzzer" at={118} volume={0.85} duration={18} />
       <Sfx name="goofy_horn" at={154} volume={0.9} duration={20} />
     </Background>

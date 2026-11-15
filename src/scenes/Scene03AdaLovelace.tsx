@@ -237,8 +237,8 @@ export const Scene03AdaLovelace: React.FC = () => {
         ]}
       />
 
-      <Sfx name="meme_bonk" at={18} volume={0.8} duration={16} />
-      <Sfx name="vine_boom" at={80} volume={0.9} duration={20} />
+      <Sfx name="boing" at={18} volume={0.8} duration={16} />
+      <Sfx name="meme_bonk" at={80} volume={0.9} duration={16} />
       <Sfx name="goofy_horn" at={146} volume={0.85} duration={20} />
       <Sfx name="vine_boom" at={202} volume={0.95} duration={20} />
       <Sfx name="meme_bonk" at={284} volume={0.85} duration={16} />
