@@ -1,323 +1,181 @@
-import React from "react"
-import { Img, staticFile, useCurrentFrame } from "remotion"
-import { C, FONT } from "../theme"
-import { keys, lerp, rand, shake, spr } from "../lib/anim"
-import { Background } from "../components/Background"
-import { Camera } from "../components/Camera"
-import { DevtrineMascot } from "../components/DevtrineMascot"
-import {
-  Header,
-  KineticText,
-  Pill,
-  SpeechBubble,
-} from "../components/KineticTypography"
-import {
-  IconArrowRight,
-  IconCheck,
-  IconHandshake,
-  IconLaptop,
-  IconMegaphone,
-  IconMonitor,
-  IconSparkles,
-  IconTie,
-  IconUser,
-  IconUserPlus,
-} from "../components/Icons"
-import { Sfx } from "../components/SoundEffect"
-import { Subtitles } from "../components/Subtitles"
-import { Flash } from "../components/Transition"
+import React from "react";
+import { Img, staticFile, useCurrentFrame } from "remotion";
+import { C, FONT } from "../theme";
+import { keys, lerp, rand, shake, spr } from "../lib/anim";
+import { Background } from "../components/Background";
+import { Camera } from "../components/Camera";
+import { DevtrineMascot } from "../components/DevtrineMascot";
+import { ExplainCard } from "../components/Explainers";
+import { IconBug, IconCheck, IconHelp, IconShield, IconUserPlus } from "../components/Icons";
+import { Header, KineticText, Pill } from "../components/KineticTypography";
+import { MemeSticker } from "../components/MemeKit";
+import { Sfx } from "../components/SoundEffect";
+import { Subtitles } from "../components/Subtitles";
+import { Flash } from "../components/Transition";
 
-const PANELS = [
-  {
-    era: "1. DULU (1940s)",
-    title: "Manusia Ngajarin Komputer",
-    desc: '"Nih gue colok kabel biar lu ngerti 1+1!"',
-    accent: C.cyanLight,
-    at: 8,
-    icons: (
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <IconUser size={34} color={C.charcoal} />
-        <IconArrowRight size={22} color={C.cyan} />
-        <IconMonitor size={34} color={C.charcoal} />
-      </div>
-    ),
-  },
-  {
-    era: "2. SEKARANG (2026)",
-    title: "Komputer Bantuin Manusia",
-    desc: '"Tenang bos, kodenya udah gue benerin ✦"',
-    accent: C.green,
-    at: 64,
-    icons: (
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <IconLaptop size={34} color={C.charcoal} />
-        <IconHandshake size={34} color={C.green} />
-        <IconSparkles size={30} color={C.yellow} />
-      </div>
-    ),
-  },
-  {
-    era: "3. MASA DEPAN",
-    title: "Komputer Jadi BOS Kita!",
-    desc: '"MANUSIA! KERJAIN PR GUE SEKARANG!!"',
-    accent: C.red,
-    at: 125,
-    icons: (
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <IconMonitor size={34} color={C.red} />
-        <IconTie size={32} color={C.red} />
-        <IconMegaphone size={32} color={C.red} />
-      </div>
-    ),
-  },
-]
-
-const CONFETTI = Array.from({ length: 24 }, (_, i) => ({
-  ang: (i / 24) * Math.PI * 2,
-  dist: 180 + rand(i * 5) * 320,
-  col: i % 3 === 0 ? C.cyan : i % 2 === 0 ? C.yellow : C.red,
+const CONFETTI = Array.from({ length: 18 }, (_, i) => ({
+  ang: (i / 18) * Math.PI * 2,
+  dist: 170 + rand(i * 5) * 280,
+  col: i % 3 === 0 ? "#FF6B35" : i % 2 === 0 ? C.yellow : C.cyanLight,
   rot: rand(i * 9) * 360,
-}))
+}));
 
 export const Scene10Closing: React.FC = () => {
-  const frame = useCurrentFrame()
-  const isOutro = frame >= 275
+  const frame = useCurrentFrame();
+  const isOutro = frame >= 174;
 
-  // Boss PC slam at f=128
-  const bossSlam = spr(frame, 125, { damping: 9, stiffness: 210 })
-  const shk = shake(frame, 128, 28, 14)
-  const shkOutro = shake(frame, 280, 22, 12)
+  const shk = shake(frame, 88, 16, 10);
+  const shkOutro = shake(frame, 178, 16, 10);
+  const camScale = keys(frame, [0, 75, 174, 240, 366], [1, 1.04, 1, 1.03, 1.05]);
 
-  // Devtrine hovers / glides across screen in panic (f=150..265)
-  const runX =
-    frame < 150
-      ? 260
-      : frame < 215
-        ? lerp(frame, [150, 215], [260, 880])
-        : lerp(frame, [215, 270], [880, 220])
+  const bugX = keys(frame, [62, 92, 122, 162], [290, 65, 65, 310]);
+  const bugRetreats = frame >= 122;
+  const bugThinking = frame >= 90 && frame < 126;
 
-  // Outro Logo Reveal & Signature Wink
-  const logoPop = spr(frame, 282, { damping: 10, stiffness: 170 })
-  const wink =
-    frame >= 345 && frame < 357 ? Math.sin(((frame - 345) / 12) * Math.PI) : 0
-  const ctaPop = spr(frame, 305, { damping: 10, stiffness: 190 })
-  const btnPress = frame >= 332 && frame < 342 ? 0.9 : 1
-
-  const camScale = keys(
-    frame,
-    [0, 125, 135, 275, 290, 450],
-    [1, 1.02, 1.08, 1, 1.04, 1.06],
-  )
+  const logoPop = spr(frame, 180, { damping: 10, stiffness: 170 });
+  const ctaPop = spr(frame, 236, { damping: 10, stiffness: 190 });
+  const btnPress = frame >= 264 && frame < 274 ? 0.9 : 1;
+  const bounceY = Math.abs(Math.sin(frame * 0.22)) * -16;
 
   return (
-    <Background variant="light" drift={isOutro ? 0.8 : 2.0}>
-      <Camera
-        scale={camScale}
-        x={shk.x + shkOutro.x}
-        y={shk.y + shkOutro.y}
-        focusX={540}
-        focusY={920}
-      >
-        {/* PART A (f=0..275): 3-PANEL COMEDY EVOLUTION + BOSS COMPUTER + PANIC GLIDE */}
+    <Background variant={isOutro ? "blueprint" : "warm"} drift={1.0}>
+      <Camera scale={camScale} x={shk.x + shkOutro.x} y={shk.y + shkOutro.y} focusX={540} focusY={880}>
+        {/* PART A (0..174): Tapi itulah Rust! Cepat, aman, dan bikin bug mikir dua kali sebelum muncul! */}
         {!isOutro && (
           <>
             <Header
-              kicker="PLOT TWIST MASA DEPAN"
-              title="Jangan Sampai Kebalik!"
-              highlight={["Kebalik!"]}
+              kicker="KESIMPULAN"
+              title="Bug Mikir 2 Kali Sebelum Muncul!"
+              highlight={["Bug", "Mikir", "2", "Kali"]}
             />
 
-            {/* 3 stacked evolution cards with generous vertical spacing */}
-            {PANELS.map((p, i) => {
-              const s = spr(frame, p.at, { damping: 11, stiffness: 190 })
-              const isBoss = i === 2
-              return (
+            <ExplainCard
+              at={6}
+              w={840}
+              h={435}
+              y={670}
+              bg="#161B22"
+              accent="#FF6B35"
+              badge="RUST: CEPAT & AMAN"
+              badgeIcon={<IconShield size={20} color={C.charcoal} />}
+              badgeBg={C.yellow}
+              dark
+            >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 38, width: "100%", height: 240, position: "relative" }}>
                 <div
-                  key={p.era}
                   style={{
-                    position: "absolute",
-                    left: 540,
-                    top: 550 + i * 160,
-                    width: 880,
-                    transform: `translate(-50%, -50%) scale(${s})`,
-                    background: isBoss ? "#FFF0F2" : C.white,
-                    border: `5px solid ${C.charcoal}`,
-                    borderRadius: 24,
-                    padding: "14px 24px",
-                    boxShadow: `8px 8px 0 ${p.accent}`,
+                    transform: `translateX(-110px) scale(${spr(frame, 10)})`,
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "space-between",
-                    opacity: frame >= p.at ? 1 : 0,
-                    zIndex: 10,
+                    gap: 10,
                   }}
                 >
-                  <div>
-                    <div
-                      style={{
-                        display: "inline-block",
-                        background: p.accent,
-                        color: isBoss ? C.white : C.charcoal,
-                        fontFamily: FONT.mono,
-                        fontWeight: 900,
-                        fontSize: 18,
-                        padding: "3px 12px",
-                        borderRadius: 999,
-                        marginBottom: 6,
-                      }}
-                    >
-                      {p.era}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: FONT.sans,
-                        fontWeight: 900,
-                        fontSize: 30,
-                        color: C.charcoal,
-                      }}
-                    >
-                      {p.title}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: FONT.mono,
-                        fontWeight: 700,
-                        fontSize: 20,
-                        color: "#4B5563",
-                      }}
-                    >
-                      {p.desc}
-                    </div>
+                  <div style={{ width: 130, height: 130, borderRadius: 24, border: `4px solid #FF6B35`, background: "#0D1117", padding: 14 }}>
+                    <Img src={staticFile("image-vidio/logo-rust.png")} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                   </div>
+                  <span style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 19, color: C.green, display: "flex", alignItems: "center", gap: 6 }}>
+                    <IconShield size={20} color={C.green} />
+                    <span>BORROW CHECKER</span>
+                  </span>
+                </div>
+
+                <div style={{ width: 8, height: 185, background: C.cyanLight, borderRadius: 999, boxShadow: `0 0 18px ${C.cyanLight}`, transform: "translateX(-85px)" }} />
+
+                {frame >= 60 && (
                   <div
                     style={{
-                      background: "rgba(0,0,0,0.04)",
-                      padding: "10px 18px",
-                      borderRadius: 18,
-                      border: `2px solid ${C.charcoal}22`,
+                      position: "absolute",
+                      left: "60%",
+                      transform: `translateX(${bugX - 50}px)`,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      zIndex: 10,
                     }}
                   >
-                    {p.icons}
+                    {bugThinking && (
+                      <div
+                        style={{
+                          background: C.yellow,
+                          color: C.charcoal,
+                          fontFamily: FONT.mono,
+                          fontWeight: 900,
+                          fontSize: 19,
+                          padding: "5px 14px",
+                          borderRadius: 999,
+                          border: `3px solid ${C.charcoal}`,
+                          marginBottom: 8,
+                          whiteSpace: "nowrap",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                        }}
+                      >
+                        <IconHelp size={20} color={C.charcoal} />
+                        <span>MIKIR 2 KALI...</span>
+                      </div>
+                    )}
+                    <div style={{ transform: `scaleX(${bugRetreats ? -1 : 1})` }}>
+                      <IconBug size={78} color={C.red} />
+                    </div>
+                    <div style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 18, color: C.red, marginTop: 4 }}>
+                      {bugRetreats ? "KABUR!" : "BUG MASUK"}
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                )}
+              </div>
 
-            {/* Speech bubble comfortably positioned with ample clearance below card 3 */}
-            <SpeechBubble
-              text="KABURRR! KOMPUTERNYA PAKE DASI!!"
-              x={380}
-              y={1045}
-              at={134}
-              until={265}
-              tail="left"
-              size={30}
-              bg={C.yellow}
+              <div style={{ fontFamily: FONT.sans, fontWeight: 800, fontSize: 26, color: C.white, marginTop: 8 }}>
+                {lerp(frame, [20, 60], [0, 1]) > 0.5 ? "Cepat, Aman & Anti Bug Memori!" : "Itulah Kekuatan Rust!"}
+              </div>
+            </ExplainCard>
+
+            {/* Bottom Meme Reactions synced to Part A */}
+            <MemeSticker
+              src="memes/gigachad_draw.jpg"
+              x={555}
+              y={1145}
+              w={265}
+              h={245}
+              at={20}
+              until={90}
+              rotate={-4}
+              accent={C.cyan}
+            />
+            <MemeSticker
+              src="memes/besok_aja.jpg"
+              x={805}
+              y={1145}
+              w={265}
+              h={245}
+              at={90}
+              rotate={4}
+              accent={C.red}
             />
 
-            {/* Giant Boss Computer wearing a Red Necktie barking orders */}
-            {frame >= 125 && (
-              <div
-                style={{
-                  position: "absolute",
-                  left: 740,
-                  top: 1260,
-                  transform: `translate(-50%, -50%) scale(${bossSlam}) rotate(${Math.sin(frame * 0.5) * 4}deg)`,
-                  zIndex: 20,
-                }}
-              >
-                <svg
-                  width={320}
-                  height={300}
-                  viewBox="-160 -150 320 300"
-                  style={{ overflow: "visible" }}
-                >
-                  <rect
-                    x={-125}
-                    y={-110}
-                    width={250}
-                    height={175}
-                    rx={22}
-                    fill={C.charcoal}
-                  />
-                  <rect
-                    x={-108}
-                    y={-94}
-                    width={216}
-                    height={142}
-                    rx={12}
-                    fill="#1E1418"
-                  />
-                  {/* Angry boss eyebrows & eyes */}
-                  <line
-                    x1={-68}
-                    y1={-52}
-                    x2={-20}
-                    y2={-32}
-                    stroke={C.red}
-                    strokeWidth={10}
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1={68}
-                    y1={-52}
-                    x2={20}
-                    y2={-32}
-                    stroke={C.red}
-                    strokeWidth={10}
-                    strokeLinecap="round"
-                  />
-                  <circle cx={-44} cy={-20} r={12} fill={C.yellow} />
-                  <circle cx={44} cy={-20} r={12} fill={C.yellow} />
-                  {/* Shouting mouth */}
-                  <rect
-                    x={-48}
-                    y={8}
-                    width={96}
-                    height={28}
-                    rx={10}
-                    fill={C.red}
-                  />
-                  {/* Boss Red Necktie */}
-                  <polygon
-                    points="-18,65 18,65 26,135 0,162 -26,135"
-                    fill={C.red}
-                    stroke={C.charcoal}
-                    strokeWidth={5}
-                  />
-                </svg>
-              </div>
-            )}
-
-            {/* Devtrine panicking & floating in fear (No mouth, No legs) */}
             <DevtrineMascot
-              x={runX}
-              y={1260 + Math.sin(frame * 0.4) * 8}
-              size={165}
-              expression={frame < 125 ? "happy" : "panic"}
-              lookX={frame < 215 ? -0.8 : 0.8}
-              lookY={-0.2}
-              wingL={frame >= 125 ? -48 + Math.sin(frame * 0.9) * 22 : 0}
-              wingR={frame >= 125 ? 48 + Math.cos(frame * 0.9) * 22 : 0}
-              sweat={frame >= 125 ? 1 : 0}
+              x={205}
+              y={1215 + Math.sin(frame * 0.18) * 7}
+              size={130}
+              expression="cool"
+              sunglasses
+              helmet
+              shield
               frame={frame}
               shadow
             />
           </>
         )}
 
-        {/* PART B (f=275..450): DEVTRINE OUTRO & SIGNATURE WINK */}
+        {/* PART B (174..366): Clean Episode 02 Outro (Praised by User!) */}
         {isOutro && (
           <>
-            {/* Confetti burst celebration */}
             {CONFETTI.map((c, i) => {
-              const cp = spr(frame, 332, { damping: 14, stiffness: 180 })
-              const dist = c.dist * cp
-              const x = 540 + Math.cos(c.ang) * dist
-              const y =
-                680 +
-                Math.sin(c.ang) * dist +
-                (frame > 336 ? (frame - 336) * 4 : 0)
+              const cp = spr(frame, 264, { damping: 14, stiffness: 180 });
+              const dist = c.dist * cp;
+              const x = 540 + Math.cos(c.ang) * dist;
+              const y = 620 + Math.sin(c.ang) * dist + (frame > 268 ? (frame - 268) * 4 : 0);
               return (
                 <div
                   key={i}
@@ -330,161 +188,105 @@ export const Scene10Closing: React.FC = () => {
                     background: c.col,
                     border: `2px solid ${C.charcoal}`,
                     borderRadius: i % 2 === 0 ? "50%" : 3,
-                    transform: `translate(-50%, -50%) rotate(${c.rot + frame * 4}deg) scale(${frame >= 332 ? 1 : 0})`,
-                    opacity: frame >= 332 ? 1 : 0,
+                    transform: `translate(-50%, -50%) rotate(${c.rot + frame * 4}deg) scale(${frame >= 264 ? 1 : 0})`,
+                    opacity: frame >= 264 ? 1 : 0,
                   }}
                 />
-              )
+              );
             })}
 
-            {/* Top Outro Header */}
-            <div
-              style={{
-                position: "absolute",
-                top: 220,
-                left: 80,
-                right: 80,
-                textAlign: "center",
-              }}
-            >
-              <Pill
-                text="TERIMA KASIH SUDAH NONTON!"
-                bg={C.charcoal}
-                color={C.white}
-                // icon={<IconSparkle size={20} color={C.yellow} />}
-                at={278}
-                size={26}
-              />
+            <div style={{ position: "absolute", top: 170, left: 80, right: 80, textAlign: "center" }}>
+              {/* <Pill text="EPISODE 02 SELESAI · NEXT EP.03!" bg="#FF6B35" color={C.white} at={178} size={24} /> */}
               <div style={{ marginTop: 18 }}>
                 <KineticText
-                  text="SEBELUM AI JADI BOS KITA..."
-                  start={282}
+                  text="TERTARIK BELAJAR RUST?!"
+                  start={182}
                   stagger={3}
-                  size={68}
+                  size={64}
+                  color={C.white}
                   variant="pop"
-                  highlight={["BOS", "KITA..."]}
-                  highlightColor={C.yellow}
+                  highlight={["BELAJAR", "RUST?!"]}
+                  highlightColor="#FF6B35"
                 />
               </div>
             </div>
 
-            {/* Glowing cyan halo behind mascot */}
-            <div
-              style={{
-                position: "absolute",
-                left: 540,
-                top: 700,
-                transform: `translate(-50%, -50%) scale(${logoPop})`,
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  width: 440,
-                  height: 440,
-                  transform: "translate(-50%, -50%)",
-                  borderRadius: "50%",
-                  background: `radial-gradient(circle, ${C.cyanLight}66 0%, transparent 70%)`,
-                }}
-              />
-            </div>
-
-            {/* Devtrine Mascot in center (No mouth, No legs, Winking eye + arched brow + waving wings) */}
             <DevtrineMascot
               x={540}
-              y={690 + Math.sin(frame * 0.14) * 8}
-              size={240 * logoPop}
-              expression="happy"
-              blink={wink}
-              lookX={0}
-              lookY={0}
-              wingL={Math.sin(frame * 0.2) * 16}
-              wingR={-28 + Math.cos(frame * 0.3) * 16}
+              y={630 + bounceY}
+              size={200 * logoPop}
+              expression={frame < 254 ? "salute" : "proud"}
+              headband
+              blush
               frame={frame}
               shadow
             />
 
-            {/* Official Original Logo Badge + Wordmark Card */}
             <div
               style={{
                 position: "absolute",
                 left: 540,
-                top: 999,
+                top: 975,
                 transform: `translate(-50%, -50%) scale(${ctaPop})`,
                 display: "flex",
                 alignItems: "center",
-                gap: 20,
+                gap: 18,
                 background: C.white,
                 border: `5px solid ${C.charcoal}`,
                 borderRadius: 26,
                 padding: "14px 30px",
-                boxShadow: `8px 8px 0 ${C.charcoal}`,
+                boxShadow: `8px 8px 0 #FF6B35`,
+                zIndex: 35,
               }}
             >
               <Img
                 src={staticFile("images/devtrine-logo-removebg.png")}
-                style={{ width: 65, height: 65, objectFit: "contain" }}
+                style={{ width: 58, height: 58, objectFit: "contain" }}
               />
-              <div>
-                <div
-                  style={{
-                    fontFamily: FONT.sans,
-                    fontWeight: 900,
-                    fontSize: 44,
-                    color: C.charcoal,
-                    lineHeight: 1.05,
-                    whiteSpace: "nowrap"
-                  }}
-                >
-                  DEVTRINE STUDIO
-                </div>
-                <div
-                  style={{
-                    fontFamily: FONT.mono,
-                    fontWeight: 700,
-                    fontSize: 20,
-                    color: C.cyan,
-                    letterSpacing: "0.08em",
-                    
-                  }}
-                >
-                  {/* CREATIVE TECH & MOTION GRAPHICS */}
-                </div>
+              <div
+                style={{
+                  fontFamily: FONT.sans,
+                  fontWeight: 900,
+                  fontSize: 40,
+                  color: C.charcoal,
+                  lineHeight: 1.05,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                DEVTRINE STUDIO
               </div>
             </div>
 
-            {/* CTA Button: FOLLOW DEVTRINE STUDIO with clean vector icon */}
             <div
               style={{
                 position: "absolute",
                 left: 540,
-                top: 1150,
+                top: 1135,
                 transform: `translate(-50%, -50%) scale(${ctaPop * btnPress})`,
-                background: frame >= 332 ? C.green : C.cyan,
+                background: frame >= 264 ? C.green : C.yellow,
                 color: C.charcoal,
                 border: `5px solid ${C.charcoal}`,
                 borderRadius: 999,
-                padding: "18px 44px",
+                padding: "16px 40px",
                 fontFamily: FONT.sans,
                 fontWeight: 900,
-                fontSize: 38,
+                fontSize: 34,
                 whiteSpace: "nowrap",
                 boxShadow: `8px 8px 0 ${C.charcoal}`,
                 display: "flex",
                 alignItems: "center",
-                gap: 16,
+                gap: 14,
+                zIndex: 35,
               }}
             >
-              {frame >= 332 ? (
+              {frame >= 264 ? (
                 <>
-                  <IconCheck size={36} color={C.charcoal} />
+                  <IconCheck size={32} color={C.charcoal} />
                   <span>FOLLOWED DEVTRINE STUDIO!</span>
                 </>
               ) : (
                 <>
-                  <IconUserPlus size={36} color={C.charcoal} />
+                  <IconUserPlus size={32} color={C.charcoal} />
                   <span>FOLLOW DEVTRINE STUDIO</span>
                 </>
               )}
@@ -493,50 +295,21 @@ export const Scene10Closing: React.FC = () => {
         )}
       </Camera>
 
-      <Flash at={125} color={C.red} max={0.35} />
-      <Flash at={275} color={C.cyanLight} max={0.65} />
+      <Flash at={174} color={C.cyanLight} max={0.45} />
 
       <Subtitles
         cues={[
-          {
-            from: 6,
-            to: 100,
-            text: "Dulu manusia ngajarin komputer,",
-            hi: ["Dulu", "manusia", "komputer"],
-          },
-          {
-            from: 104,
-            to: 175,
-            text: "sekarang komputer bantuin manusia.",
-            hi: ["sekarang", "komputer", "bantuin", "manusia."],
-          },
-          {
-            from: 180,
-            to: 295,
-            text: "Besok-besok jangan sampai kita yang disuruh komputer ngerjain tugas!",
-            hi: ["jangan", "sampai", "ngerjain", "tugas!"],
-          },
-          {
-            from: 320,
-            to: 444,
-            text: "Follow dulu, sebelum AI jadi bos kita!",
-            hi: ["Follow", "dulu,", "AI", "bos", "kita!"],
-          },
+          { from: 4, to: 42, text: "Tapi itulah Rust!", hi: ["itulah", "Rust!"] },
+          { from: 50, to: 166, text: "Cepat, aman, dan bikin bug mikir dua kali sebelum muncul!", hi: ["Cepat,", "aman,", "bug", "mikir"] },
+          { from: 180, to: 248, text: "Gimana? Tertarik belajar Rust?", hi: ["Gimana?", "Tertarik", "Rust?"] },
+          { from: 254, to: 356, text: "Follow dulu, kita bahas teknologi lainnya di video berikutnya!", hi: ["Follow", "dulu,", "teknologi", "berikutnya!"] },
         ]}
       />
 
-      {/* Audio cues */}
-      <Sfx name="pop" at={8} volume={0.8} />
-      <Sfx name="pop" at={64} volume={0.8} />
-      <Sfx name="impact" at={125} volume={0.95} />
-      <Sfx name="running" at={148} volume={0.85} />
-      <Sfx name="running" at={205} volume={0.85} />
-      <Sfx name="whoosh" at={272} volume={0.9} />
-      <Sfx name="shimmer" at={282} volume={0.85} />
-      <Sfx name="click" at={332} volume={0.95} />
-      <Sfx name="confetti" at={334} volume={0.85} />
-      <Sfx name="boing" at={346} volume={0.75} rate={1.3} />
-      <Sfx name="cinematic_hit" at={395} volume={0.9} />
+      <Sfx name="vine_boom" at={20} volume={0.9} duration={20} />
+      <Sfx name="meme_bonk" at={90} volume={0.85} duration={16} />
+      <Sfx name="goofy_horn" at={264} volume={0.85} duration={20} />
+      <Sfx name="vine_boom" at={330} volume={0.9} duration={20} />
     </Background>
-  )
-}
+  );
+};

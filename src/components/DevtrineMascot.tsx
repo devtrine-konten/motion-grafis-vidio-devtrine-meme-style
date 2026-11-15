@@ -3,11 +3,8 @@ import { C } from "../theme";
 
 /**
  * Devtrine — the studio mascot, built 1:1 from the Devtrine Studio logo geometry.
- * Units: ring outer radius = 100 (logo measured at 2000px: ring r=312, pupil r=158).
- *
- *   wings  = the two upper corners of the logo triangle (triangular hands that gesture / flap)
- *   ring   = the eye (cyan light), inner white = eyeball, charcoal disc = pupil
- *   notch  = negative space cutout at bottom tip of logo (no mouth, expressions purely via eyes, wings, and brow)
+ * Enhanced for Episode 02 with new expressions (cool, detective, salute, interrogated, proud, deadpan)
+ * and new interactive props (sunglasses, headband, helmet, magnifyingGlass, shield, blush, angerVein).
  */
 
 export type Expression =
@@ -20,7 +17,13 @@ export type Expression =
   | "amazed"
   | "panic"
   | "annoyed"
-  | "dizzy";
+  | "dizzy"
+  | "cool"
+  | "detective"
+  | "salute"
+  | "interrogated"
+  | "proud"
+  | "deadpan";
 
 type Brow = { l: number; r: number; arch: number; y?: number } | null;
 type Preset = {
@@ -45,12 +48,18 @@ const PRESETS: Record<Expression, Preset> = {
   panic: { top: 0, bottom: 0, pupil: 0.42, brow: { l: 14, r: 14, arch: 20, y: -6 }, wingL: -36, wingR: 36 },
   annoyed: { top: 0.46, bottom: 0.1, pupil: 0.9, brow: { l: 6, r: 6, arch: -6 }, wingL: 12, wingR: 12 },
   dizzy: { top: 0.05, bottom: 0.05, pupil: 1, brow: { l: 10, r: -6, arch: 4 }, wingL: 18, wingR: -18, pupilType: "spiral" },
+  // New Episode 02 expressions:
+  cool: { top: 0.18, bottom: 0.12, pupil: 0.95, brow: { l: -10, r: 6, arch: 12, y: -6 }, wingL: -24, wingR: 14 },
+  detective: { top: 0.28, bottom: 0.22, pupil: 0.82, brow: { l: -18, r: 10, arch: 6, y: -4 }, wingL: 10, wingR: -28 },
+  salute: { top: 0.04, bottom: 0.18, pupil: 1.02, brow: { l: 6, r: -6, arch: 10, y: -4 }, wingL: 8, wingR: -48 },
+  interrogated: { top: 0, bottom: 0, pupil: 0.38, brow: { l: 18, r: 18, arch: -14, y: -10 }, wingL: -46, wingR: 46 },
+  proud: { top: 0.5, bottom: 0.46, pupil: 1, brow: { l: -6, r: -6, arch: 20, y: -8 }, wingL: 24, wingR: -24 },
+  deadpan: { top: 0.52, bottom: 0.05, pupil: 0.88, brow: { l: 0, r: 0, arch: 0, y: 8 }, wingL: 6, wingR: -6 },
 };
 
 export type MascotProps = {
   x: number;
   y: number;
-  /** ring diameter in px */
   size?: number;
   expression?: Expression;
   lookX?: number;
@@ -61,13 +70,20 @@ export type MascotProps = {
   sy?: number;
   wingL?: number;
   wingR?: number;
-  mouth?: number; // Kept for backwards compatibility, mouth rendering removed
+  mouth?: number;
   pupilScale?: number;
   pupil?: PupilType;
-  legs?: boolean; // Kept for backwards compatibility, legs rendering removed
-  legPhase?: number; // Kept for backwards compatibility
+  legs?: boolean;
+  legPhase?: number;
   hat?: boolean;
   mustache?: boolean;
+  sunglasses?: boolean;
+  headband?: boolean;
+  helmet?: boolean;
+  magnifyingGlass?: boolean;
+  shield?: boolean;
+  blush?: boolean;
+  angerVein?: boolean;
   sweat?: number;
   tears?: number;
   frame?: number;
@@ -82,10 +98,8 @@ const rot = (p: [number, number], deg: number): [number, number] => {
 };
 const pts = (arr: [number, number][]) => arr.map((p) => `${p[0].toFixed(2)},${p[1].toFixed(2)}`).join(" ");
 
-// Logo geometry (units)
 const LEFT_WING: [number, number][] = [[-129.2, -67.6], [0, -64.2], [0, 10], [-94.5, -32.9]];
 const RIGHT_WING: [number, number][] = [[134.3, -60.6], [0, -64.2], [0, 10], [97.2, -23.5]];
-// Clean chin path with natural logo notch cutout (no separate mouth)
 const CHIN_PATH = "M -70.5,70 L 66.1,70 L 10.9,123.4 L 9.3,110 Q 9.3,106 5.3,106 L -12.4,106 Q -16.4,106 -16.6,110 L -18,123.4 Z";
 
 const RING_R = 87.2;
@@ -132,6 +146,13 @@ export const DevtrineMascot: React.FC<MascotProps> = ({
   pupil,
   hat = false,
   mustache = false,
+  sunglasses = false,
+  headband = false,
+  helmet = false,
+  magnifyingGlass = false,
+  shield = false,
+  blush = false,
+  angerVein = false,
   sweat = 0,
   tears = 0,
   frame = 0,
@@ -151,11 +172,14 @@ export const DevtrineMascot: React.FC<MascotProps> = ({
   const yT = -EYE_R + top * EYE_R * 2;
   const yB = EYE_R - bottom * EYE_R * 2;
 
-  // Triangular hands (wings): use explicit prop if provided, else expressive preset
   const actualWingL = wingL !== undefined ? wingL : p.wingL;
   const actualWingR = wingR !== undefined ? wingR : p.wingR;
   const lw = LEFT_WING.map((q) => rot(q, actualWingL));
   const rw = RIGHT_WING.map((q) => rot(q, -actualWingR));
+
+  // Subtle jitter when interrogated
+  const jitterX = expression === "interrogated" ? Math.sin(frame * 1.9) * 3.5 : 0;
+  const jitterY = expression === "interrogated" ? Math.cos(frame * 2.3) * 3.5 : 0;
 
   const w = size * 2;
   const h = size * 2.2;
@@ -164,8 +188,8 @@ export const DevtrineMascot: React.FC<MascotProps> = ({
     <div
       style={{
         position: "absolute",
-        left: x - size,
-        top: y - size * 1.1,
+        left: x - size + jitterX,
+        top: y - size * 1.1 + jitterY,
         width: w,
         height: h,
         transform: `rotate(${rotate}deg) scale(${sx}, ${sy})`,
@@ -181,8 +205,7 @@ export const DevtrineMascot: React.FC<MascotProps> = ({
           </clipPath>
         </defs>
 
-        {/* Gentle floating drop shadow (no legs) */}
-        {shadow && <ellipse cx={0} cy={142} rx={60} ry={8} fill={C.charcoal} opacity={0.12} />}
+        {shadow && <ellipse cx={0} cy={142} rx={64} ry={10} fill={C.charcoal} opacity={0.15} />}
 
         {/* Body: Logo triangular hands & chin geometry */}
         <polygon points={pts(lw)} fill={C.cyan} />
@@ -192,7 +215,7 @@ export const DevtrineMascot: React.FC<MascotProps> = ({
         {/* Eye: Cyan ring & white eyeball */}
         <circle r={RING_R} fill={C.white} stroke={C.cyanLight} strokeWidth={RING_W} />
         <g clipPath={`url(#eye${uid})`}>
-          <g transform={`translate(${lookX * 18}, ${lookY * 16}) scale(${pScale})`}>
+          <g transform={`translate(${lookX * 18 + jitterX}, ${lookY * 16 + jitterY}) scale(${pScale})`}>
             {pType === "normal" && (
               <>
                 <circle r={PUPIL_R} fill={C.charcoal} />
@@ -215,7 +238,15 @@ export const DevtrineMascot: React.FC<MascotProps> = ({
         </g>
         {closed && <path d="M-44,12 Q0,-34 44,12" fill="none" stroke={C.charcoal} strokeWidth={11} strokeLinecap="round" />}
 
-        {/* Eyebrow: primary emotional indicator */}
+        {/* Blush cheeks (proud / happy / amazed) */}
+        {(blush || expression === "proud") && (
+          <>
+            <ellipse cx={-66} cy={38} rx={18} ry={10} fill="#FF6B8B" opacity={0.65} />
+            <ellipse cx={66} cy={38} rx={18} ry={10} fill="#FF6B8B" opacity={0.65} />
+          </>
+        )}
+
+        {/* Eyebrow */}
         {brow && (
           <path
             d={`M-44,${-126 + (brow.y ?? 0) + brow.l} Q0,${-126 + (brow.y ?? 0) - brow.arch} 44,${-126 + (brow.y ?? 0) + brow.r}`}
@@ -224,6 +255,77 @@ export const DevtrineMascot: React.FC<MascotProps> = ({
             strokeWidth={11}
             strokeLinecap="round"
           />
+        )}
+
+        {/* Deal-With-It / Cool Meme Sunglasses */}
+        {(sunglasses || expression === "cool") && (
+          <g transform={`translate(0, -10) rotate(${Math.sin(frame * 0.12) * 2})`}>
+            <line x1={-96} y1={-12} x2={96} y2={-12} stroke="#111111" strokeWidth={10} strokeLinecap="round" />
+            <polygon points="-82,-12 -8,-12 -16,28 -72,28" fill="#111111" stroke={C.white} strokeWidth={3} />
+            <polygon points="8,-12 82,-12 72,28 16,28" fill="#111111" stroke={C.white} strokeWidth={3} />
+            <line x1={-62} y1={-4} x2={-46} y2={20} stroke={C.cyanLight} strokeWidth={5} strokeLinecap="round" />
+            <line x1={26} y1={-4} x2={42} y2={20} stroke={C.cyanLight} strokeWidth={5} strokeLinecap="round" />
+          </g>
+        )}
+
+        {/* Coding Ninja Headband */}
+        {headband && (
+          <g transform="translate(0, -82)">
+            <path d="M-84,0 Q0,-18 84,0 L80,20 Q0,4 -80,20 Z" fill={C.red} stroke={C.charcoal} strokeWidth={5} />
+            <path
+              d={`M80,8 Q${115 + Math.sin(frame * 0.3) * 10},${-10 + Math.cos(frame * 0.3) * 12} 135,12`}
+              fill="none"
+              stroke={C.red}
+              strokeWidth={12}
+              strokeLinecap="round"
+            />
+            <rect x={-26} y={-4} width={52} height={18} rx={4} fill={C.yellow} stroke={C.charcoal} strokeWidth={3.5} />
+          </g>
+        )}
+
+        {/* Safety Engineer Helmet (for Rust Memory Safety) */}
+        {helmet && (
+          <g transform="translate(0, -90)">
+            <path d="M-76,10 A76,68 0 0 1 76,10 Z" fill={C.yellow} stroke={C.charcoal} strokeWidth={6} />
+            <rect x={-92} y={4} width={184} height={16} rx={8} fill={C.yellow} stroke={C.charcoal} strokeWidth={5} />
+            <rect x={-18} y={-54} width={36} height={58} rx={6} fill="#FF9F1C" stroke={C.charcoal} strokeWidth={4} />
+          </g>
+        )}
+
+        {/* Detective Magnifying Glass */}
+        {(magnifyingGlass || expression === "detective") && (
+          <g transform={`translate(95, 18) rotate(${-15 + Math.sin(frame * 0.18) * 8})`}>
+            <line x1={22} y1={22} x2={62} y2={62} stroke={C.charcoal} strokeWidth={14} strokeLinecap="round" />
+            <circle r={34} fill="rgba(94, 225, 230, 0.32)" stroke={C.charcoal} strokeWidth={9} />
+            <path d="M-16,-12 A20,20 0 0 1 8,-18" fill="none" stroke={C.white} strokeWidth={5} strokeLinecap="round" />
+          </g>
+        )}
+
+        {/* Borrow Checker Shield */}
+        {shield && (
+          <g transform={`translate(-108, 22) scale(${1 + Math.sin(frame * 0.2) * 0.05})`}>
+            <path
+              d="M0,-48 L44,-30 L44,10 C44,42 0,62 0,62 C0,62 -44,42 -44,10 L-44,-30 Z"
+              fill={C.cyan}
+              stroke={C.charcoal}
+              strokeWidth={7}
+              strokeLinejoin="round"
+            />
+            <path d="M-16,4 L-4,18 L20,-10" fill="none" stroke={C.white} strokeWidth={9} strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+        )}
+
+        {/* Anime Anger Vein (💢) */}
+        {angerVein && (
+          <g transform={`translate(76, -86) scale(${0.9 + Math.sin(frame * 0.4) * 0.15})`}>
+            <path
+              d="M-16,-6 Q-4,-4 -6,-16 M6,-16 Q4,-4 16,-6 M16,6 Q4,4 6,16 M-6,16 Q-4,4 -16,6"
+              fill="none"
+              stroke={C.red}
+              strokeWidth={7}
+              strokeLinecap="round"
+            />
+          </g>
         )}
 
         {mustache && (

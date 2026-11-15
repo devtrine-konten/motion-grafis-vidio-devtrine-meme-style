@@ -1,15 +1,15 @@
 {
   "fps": 30,
   "scenes": [
-    { "id": "hook", "title": "Scene 01 — Attention Grabber", "duration": 180 },
-    { "id": "plotTwist", "title": "Scene 02 — Plot Twist", "duration": 180 },
-    { "id": "ada", "title": "Scene 03 — Ada Lovelace", "duration": 330 },
-    { "id": "skillIssue", "title": "Scene 04 — Skill Issue", "duration": 105 },
-    { "id": "machine", "title": "Scene 05 — Machine Language", "duration": 225 },
-    { "id": "otp", "title": "Scene 06 — OTP Joke", "duration": 135 },
-    { "id": "evolution", "title": "Scene 07 — Programming Evolution", "duration": 270 },
-    { "id": "ai", "title": "Scene 08 — Artificial Intelligence", "duration": 165 },
-    { "id": "aiStudio", "title": "Scene 09 — Google AI Studio", "duration": 210 },
-    { "id": "closing", "title": "Scene 10 — Final Comedy & Closing", "duration": 450 }
+    { "id": "hook", "title": "Scene 01 — Rust vs Karat Pagar", "duration": 192 },
+    { "id": "plotTwist", "title": "Scene 02 — Graydon Hoare (2006)", "duration": 222 },
+    { "id": "ada", "title": "Scene 03 — Proyek Pribadi ke Mozilla & 2015", "duration": 360 },
+    { "id": "skillIssue", "title": "Scene 04 — Kenapa Rust Diciptakan?", "duration": 90 },
+    { "id": "machine", "title": "Scene 05 — C & C++ Risiko Error Memori", "duration": 294 },
+    { "id": "otp", "title": "Scene 06 — Ownership & Borrow Checker", "duration": 333 },
+    { "id": "evolution", "title": "Scene 07 — Cepat, Aman, Tanpa GC", "duration": 189 },
+    { "id": "ai", "title": "Scene 08 — Dilirik Developer (OS, Tools, Server)", "duration": 279 },
+    { "id": "aiStudio", "title": "Scene 09 — Diinterogasi Compiler!", "duration": 195 },
+    { "id": "closing", "title": "Scene 10 — Bug Mikir Dua Kali & Closing CTA", "duration": 366 }
   ]
 }
