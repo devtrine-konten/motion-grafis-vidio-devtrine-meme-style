@@ -34,14 +34,15 @@ export const TIMELINE = timelineData.scenes.map((s) => {
   cursor += s.duration;
   return { ...s, from };
 });
-export const TOTAL_FRAMES = cursor; // 2250 frames = 75.0s @ 30fps
+export const TOTAL_FRAMES = cursor; // 2520 frames = 84.0s @ 30fps
 
 export const MainComposition: React.FC = () => {
   return (
-    <AbsoluteFill style={{ backgroundColor: C.paper, overflow: "hidden" }}>
-      {/* Background Music with automatic fade-in/out & ducking */}
+    <AbsoluteFill style={{ backgroundColor: "#DCDCDC", overflow: "hidden" }}>
+      {/* Background Music with loop + automatic fade-in/out */}
       <Audio
         src={staticFile("audio/bgm/bgm.wav")}
+        loop
         volume={(f) => {
           const fadeIn = lerp(f, [0, 20], [0, 1]);
           const fadeOut = lerp(f, [TOTAL_FRAMES - 35, TOTAL_FRAMES], [1, 0]);
@@ -49,13 +50,13 @@ export const MainComposition: React.FC = () => {
         }}
       />
 
-      {/* Synced Voice-Over (Google AI Studio) */}
+      {/* Synced Voice-Over (public/audio/vo/sync-vo.wav) */}
       <Audio
-        src={staticFile("audio/vo/vo-synced.wav")}
+        src={staticFile("audio/vo/sync-vo.wav")}
         volume={AUDIO.vo}
       />
 
-      {/* 10 Modular Scenes */}
+      {/* 10 Modular Meme Scenes */}
       {TIMELINE.map((sc) => {
         const Comp = SCENE_COMPONENTS[sc.id];
         return (
@@ -85,15 +86,15 @@ export const MainComposition: React.FC = () => {
           right: 50,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center", 
-          background: "rgba(255, 255, 255, 0.9)",
+          justifyContent: "center",
+          background: "rgba(255, 255, 255, 0.92)",
           border: `3px solid ${C.charcoal}`,
-          borderRadius: "50%",    
-          width: 80,               
-          height: 80,              
-          padding: 0,              
+          borderRadius: "50%",
+          width: 80,
+          height: 80,
+          padding: 0,
           boxShadow: `4px 4px 0 ${C.charcoal}`,
-          zIndex: 60,
+          zIndex: 90,
         }}
       >
         <Img src={staticFile("images/devtrine-logo-removebg.png")} style={{ width: 60, objectFit: "contain" }} />

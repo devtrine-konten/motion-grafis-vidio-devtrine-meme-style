@@ -1,7 +1,6 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { C, H, W } from "../theme";
-import { Sfx } from "./SoundEffect";
 import { easeIn, easeOut, keys, lerp, rand } from "../lib/anim";
 
 export const BLINK_DURATION = 16;
@@ -10,7 +9,7 @@ export const BLINK_DURATION = 16;
  * Devtrine signature transition — the logo "blinks":
  * two cyan eyelids close over the frame, the pupil flashes, then they open on the next scene.
  */
-export const BlinkWipe: React.FC<{ sfx?: boolean }> = ({ sfx = true }) => {
+export const BlinkWipe: React.FC = () => {
   const frame = useCurrentFrame();
   const half = BLINK_DURATION / 2;
   const p = frame < half ? lerp(frame, [0, half], [0, 1], easeIn) : lerp(frame, [half, BLINK_DURATION], [1, 0], easeOut);
@@ -28,7 +27,6 @@ export const BlinkWipe: React.FC<{ sfx?: boolean }> = ({ sfx = true }) => {
         <path d={`M0,${H - lid + curve} Q${W / 2},${H - lid - curve} ${W},${H - lid + curve}`} stroke={C.cyanLight} strokeWidth={28} fill="none" opacity={p > 0.02 ? 1 : 0} />
         <circle cx={W / 2} cy={H / 2} r={150 * pupilScale} fill={C.charcoal} opacity={pupil} />
       </svg>
-      {sfx && <Sfx name="whoosh_small" at={0} volume={0.45} />}
     </AbsoluteFill>
   );
 };

@@ -1,175 +1,211 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
-import { keys, lerp, spr } from "../lib/anim";
+import { autoBlink, keys, lerp, spr } from "../lib/anim";
 import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
-import { Header, SpeechBubble } from "../components/KineticTypography";
+import { ExplainCard } from "../components/Explainers";
+import { IconRocket, IconServer, IconTerminal, IconTrendUp, IconWrench } from "../components/Icons";
+import { Header } from "../components/KineticTypography";
+import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
 import { Subtitles } from "../components/Subtitles";
 import { Flash } from "../components/Transition";
 
-const AI_CODE_LINES = [
-  { text: "✦ // AI Assistant: Auto-generating app...", col: C.cyanLight },
-  { text: "export async function bikinAplikasiKece() {", col: C.white },
-  { text: "  const ui = await ai.designMotion();", col: C.yellow },
-  { text: "  const bugs = 0; // Zero bug dijamin!", col: C.green },
-  { text: "  return ui.deploy({ kecepatan: 'KILAT' });", col: C.cyanLight },
-  { text: "}", col: C.white },
+const USE_CASES = [
+  { Icon: IconTerminal, title: "Sistem Operasi", sub: "Kernel & Driver", bg: C.cyanLight, at: 116 },
+  { Icon: IconWrench, title: "Tools & CLI", sub: "Cepat & Ringan", bg: C.green, at: 168 },
+  { Icon: IconServer, title: "Server Backend", sub: "Tahan Beban Berat", bg: C.yellow, at: 192 },
+  { Icon: IconRocket, title: "High-Perf App", sub: "Game & Browser", bg: "#FF6B35", at: 218, lightText: true },
+];
+
+const BARS = [
+  { label: "2018", h: 85, at: 20 },
+  { label: "2020", h: 140, at: 32 },
+  { label: "2022", h: 195, at: 44 },
+  { label: "KINI", h: 245, at: 56 },
 ];
 
 export const Scene08ArtificialIntelligence: React.FC = () => {
   const frame = useCurrentFrame();
-
-  const editorPop = spr(frame, 10, { damping: 12, stiffness: 170 });
-  const botPop = spr(frame, 24, { damping: 10, stiffness: 190 });
-  const camScale = keys(frame, [0, 30, 120, 165], [1, 1.06, 1.1, 1.04]);
+  const isUseCases = frame >= 112;
+  const camScale = keys(frame, [0, 112, 200, 279], [1, 1.03, 1.05, 1.02]);
 
   return (
-    <Background variant="dark">
-      <Camera scale={camScale} focusX={540} focusY={920}>
+    <Background variant="dark" drift={1.0}>
+      <Camera scale={camScale} focusX={540} focusY={860}>
         <Header
-          kicker="ERA MODERN - ARTIFICIAL INTELLIGENCE"
-          title="Coding Dibantuin AI!"
-          highlight={["AI!"]}
+          kicker="KEGUNAAN RUST"
+          title={isUseCases ? "OS, Tools, Server & High-Perf!" : "Mulai Dilirik Banyak Developer!"}
+          highlight={isUseCases ? ["OS,", "Tools,", "Server"] : ["Dilirik", "Developer!"]}
           tone="dark"
-          pills={[
-            { text: "✦ AUTO-COMPLETE", bg: C.cyan, color: C.charcoal },
-            { text: "10X LEBIH CEPAT", bg: C.green, color: C.charcoal },
-          ]}
         />
 
-        {/* Futuristic Glowing AI Code Editor */}
-        <div
-          style={{
-            position: "absolute",
-            left: 660,
-            top: 940,
-            width: 620,
-            transform: `translate(-50%, -50%) scale(${editorPop})`,
-            background: "rgba(20, 26, 33, 0.95)",
-            border: `4px solid ${C.cyan}`,
-            borderRadius: 28,
-            padding: "24px 28px",
-            boxShadow: `0 0 42px rgba(12, 192, 223, 0.32), 10px 10px 0 ${C.charcoal}`,
-          }}
+        {/* Beat 1 (8..112): Rising Developer Adoption Chart */}
+        <ExplainCard
+          at={8}
+          until={112}
+          w={840}
+          h={435}
+          y={670}
+          bg="#16212E"
+          accent={C.cyan}
+          badge="TREN DEVELOPER"
+          badgeIcon={<IconTrendUp size={20} color={C.charcoal} />}
+          badgeBg={C.yellow}
+          dark
         >
-          {/* Top bar */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-            <div style={{ display: "flex", gap: 10 }}>
-              <span style={{ width: 14, height: 14, borderRadius: 7, background: C.red }} />
-              <span style={{ width: 14, height: 14, borderRadius: 7, background: C.yellow }} />
-              <span style={{ width: 14, height: 14, borderRadius: 7, background: C.green }} />
-            </div>
-            <span
-              style={{
-                background: C.cyan,
-                color: C.charcoal,
-                fontFamily: FONT.mono,
-                fontWeight: 800,
-                fontSize: 19,
-                padding: "4px 14px",
-                borderRadius: 999,
-              }}
-            >
-              ✦ AI COPILOT ACTIVE
-            </span>
-          </div>
-
-          {/* Auto-generating code lines */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {AI_CODE_LINES.map((ln, i) => {
-              const startF = 24 + i * 14;
-              const p = lerp(frame, [startF, startF + 12], [0, 1]);
-              if (p <= 0) return null;
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 40, height: 275, paddingBottom: 8 }}>
+            {BARS.map((b, idx) => {
+              const barH = lerp(frame, [b.at, b.at + 20], [0, b.h]);
+              const isLast = idx === BARS.length - 1;
               return (
-                <div
-                  key={i}
-                  style={{
-                    fontFamily: FONT.mono,
-                    fontWeight: 700,
-                    fontSize: 22,
-                    color: ln.col,
-                    opacity: p,
-                    transform: `translateX(${(1 - p) * 24}px)`,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {ln.text.slice(0, Math.ceil(ln.text.length * p))}
+                <div key={b.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                  <div
+                    style={{
+                      width: 92,
+                      height: barH,
+                      background: isLast ? "#FF6B35" : C.cyanLight,
+                      border: `4px solid ${C.white}`,
+                      borderRadius: "16px 16px 6px 6px",
+                    }}
+                  />
+                  <div style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 22, color: isLast ? C.yellow : C.white }}>
+                    {b.label}
+                  </div>
                 </div>
               );
             })}
           </div>
-        </div>
+          <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 22, color: C.green, marginTop: 6, display: "flex", alignItems: "center", gap: 8 }}>
+            <IconTrendUp size={24} color={C.green} />
+            <span>Semakin Banyak Tim Migrasi ke Rust!</span>
+          </div>
+        </ExplainCard>
 
-        {/* Floating AI Sparkle Assistant Orb */}
-        <div
-          style={{
-            position: "absolute",
-            left: 850,
-            top: 645 + Math.sin(frame * 0.16) * 16,
-            transform: `translate(-50%, -50%) scale(${botPop})`,
-            background: C.cyan,
-            color: C.charcoal,
-            border: `5px solid ${C.white}`,
-            padding: "10px 20px",
-            fontFamily: FONT.mono,
-            fontWeight: 900,
-            fontSize: 25,
-            boxShadow: `0 0 28px ${C.cyanLight}`,
-            whiteSpace: "nowrap",
-          }}
+        {/* Beat 2 (112..279): 4-Card Use Case Showcase with SVG Icons */}
+        <ExplainCard
+          at={112}
+          w={840}
+          h={440}
+          y={670}
+          bg="#16212E"
+          accent="#FF6B35"
+          badge="DIPAKAI UNTUK MEMBUAT:"
+          badgeIcon={<IconRocket size={20} color={C.charcoal} />}
+          badgeBg={C.yellow}
+          dark
         >
-          SIAP BANTU BOS!
-        </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, width: "100%" }}>
+            {USE_CASES.map((u) => {
+              const s = spr(frame, u.at, { damping: 11, stiffness: 200 });
+              const txtCol = u.lightText ? C.white : C.charcoal;
+              const IconComp = u.Icon;
+              return (
+                <div
+                  key={u.title}
+                  style={{
+                    background: u.bg,
+                    border: `4px solid ${C.charcoal}`,
+                    borderRadius: 22,
+                    padding: "18px 16px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                    transform: `scale(${s})`,
+                    opacity: frame >= u.at ? 1 : 0,
+                  }}
+                >
+                  <IconComp size={44} color={txtCol} />
+                  <div style={{ textAlign: "left" }}>
+                    <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 24, color: txtCol, lineHeight: 1.1 }}>
+                      {u.title}
+                    </div>
+                    <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 16, color: txtCol, opacity: 0.85, marginTop: 4 }}>
+                      {u.sub}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </ExplainCard>
 
-        {/* Devtrine amazed (starry pupil) watching code write itself */}
+        {/* Bottom Meme Reactions synced to VO beats */}
+        <MemeSticker
+          src="memes/menggoda.jpg"
+          x={555}
+          y={1145}
+          w={265}
+          h={245}
+          at={18}
+          until={66}
+          rotate={-4}
+          accent={C.cyan}
+        />
+        <MemeSticker
+          src="memes/towewew.jpg"
+          x={805}
+          y={1145}
+          w={265}
+          h={245}
+          at={64}
+          until={112}
+          rotate={4}
+          accent={C.yellow}
+        />
+        <MemeSticker
+          src="memes/well_well.jpg"
+          x={555}
+          y={1145}
+          w={265}
+          h={245}
+          at={166}
+          until={218}
+          rotate={-4}
+          accent={C.green}
+        />
+        <MemeSticker
+          src="memes/edan.jpg"
+          x={805}
+          y={1145}
+          w={265}
+          h={245}
+          at={216}
+          rotate={4}
+          accent="#FF6B35"
+        />
+
         <DevtrineMascot
-          x={245}
-          y={1075 + Math.sin(frame * 0.14) * 10}
-          size={215}
-          expression="amazed"
-          lookX={0.85}
-          lookY={-0.25}
-          wingL={-34 + Math.sin(frame * 0.25) * 12}
-          wingR={-34 + Math.cos(frame * 0.25) * 12}
-          legs
+          x={205}
+          y={1215 + Math.sin(frame * 0.16) * 7}
+          size={130}
+          expression={isUseCases ? "proud" : "amazed"}
+          headband={isUseCases}
+          blush={isUseCases}
+          blink={autoBlink(frame, 12)}
+          lookX={0.5}
+          lookY={-0.3}
           frame={frame}
           shadow
         />
-
-        <SpeechBubble
-          text="Gue tinggal seduh kopi doang?!"
-          x={330}
-          y={770}
-          at={48}
-          until={160}
-          tail="left"
-          size={33}
-          bg={C.yellow}
-        />
       </Camera>
 
-      <Flash at={24} color={C.cyanLight} max={0.35} />
+      <Flash at={112} color={C.cyanLight} max={0.25} />
 
       <Subtitles
         cues={[
-          {
-            from: 4,
-            to: 160,
-            text: "Dan sekarang, kita bahkan bisa memanfaatkan AI untuk membantu coding!",
-            hi: ["sekarang,", "AI", "membantu", "coding!"],
-          },
+          { from: 7, to: 112, text: "Makanya, Rust mulai dilirik banyak developer", hi: ["Rust", "dilirik", "developer"] },
+          { from: 112, to: 168, text: "untuk bikin sistem operasi,", hi: ["sistem", "operasi,"] },
+          { from: 168, to: 272, text: "tools, server, sampai software berperforma tinggi.", hi: ["tools,", "server,", "berperforma", "tinggi."] },
         ]}
       />
 
-      {/* Audio cues */}
-      <Sfx name="whoosh" at={0} volume={0.8} />
-      <Sfx name="activation" at={10} volume={0.85} />
-      <Sfx name="ai_chime" at={24} volume={0.85} />
-      <Sfx name="ai_ambience" at={0} volume={0.5} duration={165} />
-      <Sfx name="typing" at={32} volume={0.55} duration={75} />
+      <Sfx name="sus" at={18} volume={0.85} duration={18} />
+      <Sfx name="vine_boom" at={112} volume={0.9} duration={20} />
+      <Sfx name="meme_bonk" at={166} volume={0.85} duration={16} />
+      <Sfx name="goofy_horn" at={216} volume={0.9} duration={20} />
     </Background>
   );
 };

@@ -1,240 +1,269 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { Img, staticFile, useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
-import { easeOut, keys, lerp, rand, shake, spr } from "../lib/anim";
+import { autoBlink, keys, lerp, shake, spr } from "../lib/anim";
 import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
-import { Callout, Header, SpeechBubble } from "../components/KineticTypography";
+import { ExplainCard } from "../components/Explainers";
+import { IconAlert, IconArrowRight, IconBug, IconUnlock, IconZap } from "../components/Icons";
+import { Header } from "../components/KineticTypography";
+import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
 import { Subtitles } from "../components/Subtitles";
+import { Flash } from "../components/Transition";
 
-const COLUMNS = Array.from({ length: 12 }, (_, i) => ({
-  x: 75 + i * 84,
-  spd: 5 + (i % 4) * 2.4,
-  bits: Array.from({ length: 16 }, (__, j) => (Math.round(rand(i * 19 + j * 7)) ? "1" : "0")),
-}));
-
-const PILE_BITS = Array.from({ length: 14 }, (_, i) => ({
-  bit: i % 2 === 0 ? "0" : "1",
-  x: 135 + (i % 7) * 52 + (i > 6 ? 22 : 0),
-  y: 1220 - Math.floor(i / 7) * 65,
-  rot: (rand(i * 11) - 0.5) * 38,
-  delay: 135 + i * 3,
-}));
+const RAM_SLOTS = [
+  { addr: "0x01", label: "DATA A" },
+  { addr: "0x02", label: "FREED!" },
+  { addr: "0x03", label: "DATA B" },
+  { addr: "0x04", label: "SECRET" },
+];
 
 export const Scene05MachineLanguage: React.FC = () => {
   const frame = useCurrentFrame();
+  const isCrash = frame >= 132;
+  const shk = shake(frame, 134, 18, 12);
+  const camScale = keys(frame, [0, 60, 132, 145, 294], [1, 1.03, 1.01, 1.05, 1.02]);
 
-  const eniacPop = spr(frame, 8, { damping: 12, stiffness: 150 });
-  const dizzy = frame >= 85;
-  const buried = frame >= 145;
-  const buryY = lerp(frame, [140, 175], [0, 85], easeOut);
-  const camScale = keys(frame, [0, 80, 140, 225], [1, 1.04, 1.1, 1.12]);
-  const shk = shake(frame, 145, 18, 16);
+  const speedPct = lerp(frame, [28, 86], [0, 100]);
+  const ptrX = lerp(frame, [142, 182], [0, 1]);
+  const isErrorHit = frame >= 182;
+  const exploitX = lerp(frame, [242, 282], [-170, 170]);
 
   return (
-    <Background variant="retro">
-      <Camera scale={camScale} x={shk.x} y={shk.y} focusX={480} focusY={980}>
-        {/* Flowing Binary Code Rain in background */}
-        <AbsoluteFill style={{ opacity: 0.34, pointerEvents: "none" }}>
-          {COLUMNS.map((col, idx) => {
-            const yOff = (frame * col.spd) % 960;
-            return (
-              <div
-                key={idx}
-                style={{
-                  position: "absolute",
-                  left: col.x,
-                  top: -320 + yOff,
-                  fontFamily: FONT.mono,
-                  fontWeight: 800,
-                  fontSize: 34,
-                  lineHeight: 1.55,
-                  color: idx % 2 === 0 ? C.cyanLight : C.green,
-                  textShadow: `0 0 12px ${C.cyan}`,
-                }}
-              >
-                {col.bits.map((b, j) => (
-                  <div key={j}>{b}</div>
-                ))}
-              </div>
-            );
-          })}
-        </AbsoluteFill>
-
+    <Background variant="blueprint" drift={1.0}>
+      <Camera scale={camScale} x={shk.x} y={shk.y} focusX={540} focusY={860}>
         <Header
-          kicker="ERA 1940-AN - KOMPUTER GENERASI PERTAMA"
-          title="Bahasa Mesin: 0 & 1"
-          highlight={["0", "1"]}
+          kicker="MASALAH DI C & C++"
+          title={isCrash ? "Risiko Error Memori & Crash!" : "C & C++ Memang Cepat, Tapi..."}
+          highlight={isCrash ? ["Error", "Memori", "Crash!"] : ["C", "C++", "Cepat,"]}
           tone="dark"
-          pills={[
-            { text: "BINARY CODE", bg: C.cyan, color: C.charcoal },
-            { text: "UKURAN 1 RUANGAN!", bg: C.yellow, color: C.charcoal },
-          ]}
         />
 
-        {/* Retro 1940s Giant Mainframe Computer (ENIAC-inspired) */}
-        <div
-          style={{
-            position: "absolute",
-            left: 710,
-            top: 970,
-            transform: `translate(-50%, -50%) scale(${eniacPop})`,
-          }}
+        {/* Beat 1 (10..132): C & C++ Native Speed Visualization */}
+        <ExplainCard
+          at={10}
+          until={132}
+          w={840}
+          h={440}
+          y={670}
+          bg="#16212E"
+          accent={C.cyan}
+          badge="PERFORMA TINGGI"
+          badgeIcon={<IconZap size={20} color={C.charcoal} />}
+          badgeBg={C.yellow}
+          dark
         >
-          <svg width={460} height={520} viewBox="-230 -260 460 520">
-            {/* Cabinet body */}
-            <rect x={-195} y={-230} width={390} height={450} rx={22} fill="#36423E" stroke={C.charcoal} strokeWidth={10} />
-            <rect x={-172} y={-206} width={344} height={402} rx={12} fill="#252E2B" stroke={C.charcoal} strokeWidth={6} />
+          <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
+            <div style={{ width: 170, height: 170, background: C.white, borderRadius: 24, border: `4px solid ${C.charcoal}`, padding: 18 }}>
+              <Img src={staticFile("image-vidio/c-logo.png")} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+            </div>
+            <div style={{ width: 170, height: 170, background: C.white, borderRadius: 24, border: `4px solid ${C.charcoal}`, padding: 18 }}>
+              <Img src={staticFile("image-vidio/logo-c++.png")} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+            </div>
+          </div>
 
-            {/* Dual spinning magnetic tape reels */}
-            {[-88, 88].map((rx, i) => (
-              <g key={i} transform={`translate(${rx}, -115) rotate(${frame * (i === 0 ? 5 : -5)})`}>
-                <circle r={66} fill="#161C1A" stroke={C.cyanLight} strokeWidth={6} />
-                <circle r={22} fill={C.cyan} />
-                {[0, 120, 240].map((deg) => (
-                  <rect key={deg} x={-7} y={-60} width={14} height={38} rx={4} fill={C.cyanLight} transform={`rotate(${deg})`} />
-                ))}
-              </g>
-            ))}
+          <div style={{ width: "90%", marginTop: 26 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONT.mono, fontWeight: 800, fontSize: 21, color: C.cyanLight, marginBottom: 8 }}>
+              <span>KECEPATAN EKSEKUSI</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <IconZap size={20} color={C.yellow} />
+                <span>{Math.round(speedPct)}% NATIVE</span>
+              </span>
+            </div>
+            <div style={{ height: 26, background: "#0D141C", borderRadius: 999, border: `3px solid ${C.cyanLight}`, overflow: "hidden" }}>
+              <div style={{ width: `${speedPct}%`, height: "100%", background: C.green }} />
+            </div>
+          </div>
+        </ExplainCard>
 
-            {/* Blinking vacuum tube lights grid */}
-            {Array.from({ length: 24 }, (_, k) => {
-              const gx = -138 + (k % 6) * 55;
-              const gy = -15 + Math.floor(k / 6) * 36;
-              const on = Math.sin(frame * 0.35 + k * 1.9) > 0;
+        {/* Beat 2 (132..230): RAM Pointer Error -> Crash */}
+        <ExplainCard
+          at={132}
+          until={230}
+          w={840}
+          h={440}
+          y={670}
+          bg="#1E1318"
+          accent={C.red}
+          badge="ILUSTRASI ERROR MEMORI"
+          badgeIcon={<IconAlert size={20} color={C.white} />}
+          badgeBg={C.red}
+          dark
+        >
+          <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 21, color: C.yellow, marginBottom: 16 }}>
+            RAM MEMORY BLOCKS (POINTER AKSES SALAH ALAMAT)
+          </div>
+          <div style={{ display: "flex", gap: 16, width: "100%", justifyContent: "center" }}>
+            {RAM_SLOTS.map((s, idx) => {
+              const bad = idx === 1 && isErrorHit;
               return (
-                <circle
-                  key={k}
-                  cx={gx}
-                  cy={gy}
-                  r={10}
-                  fill={on ? (k % 3 === 0 ? C.yellow : k % 2 === 0 ? C.red : C.green) : "#141A18"}
-                  stroke={C.charcoal}
-                  strokeWidth={3}
-                />
+                <div
+                  key={s.addr}
+                  style={{
+                    width: 150,
+                    height: 145,
+                    borderRadius: 20,
+                    border: `4px solid ${bad ? C.red : C.cyanLight}`,
+                    background: bad ? "#5A1620" : "#0D141C",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    transform: bad ? `scale(${1 + Math.sin(frame * 0.7) * 0.05})` : undefined,
+                  }}
+                >
+                  <div style={{ fontFamily: FONT.mono, fontSize: 18, color: C.cyanLight }}>{s.addr}</div>
+                  <div style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 22, color: idx === 1 ? C.red : C.white, display: "flex", alignItems: "center", gap: 6 }}>
+                    {bad && <IconAlert size={20} color={C.red} />}
+                    <span>{bad ? "CRASH!" : s.label}</span>
+                  </div>
+                </div>
               );
             })}
-
-            {/* Green CRT binary readout */}
-            <rect x={-148} y={120} width={296} height={58} rx={8} fill="#0B1911" stroke={C.green} strokeWidth={4} />
-            <text x={0} y={158} textAnchor="middle" fill={C.green} fontFamily={FONT.mono} fontSize={28} fontWeight={800}>
-              {"01001000 01001001".slice(0, 6 + (Math.floor(frame / 3) % 12))}
-            </text>
-          </svg>
-        </div>
-
-        {/* Binary Data Stream Ribbon flowing from Mainframe toward Devtrine */}
-        {frame >= 30 && (
+          </div>
           <div
             style={{
-              position: "absolute",
-              left: 190,
-              top: 780,
-              width: 500,
-              padding: "12px 22px",
-              background: "rgba(12, 192, 223, 0.18)",
-              border: `4px solid ${C.cyanLight}`,
-              borderRadius: 18,
+              marginTop: 20,
               fontFamily: FONT.mono,
               fontWeight: 900,
-              fontSize: 38,
-              color: C.white,
-              letterSpacing: "0.14em",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              transform: `rotate(-8deg) scale(${spr(frame, 30, { damping: 11, stiffness: 170 })})`,
+              fontSize: 24,
+              color: isErrorHit ? C.red : C.yellow,
+              transform: `translateX(${lerp(ptrX, [0, 1], [-170, -85])}px)`,
             }}
           >
-            {"011010010100111001010".slice(frame % 8, (frame % 8) + 12)}
+            *ptr mengakses memori kosong (0x02)!
           </div>
-        )}
+        </ExplainCard>
 
-        <Callout text="ENIAC · 30 TON!" x={780} y={660} tx={720} ty={760} at={38} bg={C.yellow} />
+        {/* Beat 3 (230..294): Security Breach Visualization */}
+        <ExplainCard
+          at={230}
+          w={840}
+          h={440}
+          y={670}
+          bg="#1E1318"
+          accent={C.yellow}
+          badge="CELAH KEAMANAN"
+          badgeIcon={<IconUnlock size={20} color={C.charcoal} />}
+          badgeBg={C.yellow}
+          dark
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 38, position: "relative", width: "100%", justifyContent: "center" }}>
+            <div style={{ transform: `scale(${spr(frame, 232)})` }}>
+              <IconUnlock size={92} color={C.red} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 46 }}>
+              <div style={{ width: 22, height: 78, background: C.cyan, borderRadius: 8 }} />
+              <div style={{ width: 22, height: 78, background: C.cyan, borderRadius: 8 }} />
+            </div>
+            <div style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 28, color: C.red }}>
+              DATA BOCOR!
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                transform: `translateX(${exploitX}px)`,
+                background: C.red,
+                color: C.white,
+                fontFamily: FONT.mono,
+                fontWeight: 900,
+                fontSize: 21,
+                padding: "8px 18px",
+                borderRadius: 999,
+                border: `3px solid ${C.white}`,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <IconBug size={22} color={C.white} />
+              <span>EXPLOIT</span>
+              <IconArrowRight size={20} color={C.white} />
+            </div>
+          </div>
+          <div style={{ fontFamily: FONT.sans, fontWeight: 700, fontSize: 25, color: C.yellow, marginTop: 18 }}>
+            Bug memori bisa dimanfaatkan peretas!
+          </div>
+        </ExplainCard>
 
-        {/* Devtrine reading the binary stream -> gets dizzy -> gets buried under 0s and 1s */}
+        {/* Bottom Meme Reactions synced to VO beats */}
+        <MemeSticker
+          src="memes/satoru_speed.jpg"
+          x={680}
+          y={1145}
+          w={275}
+          h={245}
+          at={52}
+          until={132}
+          rotate={4}
+          accent={C.yellow}
+        />
+        <MemeSticker
+          src="memes/patrick_jug.jpg"
+          x={555}
+          y={1145}
+          w={265}
+          h={245}
+          at={138}
+          until={188}
+          rotate={-5}
+          accent={C.yellow}
+        />
+        <MemeSticker
+          src="memes/gak_beres.jpg"
+          x={805}
+          y={1145}
+          w={265}
+          h={245}
+          at={186}
+          until={232}
+          rotate={4}
+          accent={C.red}
+        />
+        <MemeSticker
+          src="memes/merinding.jpg"
+          x={680}
+          y={1145}
+          w={285}
+          h={250}
+          at={234}
+          rotate={-3}
+          accent={C.cyanLight}
+        />
+
         <DevtrineMascot
-          x={290}
-          y={1070 + buryY}
-          size={215}
-          expression={dizzy ? "dizzy" : "curious"}
-          lookX={dizzy ? 0 : Math.sin(frame * 0.55) * 1.1}
+          x={205}
+          y={1215 + Math.sin(frame * 0.18) * 7}
+          size={130}
+          expression={isCrash ? "interrogated" : "cool"}
+          sunglasses={!isCrash}
+          angerVein={isCrash}
+          sweat={isCrash ? 1 : 0}
+          blink={autoBlink(frame, 12)}
+          lookX={0.5}
           lookY={-0.3}
-          wingL={dizzy ? -45 + Math.sin(frame * 0.6) * 20 : -15}
-          wingR={dizzy ? -45 + Math.cos(frame * 0.6) * 20 : 25}
-          sweat={frame >= 65 ? 1 : 0}
-          legs={!buried}
           frame={frame}
           shadow
         />
-
-        {/* Avalanche of giant 0 & 1 blocks piling on top of Devtrine */}
-        {PILE_BITS.map((b, i) => {
-          if (frame < b.delay) return null;
-          const s = spr(frame, b.delay, { damping: 10, stiffness: 200 });
-          return (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                left: b.x,
-                top: lerp(s, [0, 1], [620, b.y]),
-                transform: `translate(-50%, -50%) rotate(${b.rot}deg)`,
-                background: i % 2 === 0 ? C.cyanLight : C.yellow,
-                color: C.charcoal,
-                fontFamily: FONT.mono,
-                fontWeight: 900,
-                fontSize: 54,
-                padding: "4px 20px",
-                borderRadius: 16,
-                border: `5px solid ${C.charcoal}`,
-                boxShadow: `5px 5px 0 ${C.charcoal}`,
-              }}
-            >
-              {b.bit}
-            </div>
-          );
-        })}
-
-        <SpeechBubble
-          text="010101... Mata gue kram!!"
-          x={330}
-          y={740}
-          at={78}
-          until={220}
-          tail="left"
-          size={34}
-          bg={C.yellow}
-        />
       </Camera>
+
+      <Flash at={132} color={C.red} max={0.3} />
 
       <Subtitles
         cues={[
-          {
-            from: 4,
-            to: 105,
-            tag: "energetic",
-            text: "Lanjut! Sekitar tahun 1940-an, programmer harus menggunakan bahasa mesin...",
-            hi: ["1940-an,", "bahasa", "mesin..."],
-          },
-          {
-            from: 105,
-            to: 220,
-            tag: "energetic",
-            text: "Yang isinya cuma angka nol dan satu!",
-            hi: ["angka", "nol", "satu!"],
-          },
+          { from: 10, to: 128, text: "Karena bahasa seperti C dan C++ memang cepat,", hi: ["C", "C++", "cepat,"] },
+          { from: 134, to: 228, text: "tapi punya risiko error memori yang bisa bikin program crash", hi: ["risiko", "error", "memori", "crash"] },
+          { from: 228, to: 288, text: "bahkan membuka celah keamanan.", hi: ["celah", "keamanan."] },
         ]}
       />
 
-      {/* Audio cues */}
-      <Sfx name="digital_sweep" at={0} volume={0.85} />
-      <Sfx name="machine_hum" at={6} volume={0.65} duration={215} />
-      <Sfx name="retro_beep" at={24} volume={0.8} />
-      <Sfx name="data" at={48} volume={0.75} />
-      <Sfx name="typing" at={95} volume={0.75} />
-      <Sfx name="boing" at={140} volume={0.85} />
+      <Sfx name="vine_boom" at={52} volume={0.9} duration={20} />
+      <Sfx name="error_buzzer" at={134} volume={0.9} duration={18} />
+      <Sfx name="meme_bonk" at={186} volume={0.85} duration={16} />
+      <Sfx name="sus" at={234} volume={0.9} duration={20} />
     </Background>
   );
 };
