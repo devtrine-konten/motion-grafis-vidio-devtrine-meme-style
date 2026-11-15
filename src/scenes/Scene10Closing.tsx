@@ -7,7 +7,7 @@ import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
 import { ExplainCard } from "../components/Explainers";
 import { IconBug, IconCheck, IconHelp, IconShield, IconUserPlus } from "../components/Icons";
-import { Header, KineticText, Pill } from "../components/KineticTypography";
+import { Header, KineticText } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
 import { Subtitles } from "../components/Subtitles";
