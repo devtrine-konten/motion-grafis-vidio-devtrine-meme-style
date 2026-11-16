@@ -122,8 +122,7 @@ export const Scene03AdaLovelace: React.FC = () => {
           y={730}
           bg="#16212E"
           accent={C.green}
-          badge="2015 · RILIS STABIL PERTAMA"
-          badgeIcon={<IconRocket size={20} color={C.charcoal} />}
+          badge="2015 RILIS STABIL PERTAMA"
           badgeBg={C.green}
           dark
         >
@@ -167,7 +166,7 @@ export const Scene03AdaLovelace: React.FC = () => {
           accent={C.cyan}
         />
         <MemeSticker
-          src="memes/dana_masuk.jpg"
+          src="memes/hontoni.jpg"
           x={545}
           y={1145}
           w={265}
@@ -203,8 +202,8 @@ export const Scene03AdaLovelace: React.FC = () => {
           src="memes/horee.jpg"
           x={805}
           y={1145}
-          w={265}
-          h={245}
+          w={325}
+          h={320}
           at={284}
           rotate={4}
           accent={C.yellow}
@@ -237,11 +236,11 @@ export const Scene03AdaLovelace: React.FC = () => {
         ]}
       />
 
-      <Sfx name="boing" at={18} volume={0.8} duration={16} />
-      <Sfx name="meme_bonk" at={80} volume={0.9} duration={16} />
-      <Sfx name="goofy_horn" at={146} volume={0.85} duration={20} />
-      <Sfx name="vine_boom" at={202} volume={0.95} duration={20} />
-      <Sfx name="meme_bonk" at={284} volume={0.85} duration={16} />
+      <Sfx name="boing" at={18} volume={0.8} duration={17} />
+      <Sfx name="meme_bonk" at={80} volume={0.85} duration={14} />
+      <Sfx name="ka_ching" at={96} volume={0.9} duration={27} />
+      <Sfx name="vine_boom" at={202} volume={0.95} duration={26} />
+      <Sfx name="meme_bonk" at={284} volume={0.85} duration={14} />
     </Background>
   );
 };

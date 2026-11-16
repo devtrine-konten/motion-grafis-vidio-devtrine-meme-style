@@ -131,8 +131,7 @@ export const Scene04SkillIssue: React.FC = () => {
         ]}
       />
 
-      <Sfx name="sus" at={8} volume={0.9} duration={20} />
-      <Sfx name="vine_boom" at={46} volume={0.9} duration={20} />
+      <Sfx name="sus" at={8} volume={0.9} duration={26} />
     </Background>
   );
 };

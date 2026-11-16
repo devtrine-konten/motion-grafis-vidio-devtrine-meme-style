@@ -39,8 +39,7 @@ export const Scene09GoogleAIStudio: React.FC = () => {
           y={670}
           bg="#1B1316"
           accent={C.red}
-          badge="RUANG INTEROGASI COMPILER"
-          badgeIcon={<IconAlert size={20} color={C.white} />}
+          badge="INTEROGASI COMPILER"
           badgeBg={C.red}
           dark
         >
@@ -73,11 +72,9 @@ export const Scene09GoogleAIStudio: React.FC = () => {
           x={540}
           y={670}
           w={470}
-          h={435}
+          h={475}
           at={112}
           accent={C.yellow}
-          badge="NASIB PROGRAMMER"
-          badgeIcon={<IconAlert size={20} color={C.charcoal} />}
           badgeBg={C.yellow}
         />
 
@@ -125,10 +122,9 @@ export const Scene09GoogleAIStudio: React.FC = () => {
         ]}
       />
 
-      <Sfx name="sus" at={10} volume={0.9} duration={20} />
-      <Sfx name="error_buzzer" at={34} volume={0.85} duration={18} />
-      <Sfx name="vine_boom" at={112} volume={0.95} duration={20} />
-      <Sfx name="goofy_horn" at={170} volume={0.9} duration={20} />
+      <Sfx name="sus" at={10} volume={0.9} duration={22} />
+      <Sfx name="vine_boom" at={112} volume={0.95} duration={18} />
+      <Sfx name="bruh" at={130} volume={0.9} duration={15} />
     </Background>
   );
 };

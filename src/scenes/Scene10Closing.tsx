@@ -136,8 +136,8 @@ export const Scene10Closing: React.FC = () => {
               src="memes/gigachad_draw.jpg"
               x={555}
               y={1145}
-              w={265}
-              h={245}
+              w={320}
+              h={325}
               at={20}
               until={90}
               rotate={-4}
@@ -196,7 +196,6 @@ export const Scene10Closing: React.FC = () => {
             })}
 
             <div style={{ position: "absolute", top: 170, left: 80, right: 80, textAlign: "center" }}>
-              {/* <Pill text="EPISODE 02 SELESAI · NEXT EP.03!" bg="#FF6B35" color={C.white} at={178} size={24} /> */}
               <div style={{ marginTop: 18 }}>
                 <KineticText
                   text="TERTARIK BELAJAR RUST?!"
@@ -235,7 +234,6 @@ export const Scene10Closing: React.FC = () => {
                 border: `5px solid ${C.charcoal}`,
                 borderRadius: 26,
                 padding: "14px 30px",
-                boxShadow: `8px 8px 0 #FF6B35`,
                 zIndex: 35,
               }}
             >
@@ -306,10 +304,9 @@ export const Scene10Closing: React.FC = () => {
         ]}
       />
 
-      <Sfx name="vine_boom" at={20} volume={0.9} duration={20} />
-      <Sfx name="meme_bonk" at={90} volume={0.85} duration={16} />
-      <Sfx name="goofy_horn" at={264} volume={0.85} duration={20} />
-      <Sfx name="vine_boom" at={330} volume={0.9} duration={20} />
+      <Sfx name="vine_boom" at={20} volume={0.9} duration={26} />
+      <Sfx name="bruh" at={90} volume={0.9} duration={15} />
+      <Sfx name="meme_click" at={262} volume={0.9} duration={8} />
     </Background>
   );
 };

@@ -145,7 +145,7 @@ export const Scene07ProgrammingEvolution: React.FC = () => {
           accent={C.yellow}
         />
         <MemeSticker
-          src="memes/no_gc.jpg"
+          src="memes/omg.jpg"
           x={555}
           y={1145}
           w={265}
@@ -187,9 +187,9 @@ export const Scene07ProgrammingEvolution: React.FC = () => {
         ]}
       />
 
-      <Sfx name="vine_boom" at={34} volume={0.9} duration={20} />
-      <Sfx name="meme_bonk" at={86} volume={0.85} duration={16} />
-      <Sfx name="goofy_horn" at={140} volume={0.85} duration={20} />
+      <Sfx name="vine_boom" at={34} volume={0.9} duration={26} />
+      <Sfx name="meme_bonk" at={86} volume={0.85} duration={14} />
+      {/* <Sfx name="goofy_horn" at={140} volume={0.85} duration={24} /> */}
     </Background>
   );
 };

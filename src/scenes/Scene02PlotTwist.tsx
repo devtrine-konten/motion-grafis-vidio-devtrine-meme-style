@@ -176,8 +176,8 @@ export const Scene02PlotTwist: React.FC = () => {
           src="memes/kelas_king.jpg"
           x={680}
           y={1145}
-          w={285}
-          h={255}
+          w={310}
+          h={310}
           at={166}
           rotate={4}
           accent={C.yellow}
@@ -205,9 +205,9 @@ export const Scene02PlotTwist: React.FC = () => {
       />
 
       {/* <Sfx name="sus" at={12} volume={0.85} duration={18} /> */}
-      <Sfx name="meme_bonk" at={46} volume={0.85} duration={16} />
-      {/* <Sfx name="vine_boom" at={108} volume={0.9} duration={20} /> */}
-      <Sfx name="meme_bonk" at={166} volume={0.85} duration={20} />
+      <Sfx name="meme_bonk" at={46} volume={0.85} duration={14} />
+      {/* <Sfx name="vine_boom" at={116} volume={0.85} duration={24} /> */}
+      <Sfx name="error_buzzer" at={166} volume={0.85} duration={14} />
     </Background>
   );
 };

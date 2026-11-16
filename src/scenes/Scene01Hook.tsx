@@ -64,7 +64,7 @@ export const Scene01Hook: React.FC = () => {
               background: "#0D1117",
               border: `3px solid ${C.cyan}`,
               borderRadius: 16,
-              padding: "12px 24px",
+              padding: "12px 20px",
               fontFamily: FONT.mono,
               fontWeight: 800,
               fontSize: 26,
@@ -112,15 +112,14 @@ export const Scene01Hook: React.FC = () => {
 
         {/* Beat 2 (118..192): Joke Cutaway — Bukan Karat di Pagar Rumah */}
         <MemeSticker
-          src="memes/pagar_cicak.jpg"
+          src="memes/maling_besi.jpg"
           x={540}
           y={670}
-          w={600}
-          h={430}
+          w={700}
+          h={530}
           at={118}
           until={192}
           accent={C.red}
-          badge="BUKAN KARAT PAGAR RUMAH"
           badgeIcon={<IconXCircle size={22} color={C.white} />}
           badgeBg={C.red}
         />
@@ -130,11 +129,6 @@ export const Scene01Hook: React.FC = () => {
               position: "absolute",
               left: 540,
               top: 670,
-              transform: `translate(-50%, -50%) scale(${xPop}) rotate(-10deg)`,
-              border: `7px solid ${C.red}`,
-              borderRadius: 18,
-              padding: "8px 26px",
-              background: "rgba(20, 20, 20, 0.86)",
               color: C.red,
               fontFamily: FONT.mono,
               fontWeight: 900,
@@ -145,18 +139,16 @@ export const Scene01Hook: React.FC = () => {
               zIndex: 30,
             }}
           >
-            <IconAlert size={40} color={C.red} />
-            <span>BUKAN INI!</span>
+            <span>BUKAN INI WOK!</span>
           </div>
         )}
 
-        {/* WKWK Meme Reaction beside Devtrine */}
         <MemeSticker
           src="memes/malu_tuh.jpg"
           x={680}
           y={1150}
-          w={290}
-          h={260}
+          w={300}
+          h={300}
           at={154}
           rotate={4}
           accent={C.yellow}
@@ -190,11 +182,11 @@ export const Scene01Hook: React.FC = () => {
         ]}
       />
 
-      <Sfx name="vine_boom" at={20} volume={0.9} duration={20} />
-      {/* <Sfx name="sus" at={42} volume={0.85} duration={18} /> */}
-      <Sfx name="sus" at={78} volume={0.85} duration={16} />
-      <Sfx name="error_buzzer" at={118} volume={0.85} duration={18} />
-      <Sfx name="goofy_horn" at={154} volume={0.9} duration={20} />
+      <Sfx name="vine_boom" at={23} volume={0.9} duration={20} />
+      {/* <Sfx name="what_meme" at={42} volume={0.85} duration={26} /> */}
+      <Sfx name="sus" at={78} volume={0.85} duration={26} />
+      {/* <Sfx name="error_buzzer" at={118} volume={0.85} duration={22} /> */}
+      <Sfx name="goofy_horn" at={154} volume={0.9} duration={24} />
     </Background>
   );
 };

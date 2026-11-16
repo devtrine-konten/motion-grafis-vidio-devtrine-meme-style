@@ -283,7 +283,7 @@ export const Scene06OtpJoke: React.FC = () => {
           accent="#FF6B35"
         />
         <MemeSticker
-          src="memes/bukankah_ini_my.jpg"
+          src="memes/bahagia.jpg"
           x={555}
           y={1145}
           w={265}
@@ -307,11 +307,11 @@ export const Scene06OtpJoke: React.FC = () => {
           accent={C.cyan}
         />
         <MemeSticker
-          src="memes/perbaiki_bahasamu.jpg"
+          src="memes/edan.jpg"
           x={680}
           y={1145}
-          w={285}
-          h={250}
+          w={320}
+          h={310}
           at={212}
           rotate={-3}
           accent={C.green}
@@ -344,10 +344,8 @@ export const Scene06OtpJoke: React.FC = () => {
         ]}
       />
 
-      <Sfx name="vine_boom" at={14} volume={0.9} duration={20} />
-      <Sfx name="meme_bonk" at={92} volume={0.85} duration={16} />
-      <Sfx name="sus" at={148} volume={0.85} duration={20} />
-      <Sfx name="goofy_horn" at={212} volume={0.85} duration={20} />
+      <Sfx name="vine_boom" at={14} volume={0.9} duration={26} />
+      <Sfx name="meme_bonk" at={92} volume={0.85} duration={14} />
     </Background>
   );
 };

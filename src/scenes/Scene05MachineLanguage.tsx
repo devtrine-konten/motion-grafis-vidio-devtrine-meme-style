@@ -131,10 +131,10 @@ export const Scene05MachineLanguage: React.FC = () => {
               fontWeight: 900,
               fontSize: 24,
               color: isErrorHit ? C.red : C.yellow,
-              transform: `translateX(${lerp(ptrX, [0, 1], [-170, -85])}px)`,
+              transform: `translateX(${lerp(ptrX, [0, 1], [-120, -85])}px)`,
             }}
           >
-            *ptr mengakses memori kosong (0x02)!
+            - ptr mengakses memori kosong (0x02)!
           </div>
         </ExplainCard>
 
@@ -191,11 +191,11 @@ export const Scene05MachineLanguage: React.FC = () => {
 
         {/* Bottom Meme Reactions synced to VO beats */}
         <MemeSticker
-          src="memes/satoru_speed.jpg"
+          src="memes/yare_yare.jpg"
           x={680}
           y={1145}
-          w={275}
-          h={245}
+          w={215}
+          h={215}
           at={52}
           until={132}
           rotate={4}
@@ -227,8 +227,8 @@ export const Scene05MachineLanguage: React.FC = () => {
           src="memes/merinding.jpg"
           x={680}
           y={1145}
-          w={285}
-          h={250}
+          w={355}
+          h={350}
           at={234}
           rotate={-3}
           accent={C.cyanLight}
@@ -260,10 +260,10 @@ export const Scene05MachineLanguage: React.FC = () => {
         ]}
       />
 
-      <Sfx name="vine_boom" at={52} volume={0.9} duration={20} />
-      <Sfx name="error_buzzer" at={134} volume={0.9} duration={18} />
-      <Sfx name="meme_bonk" at={186} volume={0.85} duration={16} />
-      <Sfx name="sus" at={234} volume={0.9} duration={20} />
+      <Sfx name="vine_boom" at={52} volume={0.9} duration={26} />
+      <Sfx name="error_buzzer" at={134} volume={0.9} duration={22} />
+      <Sfx name="bruh" at={186} volume={0.9} duration={15} />
+      <Sfx name="sus" at={234} volume={0.9} duration={29} />
     </Background>
   );
 };

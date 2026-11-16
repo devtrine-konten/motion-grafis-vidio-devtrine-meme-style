@@ -24,7 +24,7 @@ export const C = {
   paper: "#F7FAFA",
   // accents (used sparingly)
   yellow: "#FFC93C",
-  red: "#FF4D5E",
+  red: "#FF0000",
   green: "#3DDC97",
   // historical scene
   sepia: "#F1E6D0",

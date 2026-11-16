@@ -93,7 +93,6 @@ export const Scene08ArtificialIntelligence: React.FC = () => {
           bg="#16212E"
           accent="#FF6B35"
           badge="DIPAKAI UNTUK MEMBUAT:"
-          badgeIcon={<IconRocket size={20} color={C.charcoal} />}
           badgeBg={C.yellow}
           dark
         >
@@ -170,8 +169,8 @@ export const Scene08ArtificialIntelligence: React.FC = () => {
           src="memes/edan.jpg"
           x={805}
           y={1145}
-          w={265}
-          h={245}
+          w={315}
+          h={305}
           at={216}
           rotate={4}
           accent="#FF6B35"
@@ -202,10 +201,11 @@ export const Scene08ArtificialIntelligence: React.FC = () => {
         ]}
       />
 
-      <Sfx name="sus" at={18} volume={0.85} duration={18} />
-      <Sfx name="vine_boom" at={112} volume={0.9} duration={20} />
-      <Sfx name="meme_bonk" at={166} volume={0.85} duration={16} />
-      <Sfx name="goofy_horn" at={216} volume={0.9} duration={20} />
+      <Sfx name="vine_boom" at={18} volume={0.85} duration={29} />
+      {/* <Sfx name="meme_click" at={64} volume={0.85} duration={8} /> */}
+      <Sfx name="vine_boom" at={112} volume={0.9} duration={26} />
+      <Sfx name="meme_bonk" at={166} volume={0.85} duration={14} />
+      {/* <Sfx name="goofy_horn" at={216} volume={0.9} duration={24} /> */}
     </Background>
   );
 };
