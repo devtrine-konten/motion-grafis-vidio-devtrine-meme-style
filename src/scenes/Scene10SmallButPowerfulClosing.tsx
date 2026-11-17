@@ -45,7 +45,6 @@ export const Scene10SmallButPowerfulClosing: React.FC = () => {
         {!isOutro && (
           <>
             <Header
-              kicker="KESIMPULAN · EP.03"
               title="Kecil-Kecil Cabe Rawit!"
               highlight={["Kecil-Kecil", "Cabe", "Rawit!"]}
             />

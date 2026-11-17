@@ -34,7 +34,6 @@ export const Scene05MoonName: React.FC = () => {
     <Background variant={isJoke ? "dotMatrix" : "voxPaper"} drift={0.85} watermark="LUA" polaroidMeme="memes/towewew.jpg">
       <Camera scale={camScale} x={shk1.x + shk2.x} y={shk1.y + shk2.y} focusX={540} focusY={725}>
         <Header
-          kicker={isJoke ? "PLOT TWIST KOMEDI!" : "FUN FACT · ARTI NAMA"}
           title={isMoon || isJoke ? "Lua = BULAN (Portugis)" : "Kenapa Namanya Lua?"}
           highlight={["BULAN", "Namanya", "Lua?"]}
         />

@@ -31,7 +31,6 @@ export const Scene03BrazilOrigin: React.FC = () => {
     <Background variant={isCreators ? "dotMatrix" : "voxPaper"} drift={0.9} watermark={isCreators ? undefined : "93"} polaroidMeme="memes/lawliet_nerd.jpg">
       <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
-          kicker={isCreators ? "TIM TECGRAF · PUC-RIO" : "ARSIP SEJARAH · BRASIL 1993"}
           title={isCreators ? "3 Pencipta Bahasa Lua" : "Lahir Tahun 1993 di Brasil"}
           highlight={isCreators ? ["Pencipta", "Lua"] : ["1993", "Brasil"]}
         />

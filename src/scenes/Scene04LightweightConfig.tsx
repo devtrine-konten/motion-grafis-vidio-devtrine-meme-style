@@ -36,7 +36,6 @@ export const Scene04LightweightConfig: React.FC = () => {
     <Background variant={isPillars ? "dotMatrix" : "voxPaper"} drift={1.0} polaroidMeme="memes/menggoda.jpg">
       <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
-          kicker="MISI AWAL LUA · 1993"
           title="Ringan, Fleksibel & Embeddable"
           highlight={["Ringan,", "Fleksibel", "Embeddable"]}
         />
