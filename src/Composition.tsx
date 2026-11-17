@@ -78,7 +78,7 @@ export const MainComposition: React.FC = () => {
         </Sequence>
       ))}
 
-      {/* Persistent Devtrine Studio Brand Pill (Top-Right Safe Area) */}
+      {/* Persistent Devtrine Studio Brand Pill (Top-Right Safe Area — Ref 1 & 2 Soft Studio Badge) */}
       <div
         style={{
           position: "absolute",
@@ -87,16 +87,17 @@ export const MainComposition: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: C.white,
-          border: `3px solid ${C.charcoal}`,
+          background: "rgba(255, 255, 255, 0.92)",
+          border: "1.5px solid rgba(20, 22, 28, 0.12)",
+          boxShadow: "0 14px 30px rgba(0, 0, 0, 0.16)",
           borderRadius: "50%",
-          width: 80,
-          height: 80,
+          width: 78,
+          height: 78,
           padding: 0,
           zIndex: 90,
         }}
       >
-        <Img src={staticFile("images/devtrine-logo-removebg.png")} style={{ width: 60, objectFit: "contain" }} />
+        <Img src={staticFile("images/devtrine-logo-removebg.png")} style={{ width: 56, objectFit: "contain" }} />
       </div>
     </AbsoluteFill>
   );

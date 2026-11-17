@@ -1,13 +1,13 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
-import { autoBlink, keys, lerp, shake, spr } from "../lib/anim";
+import { autoBlink, keys, shake, spr } from "../lib/anim";
 import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
-import { ExplainCard } from "../components/Explainers";
+import { ExplainCard, MiniCharacter } from "../components/Explainers";
 import { IconArrowRight, IconBook, IconHelp, IconLaptop, IconMoon, IconXCircle } from "../components/Icons";
-import { Header, KineticText } from "../components/KineticTypography";
+import { Header } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
 import { Subtitles } from "../components/Subtitles";
@@ -15,192 +15,168 @@ import { Flash } from "../components/Transition";
 
 export const Scene05MoonName: React.FC = () => {
   const frame = useCurrentFrame();
-  // Beat A (0..86): "Terus, kenapa namanya Lua?"
-  // Beat B (86..220): "Fun fact! Lua berarti BULAN dalam bahasa Portugis!"
-  // Beat C (220..340): "Bukan karena developernya ngoding sambil menatap bulan ya, hahaha!"
   const isMoon = frame >= 86 && frame < 220;
   const isJoke = frame >= 220;
 
   const shk1 = shake(frame, 89, 14, 9);
-  const shk2 = shake(frame, 224, 18, 10);
+  const shk2 = shake(frame, 224, 16, 10);
   const camScale = keys(frame, [0, 86, 98, 220, 234, 340], [1, 1.02, 1.06, 1.02, 1.06, 1.02]);
 
-  const moonRise = lerp(frame, [96, 128], [130, 0]);
-  const moonScale = spr(frame, 96, { damping: 10, stiffness: 180 });
+  const moonSwing = Math.sin(frame * 0.08) * 5;
+  const moonScale = spr(frame, 90, { damping: 11, stiffness: 185 });
   const xStamp = spr(frame, 250, { damping: 9, stiffness: 250 });
 
+  // Mascot moves actively across beats: right when coba_jelaskan -> center-left on Moon -> jumps/shakes laughing on Joke!
+  const mascotX = keys(frame, [0, 35, 86, 220, 295, 340], [540, 610, 480, 560, 500, 540]);
+  const hop = isJoke && frame >= 295 ? Math.abs(Math.sin(frame * 0.45)) * -24 : Math.sin(frame * 0.15) * 6;
+
   return (
-    <Background variant="luaNight" drift={0.8}>
-      <Camera scale={camScale} x={shk1.x + shk2.x} y={shk1.y + shk2.y} focusX={540} focusY={700}>
+    <Background variant={isJoke ? "dotMatrix" : "voxPaper"} drift={0.85} watermark="LUA" polaroidMeme="memes/towewew.jpg">
+      <Camera scale={camScale} x={shk1.x + shk2.x} y={shk1.y + shk2.y} focusX={540} focusY={725}>
         <Header
-          kicker={isJoke ? "PLOT TWIST!" : "FUN FACT · ARTI NAMA"}
+          kicker={isJoke ? "PLOT TWIST KOMEDI!" : "FUN FACT · ARTI NAMA"}
           title={isMoon || isJoke ? "Lua = BULAN (Portugis)" : "Kenapa Namanya Lua?"}
           highlight={["BULAN", "Namanya", "Lua?"]}
-          tone="dark"
         />
 
-        {/* Beat A (0..86): Curious Question */}
+        {/* Beat A: Question */}
         <ExplainCard
           at={4}
           until={86}
-          w={840}
-          h={420}
-          y={675}
-          bg="#0D1436"
-          accent={C.luaSky}
+          w={960}
+          h={620}
+          y={725}
           badge="ASAL NAMA LUA"
-          badgeIcon={<IconHelp size={20} color={C.charcoal} />}
-          badgeBg={C.yellow}
-          dark
+          badgeIcon={<IconHelp size={18} color={C.charcoal} />}
+          tape
         >
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
-            <IconHelp size={110} color={C.yellow} />
-            <KineticText text="KENAPA LUA?!" start={12} size={62} color={C.white} variant="pop" />
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}>
+            <IconHelp size={135} color={C.luaBlue} />
+            <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 66, color: C.charcoal, letterSpacing: "-0.04em" }}>
+              Kenapa namanya <span style={{ color: C.luaBlue }}>Lua?</span>
+            </div>
           </div>
         </ExplainCard>
 
-        {/* Beat B (86..220): Animated Vector Moon + Portuguese Translation */}
+        {/* Beat B: Hanging Moon Medallion + Lua = Bulan */}
         <ExplainCard
           at={86}
           until={220}
-          w={860}
-          h={460}
-          y={675}
-          bg="#0C1333"
-          accent={C.luaSky}
+          w={960}
+          h={630}
+          y={725}
           badge="BAHASA PORTUGIS"
-          badgeIcon={<IconBook size={20} color={C.charcoal} />}
-          badgeBg={C.yellow}
-          dark
+          badgeIcon={<IconBook size={18} color={C.charcoal} />}
+          tape
         >
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-            {/* Custom Animated SVG Crescent/Full Moon (Zero Emoji!) */}
-            <div style={{ transform: `translateY(${moonRise}px) scale(${moonScale})`, position: "relative" }}>
-              <svg width={210} height={210} viewBox="-105 -105 210 210">
-                <circle r={88} fill="none" stroke={C.luaSky} strokeWidth={3} strokeDasharray="8 8" opacity={0.45} transform={`rotate(${frame * 1.2})`} />
-                <circle r={68} fill={C.luaIce} stroke={C.luaSky} strokeWidth={5} />
-                {/* Subtle moon craters */}
-                <circle cx={-22} cy={-16} r={13} fill={C.luaSky} opacity={0.45} />
-                <circle cx={24} cy={18} r={17} fill={C.luaSky} opacity={0.4} />
-                <circle cx={14} cy={-28} r={8} fill={C.luaSky} opacity={0.35} />
-                {/* Orbiting mini satellite */}
-                <g transform={`rotate(${frame * 2.5})`}>
-                  <circle cx={88} cy={0} r={11} fill={C.luaBlue} stroke={C.white} strokeWidth={2.5} />
-                </g>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+            <div
+              style={{
+                transform: `scale(${moonScale}) rotate(${moonSwing}deg)`,
+                transformOrigin: "50% 0%",
+                filter: "drop-shadow(0 24px 32px rgba(5,9,41,0.24))",
+              }}
+            >
+              <svg width={275} height={280} viewBox="-105 -115 210 215">
+                <line x1={-40} y1={-115} x2={-12} y2={-86} stroke="#64748B" strokeWidth={5} strokeDasharray="8 5" />
+                <circle cx={0} cy={-86} r={14} fill="none" stroke={C.luaNavy} strokeWidth={5} />
+                <rect x={-10} y={-76} width={20} height={12} rx={3} fill={C.luaBlue} />
+                <circle cx={0} cy={0} r={72} fill={C.luaNavy} stroke={C.luaSky} strokeWidth={8} />
+                <circle cx={0} cy={0} r={59} fill={C.luaIce} />
+                <circle cx={-16} cy={-12} r={11} fill="#93C5FD" opacity={0.6} />
+                <circle cx={20} cy={14} r={15} fill="#93C5FD" opacity={0.5} />
+                <circle cx={12} cy={-22} r={7} fill="#93C5FD" opacity={0.45} />
               </svg>
             </div>
 
-            {/* Translation Card */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 20,
-                background: C.black,
-                border: `4px solid ${C.luaSky}`,
-                borderRadius: 18,
-                padding: "12px 28px",
-              }}
-            >
-              <span style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 38, color: C.luaSky }}>LUA</span>
-              <IconArrowRight size={36} color={C.yellow} />
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <IconMoon size={36} color={C.yellow} />
-                <span style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 40, color: C.yellow }}>BULAN</span>
-              </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+              <span style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 64, color: C.luaNavy, letterSpacing: "-0.04em" }}>
+                Lua
+              </span>
+              <IconArrowRight size={44} color={C.luaBlue} />
+              <span style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 72, color: C.luaBlue, letterSpacing: "-0.03em" }}>
+                BULAN
+              </span>
             </div>
           </div>
         </ExplainCard>
 
-        {/* Beat C (220..340): Comedy Cutaway — Not coding while staring at the moon! */}
+        {/* Beat C: Character Illustration — Developer staring at Moon while coding! */}
         <ExplainCard
           at={220}
-          w={860}
-          h={455}
-          y={675}
-          bg="#0C1333"
-          accent={C.red}
+          w={960}
+          h={620}
+          y={725}
           badge="BUKAN GITU KONSEPNYA!"
-          badgeIcon={<IconXCircle size={20} color={C.white} />}
-          badgeBg={C.red}
+          badgeIcon={<IconXCircle size={18} color={C.red} />}
+          watermark="MYTH BUSTED"
           dark
         >
-          <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-around" }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-              <IconLaptop size={105} color={C.luaIce} />
-              <span style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 22, color: C.luaSky }}>NGODING MALAM</span>
+          <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-around", paddingTop: 40 }}>
+            <div style={{ position: "relative", width: 280, height: 260, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end" }}>
+              <MiniCharacter kind="coder" x={115} y={115} scale={1.45} running={false} frame={frame} />
+              <div style={{ marginTop: 185, display: "flex", alignItems: "center", gap: 10 }}>
+                <IconLaptop size={44} color={C.luaIce} />
+                <span style={{ fontFamily: FONT.sans, fontWeight: 800, fontSize: 26, color: C.white }}>Ngoding Malam</span>
+              </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-              <IconMoon size={105} color={C.yellow} />
-              <span style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 22, color: C.yellow }}>NATAP BULAN</span>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+              <div style={{ transform: `rotate(${Math.sin(frame * 0.1) * 8}deg)` }}>
+                <IconMoon size={150} color={C.luaSky} />
+              </div>
+              <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 30, color: C.luaSky }}>
+                Sambil Natap Bulan
+              </span>
             </div>
 
-            {/* Big Red X Stamp */}
             {frame >= 250 && (
               <div
                 style={{
                   position: "absolute",
-                  transform: `scale(${xStamp}) rotate(-10deg)`,
+                  transform: `scale(${xStamp}) rotate(-8deg)`,
                   background: C.red,
                   color: C.white,
-                  border: `6px solid ${C.white}`,
-                  borderRadius: 20,
-                  padding: "12px 28px",
+                  border: "3px solid rgba(255,255,255,0.92)",
+                  borderRadius: 24,
+                  padding: "16px 38px",
                   fontFamily: FONT.sans,
                   fontWeight: 900,
-                  fontSize: 44,
+                  fontSize: 50,
                   display: "flex",
                   alignItems: "center",
-                  gap: 12,
-                  boxShadow: `8px 8px 0 ${C.black}`,
+                  gap: 14,
+                  boxShadow: "0 24px 48px rgba(0,0,0,0.45)",
                 }}
               >
-                <IconXCircle size={46} color={C.white} />
+                <IconXCircle size={50} color={C.white} />
                 <span>BUKAN YA!</span>
               </div>
             )}
           </div>
         </ExplainCard>
 
-        {/* Bottom Memes */}
-        <MemeSticker
-          src="memes/shocked_pikachu.jpg"
-          x={680}
-          y={1145}
-          w={265}
-          h={250}
-          at={108}
-          until={220}
-          rotate={4}
-          accent={C.yellow}
-        />
-        <MemeSticker
-          src="memes/tertawa_terluka.jpg"
-          x={680}
-          y={1145}
-          w={285}
-          h={270}
-          at={240}
-          rotate={-4}
-          accent={C.red}
-        />
+        <MemeSticker src="memes/coba_jelaskan.jpg" x={205} y={1245} w={245} h={225} at={35} until={67} rotate={-6} />
+        <MemeSticker src="memes/shocked_pikachu.jpg" x={875} y={1245} w={255} h={230} at={108} until={220} rotate={5} />
+        <MemeSticker src="memes/gak_beres.jpg" x={205} y={1245} w={250} h={230} at={250} until={282} rotate={-5} />
+        <MemeSticker src="memes/tertawa_terluka.jpg" x={875} y={1245} w={265} h={235} at={292} rotate={4} />
 
         <DevtrineMascot
-          x={205}
-          y={1215 + (isJoke && frame >= 300 ? Math.abs(Math.sin(frame * 0.45)) * -18 : Math.sin(frame * 0.15) * 7)}
-          size={130}
+          x={mascotX}
+          y={1245 + hop}
+          size={156}
           expression={isJoke ? "laughing" : isMoon ? "amazed" : "curious"}
           tears={isJoke && frame >= 295 ? 1 : 0}
           blink={autoBlink(frame, 17)}
-          lookX={0.5}
+          rotate={isJoke ? Math.sin(frame * 0.3) * 7 : 0}
+          lookX={0}
           lookY={-0.3}
           frame={frame}
           shadow
         />
       </Camera>
 
-      <Flash at={89} color={C.luaIce} max={0.25} />
+      <Flash at={89} color={C.luaIce} max={0.3} />
 
       <Subtitles
         cues={[
@@ -211,10 +187,11 @@ export const Scene05MoonName: React.FC = () => {
         ]}
       />
 
-      <Sfx name="thud" at={89} volume={0.9} />
+      <Sfx name="sus" at={35} volume={0.85} duration={36} />
+      <Sfx name="thud" at={89} volume={0.9} duration={44} />
       <Sfx name="shimmer" at={115} volume={0.65} duration={36} />
-      <Sfx name="record_scratch" at={250} volume={0.85} />
-      <Sfx name="meme_haha" at={310} volume={0.85} duration={28} />
+      <Sfx name="bruh" at={250} volume={0.95} duration={16} />
+      <Sfx name="meme_haha" at={306} volume={0.85} duration={32} />
     </Background>
   );
 };

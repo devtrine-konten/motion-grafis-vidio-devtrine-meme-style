@@ -5,71 +5,70 @@ import { autoBlink, easeOut, keys, lerp, spr } from "../lib/anim";
 import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
-import { ExplainCard, VoxCutout } from "../components/Explainers";
-import { IconClock, IconMapPin, IconUsers } from "../components/Icons";
-import { Header, Pill } from "../components/KineticTypography";
+import { ExplainCard, NodeTreeList, VoxCutout } from "../components/Explainers";
+import { IconClock, IconMapPin } from "../components/Icons";
+import { Header } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
 import { Subtitles } from "../components/Subtitles";
 
 export const Scene03BrazilOrigin: React.FC = () => {
   const frame = useCurrentFrame();
-  // Beat A: 0..182 ("Lua lahir tahun 1993 di Brasil, tepatnya di PUC-Rio.")
-  // Beat B: 182..400 ("Bahasa ini dibuat oleh Roberto Ierusalimschy, Luiz Henrique de Figueiredo, dan Waldemar Celes.")
   const isCreators = frame >= 182;
 
   const yearNum = Math.round(lerp(frame, [10, 48], [1980, 1993], easeOut));
-  const pinDrop = spr(frame, 48, { damping: 9, stiffness: 220 });
+  const pinDrop = spr(frame, 48, { damping: 10, stiffness: 210 });
   const pucSlide = spr(frame, 113, { damping: 12, stiffness: 190 });
   const camScale = keys(frame, [0, 60, 182, 287, 351, 400], [1, 1.03, 1.01, 1.04, 1.05, 1.02]);
 
+  // Dynamic Mascot position: patrols right -> center during map -> hops left/center during creators
+  const mascotX = keys(frame, [0, 48, 113, 182, 287, 351, 400], [540, 620, 560, 460, 520, 480, 540]);
+  const hop =
+    (frame >= 182 && frame < 198 ? Math.sin(((frame - 182) / 16) * Math.PI) * -28 : 0) +
+    (frame >= 351 && frame < 367 ? Math.sin(((frame - 351) / 16) * Math.PI) * -26 : 0);
+
   return (
-    <Background variant="voxPaper" drift={0.9}>
-      <Camera scale={camScale} focusX={540} focusY={720}>
+    <Background variant={isCreators ? "dotMatrix" : "voxPaper"} drift={0.9} watermark={isCreators ? undefined : "93"} polaroidMeme="memes/lawliet_nerd.jpg">
+      <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
-          kicker="VOX ARCHIVE · BRASIL 1993"
+          kicker={isCreators ? "TIM TECGRAF · PUC-RIO" : "ARSIP SEJARAH · BRASIL 1993"}
           title={isCreators ? "3 Pencipta Bahasa Lua" : "Lahir Tahun 1993 di Brasil"}
-          highlight={isCreators ? ["3", "Pencipta", "Lua"] : ["1993", "Brasil"]}
+          highlight={isCreators ? ["Pencipta", "Lua"] : ["1993", "Brasil"]}
         />
 
-        {/* BEAT A (0..182): Brazil Map + 1993 Counter + PUC-Rio Campus */}
         <ExplainCard
           at={4}
           until={182}
-          w={870}
-          h={470}
-          y={675}
-          bg={C.white}
-          accent={C.luaNavy}
-          badge="ORIGIN MAP · PUC-RIO (1993)"
-          badgeIcon={<IconMapPin size={20} color={C.charcoal} />}
-          badgeBg={C.yellow}
+          w={960}
+          h={630}
+          y={725}
+          badge="ORIGIN MAP · PUC-RIO"
+          badgeIcon={<IconMapPin size={18} color={C.charcoal} />}
           tape
         >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", gap: 18 }}>
-            {/* Left: Brazil Map + Animated Pin on Rio de Janeiro */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", gap: 26 }}>
             <div
               style={{
                 position: "relative",
-                width: 375,
-                height: 360,
+                width: 440,
+                height: 470,
                 background: C.paper,
-                border: `4px solid ${C.charcoal}`,
+                border: "1px solid rgba(0,0,128,0.16)",
                 borderRadius: 18,
                 overflow: "hidden",
+                boxShadow: "0 18px 36px rgba(5,9,41,0.14)",
                 flexShrink: 0,
               }}
             >
               <Img
                 src={staticFile("image-vidio/lua/brazil-map.png")}
-                style={{ width: "100%", height: "100%", objectFit: "cover", filter: "contrast(1.05) saturate(0.85)" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", filter: "contrast(1.04) saturate(0.88)" }}
               />
-              {/* Animated Vox Map Pin at Rio de Janeiro (southeast coast) */}
               <div
                 style={{
                   position: "absolute",
-                  left: 262,
-                  top: 245,
+                  left: 305,
+                  top: 325,
                   transform: `translate(-50%, -100%) scale(${pinDrop})`,
                   display: "flex",
                   flexDirection: "column",
@@ -78,38 +77,39 @@ export const Scene03BrazilOrigin: React.FC = () => {
               >
                 <div
                   style={{
-                    background: C.luaBlue,
+                    background: C.luaNavy,
                     color: C.white,
-                    fontFamily: FONT.mono,
-                    fontWeight: 900,
-                    fontSize: 16,
-                    padding: "4px 10px",
-                    borderRadius: 8,
-                    border: `3px solid ${C.charcoal}`,
+                    fontFamily: FONT.sans,
+                    fontWeight: 800,
+                    fontSize: 17,
+                    padding: "5px 14px",
+                    borderRadius: 999,
+                    boxShadow: "0 8px 18px rgba(0,0,0,0.25)",
                     whiteSpace: "nowrap",
                     marginBottom: 4,
                   }}
                 >
-                  RIO DE JANEIRO
+                  Rio de Janeiro
                 </div>
-                <IconMapPin size={44} color={C.red} strokeWidth={2.8} />
+                <IconMapPin size={46} color={C.red} strokeWidth={2.6} />
               </div>
             </div>
 
-            {/* Right: 1993 Counter & PUC-Rio Campus Photo Cutout */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <IconClock size={26} color={C.luaBlue} />
-                <span style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 20, color: C.slate }}>TAHUN LAHIR</span>
+                <IconClock size={24} color={C.luaBlue} />
+                <span style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 20, color: C.luaBlue }}>
+                  TAHUN LAHIR
+                </span>
               </div>
               <div
                 style={{
-                  fontFamily: FONT.mono,
+                  fontFamily: FONT.sans,
                   fontWeight: 900,
-                  fontSize: 96,
+                  fontSize: 108,
                   color: C.luaNavy,
-                  lineHeight: 0.95,
-                  letterSpacing: "-0.03em",
+                  lineHeight: 0.92,
+                  letterSpacing: "-0.05em",
                 }}
               >
                 {yearNum}
@@ -118,131 +118,80 @@ export const Scene03BrazilOrigin: React.FC = () => {
               <div
                 style={{
                   width: "100%",
-                  background: C.black,
-                  border: `4px solid ${C.charcoal}`,
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(0,0,128,0.12)",
                   borderRadius: 16,
-                  padding: 8,
+                  padding: 10,
+                  boxShadow: "0 16px 32px rgba(5,9,41,0.14)",
                   transform: `scale(${pucSlide})`,
                   opacity: frame >= 110 ? 1 : 0,
                 }}
               >
                 <Img
                   src={staticFile("image-vidio/lua/puc-rio.jpg")}
-                  style={{ width: "100%", height: 155, objectFit: "cover", borderRadius: 10 }}
+                  style={{ width: "100%", height: 215, objectFit: "cover", borderRadius: 10 }}
                 />
                 <div
                   style={{
-                    fontFamily: FONT.mono,
-                    fontWeight: 900,
-                    fontSize: 18,
-                    color: C.yellow,
+                    fontFamily: FONT.sans,
+                    fontWeight: 800,
+                    fontSize: 20,
+                    color: C.charcoal,
                     textAlign: "center",
-                    marginTop: 6,
+                    marginTop: 8,
                   }}
                 >
-                  KAMPUS PUC-RIO, BRASIL
+                  Kampus <span style={{ color: C.luaBlue }}>PUC-Rio, Brasil</span>
                 </div>
               </div>
             </div>
           </div>
         </ExplainCard>
 
-        {/* BEAT B (182..400): Vox Cutout Collage of the 3 Lua Creators */}
         {isCreators && (
           <>
-            <div style={{ position: "absolute", left: 540, top: 418, transform: "translateX(-50%)", zIndex: 25 }}>
-              <Pill
-                text="TIM TECGRAF · PUC-RIO"
-                bg={C.luaNavy}
-                color={C.white}
-                at={184}
-                size={22}
-                icon={<IconUsers size={22} color={C.yellow} />}
-              />
-            </div>
+            <ExplainCard at={182} w={960} h={355} y={565} watermark="PUC-RIO" dark>
+              <div style={{ width: "100%", height: "100%", position: "relative" }} />
+            </ExplainCard>
 
-            {/* 1. Roberto Ierusalimschy (at 186) */}
-            <VoxCutout
-              x={235}
-              y={665}
-              w={315}
-              h={280}
-              at={186}
-              rotate={-3}
-              accent={C.luaBlue}
-              caption="Roberto Ierusalimschy"
-              subcaption="CREATOR #1"
-              zIndex={22}
-            >
+            <VoxCutout x={225} y={575} w={285} h={235} at={186} rotate={-3} caption="Roberto Ierusalimschy" subcaption="Lead Architect" zIndex={22}>
               <Img src={staticFile("image-vidio/lua/roberto-crop.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </VoxCutout>
 
-            {/* 2. Luiz Henrique de Figueiredo (at 287) */}
-            <VoxCutout
-              x={545}
-              y={635}
-              w={315}
-              h={280}
-              at={287}
-              rotate={2}
-              accent={C.black}
-              caption="Luiz H. de Figueiredo"
-              subcaption="CREATOR #2"
-              zIndex={23}
-            >
+            <VoxCutout x={540} y={560} w={285} h={235} at={287} rotate={2} caption="Luiz H. de Figueiredo" subcaption="Core Engine" zIndex={23}>
               <Img src={staticFile("image-vidio/lua/luiz.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </VoxCutout>
 
-            {/* 3. Waldemar Celes (at 351) */}
-            <VoxCutout
-              x={845}
-              y={685}
-              w={315}
-              h={280}
-              at={351}
-              rotate={-2}
-              accent={C.luaSky}
-              caption="Waldemar Celes"
-              subcaption="CREATOR #3"
-              zIndex={24}
-            >
+            <VoxCutout x={855} y={575} w={285} h={235} at={351} rotate={-2} caption="Waldemar Celes" subcaption="C API & Systems" zIndex={24}>
               <Img src={staticFile("image-vidio/lua/waldemar.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </VoxCutout>
+
+            <NodeTreeList
+              x={125}
+              y={795}
+              items={[
+                { label: "Roberto Ierusalimschy", sub: "syntax & design", at: 192 },
+                { label: "Luiz H. de Figueiredo", sub: "compiler & VM", at: 290 },
+                { label: "Waldemar Celes", sub: "C API integration", at: 354, highlight: true },
+              ]}
+            />
           </>
         )}
 
-        {/* Bottom Meme Reactions */}
-        <MemeSticker
-          src="memes/nerd_cat.jpg"
-          x={680}
-          y={1145}
-          w={265}
-          h={250}
-          at={36}
-          until={180}
-          rotate={-4}
-          accent={C.luaBlue}
-        />
-        <MemeSticker
-          src="memes/gigachad_draw.jpg"
-          x={680}
-          y={1145}
-          w={285}
-          h={275}
-          at={195}
-          rotate={4}
-          accent={C.black}
-        />
+        <MemeSticker src="memes/nerd_cat.jpg" x={205} y={1245} w={250} h={230} at={36} until={180} rotate={-5} />
+        <MemeSticker src="memes/kelas_king.jpg" x={875} y={1245} w={255} h={235} at={186} until={218} rotate={5} />
+        <MemeSticker src="memes/gigachad_draw.jpg" x={875} y={1245} w={260} h={240} at={287} rotate={4} />
 
         <DevtrineMascot
-          x={205}
-          y={1215 + Math.sin(frame * 0.15) * 7}
-          size={130}
+          x={mascotX}
+          y={1245 + hop + Math.sin(frame * 0.15) * 6}
+          size={156}
           expression={isCreators ? "salute" : "detective"}
           magnifyingGlass={!isCreators}
           blink={autoBlink(frame, 19)}
-          lookX={0.5}
-          lookY={-0.3}
+          rotate={isCreators ? Math.sin(frame * 0.1) * 4 : -4}
+          lookX={isCreators ? 0.3 : -0.25}
+          lookY={-0.35}
           frame={frame}
           shadow
         />
@@ -260,7 +209,7 @@ export const Scene03BrazilOrigin: React.FC = () => {
 
       <Sfx name="pop" at={48} volume={0.85} />
       <Sfx name="paper" at={113} volume={0.8} />
-      <Sfx name="pop" at={186} volume={0.85} />
+      <Sfx name="ka_ching" at={186} volume={0.85} duration={24} />
       <Sfx name="pop" at={287} volume={0.85} />
       <Sfx name="confirm" at={351} volume={0.85} />
     </Background>

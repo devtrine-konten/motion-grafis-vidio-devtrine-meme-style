@@ -5,8 +5,8 @@ import { autoBlink, keys, lerp, spr } from "../lib/anim";
 import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
-import { ExplainCard } from "../components/Explainers";
-import { IconTarget, IconUser, IconWrench } from "../components/Icons";
+import { ExplainCard, MiniCharacter } from "../components/Explainers";
+import { IconTarget, IconWrench } from "../components/Icons";
 import { Header } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
@@ -17,12 +17,18 @@ export const Scene09JourneyMeme: React.FC = () => {
   const camScale = keys(frame, [0, 80, 140, 204], [1, 1.04, 1.05, 1.02]);
 
   const progress = lerp(frame, [24, 118], [0, 1]);
-  const chaseX = lerp(frame, [62, 130], [-40, 380]);
-  const isChasing = frame >= 60 && frame < 132;
+  const chaseX = lerp(frame, [45, 140], [50, 620]);
+  const isChasing = frame >= 45 && frame < 136;
+
+  // Mascot actively runs back & forth in panic during chase, then lands laughing at center!
+  const mascotX = isChasing
+    ? 540 + Math.sin((frame - 45) * 0.22) * 145
+    : lerp(frame, [136, 154], [540 + Math.sin(91 * 0.22) * 145, 540]);
+  const mascotHop = isChasing ? Math.abs(Math.sin(frame * 0.65)) * -24 : Math.sin(frame * 0.16) * 6;
 
   return (
-    <Background variant="voxPaper" drift={1.0}>
-      <Camera scale={camScale} focusX={540} focusY={700}>
+    <Background variant="voxPaper" drift={1.0} watermark="93" polaroidMeme="memes/hontoni.jpg">
+      <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
           kicker="PLOT TWIST PERJALANAN"
           title="Jauh Juga Perjalanan Si Lua!"
@@ -31,113 +37,117 @@ export const Scene09JourneyMeme: React.FC = () => {
 
         <ExplainCard
           at={6}
-          w={870}
-          h={455}
-          y={675}
-          bg={C.white}
-          accent={C.luaNavy}
+          w={960}
+          h={630}
+          y={725}
           badge="TIMELINE EVOLUSI · 1993 -> KINI"
-          badgeIcon={<IconTarget size={20} color={C.charcoal} />}
-          badgeBg={C.yellow}
+          badgeIcon={<IconTarget size={18} color={C.charcoal} />}
           tape
         >
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
-            {/* Top Timeline Nodes: 1993 Teknik ---> Sekarang NPC Ngejar Player */}
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "96%", position: "relative" }}>
               <div
                 style={{
-                  width: 235,
-                  background: C.paper,
-                  border: `4px solid ${C.charcoal}`,
-                  borderRadius: 18,
-                  padding: "14px 12px",
+                  width: 270,
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(0,0,128,0.16)",
+                  borderRadius: 20,
+                  padding: "18px 16px",
+                  boxShadow: "0 14px 28px rgba(5,9,41,0.10)",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  gap: 8,
+                  gap: 6,
                   transform: `scale(${spr(frame, 16)})`,
                 }}
               >
-                <IconWrench size={44} color={C.luaNavy} />
-                <div style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 18, color: C.luaBlue }}>1993</div>
-                <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 22, color: C.charcoal, textAlign: "center" }}>
+                <IconWrench size={46} color={C.luaNavy} />
+                <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 18, color: C.luaBlue }}>
+                  1993 · ORIGIN
+                </div>
+                <div style={{ fontFamily: FONT.sans, fontWeight: 800, fontSize: 25, color: C.charcoal, textAlign: "center" }}>
                   Proyek Teknik
                 </div>
               </div>
 
-              {/* Growing Vox Dotted Line */}
-              <div style={{ flex: 1, height: 8, margin: "0 12px", background: C.paperGrid, borderRadius: 999, overflow: "hidden" }}>
-                <div style={{ width: `${progress * 100}%`, height: "100%", background: C.luaBlue }} />
+              <div style={{ flex: 1, height: 10, margin: "0 18px", background: "rgba(0,0,128,0.12)", borderRadius: 999, overflow: "hidden" }}>
+                <div
+                  style={{
+                    width: `${progress * 100}%`,
+                    height: "100%",
+                    background: `linear-gradient(90deg, ${C.luaNavy} 0%, ${C.luaBlue} 60%, ${C.red} 100%)`,
+                  }}
+                />
               </div>
 
               <div
                 style={{
-                  width: 255,
-                  background: C.black,
-                  border: `4px solid ${C.luaSky}`,
-                  borderRadius: 18,
-                  padding: "14px 12px",
+                  width: 290,
+                  background: "linear-gradient(145deg, #1E3A8A 0%, #000080 55%, #050929 100%)",
+                  borderRadius: 20,
+                  padding: "18px 16px",
+                  boxShadow: "0 18px 36px rgba(0,0,128,0.28)",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  gap: 8,
-                  transform: `scale(${spr(frame, 75)})`,
+                  gap: 6,
+                  transform: `scale(${spr(frame, 72)})`,
                 }}
               >
-                <IconTarget size={44} color={C.red} />
-                <div style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 18, color: C.yellow }}>SEKARANG</div>
-                <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 22, color: C.white, textAlign: "center" }}>
+                <IconTarget size={46} color={C.red} />
+                <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 18, color: C.luaSky }}>
+                  SEKARANG
+                </div>
+                <div style={{ fontFamily: FONT.sans, fontWeight: 800, fontSize: 25, color: C.white, textAlign: "center" }}>
                   NPC Ngejar Player!
                 </div>
               </div>
             </div>
 
-            {/* Animated Mini Chase Track */}
+            {/* Animated Character Chase Stage (NPC Character chasing Roblox Noob Player!) */}
             <div
               style={{
-                width: "92%",
-                height: 82,
-                background: C.black,
-                borderRadius: 18,
-                border: `4px solid ${C.charcoal}`,
+                width: "96%",
+                height: 175,
+                background: "linear-gradient(180deg, #091342 0%, #050929 72%, #1E293B 72%, #0F172A 100%)",
+                borderRadius: 24,
+                border: "1.5px solid rgba(96,165,250,0.3)",
+                boxShadow: "0 20px 40px rgba(5,9,41,0.24)",
                 position: "relative",
                 overflow: "hidden",
-                display: "flex",
-                alignItems: "center",
               }}
             >
-              <div style={{ position: "absolute", left: chaseX, display: "flex", alignItems: "center", gap: 6, background: C.red, padding: "6px 12px", borderRadius: 12 }}>
-                <IconTarget size={26} color={C.white} />
-                <span style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 18, color: C.white }}>NPC</span>
-              </div>
-              <div style={{ position: "absolute", left: chaseX + 165, display: "flex", alignItems: "center", gap: 6, background: C.luaSky, padding: "6px 12px", borderRadius: 12 }}>
-                <IconUser size={26} color={C.charcoal} />
-                <span style={{ fontFamily: FONT.mono, fontWeight: 900, fontSize: 18, color: C.charcoal }}>PLAYER</span>
-              </div>
+              {/* Motion speed lines */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  backgroundImage: "repeating-linear-gradient(90deg, rgba(96,165,250,0.12) 0px, rgba(96,165,250,0.12) 24px, transparent 24px, transparent 60px)",
+                  backgroundPosition: `${-frame * 12}px 0`,
+                }}
+              />
+              {/* Angry Red NPC Bot Character */}
+              <MiniCharacter kind="npc" x={chaseX} y={100} scale={1.05} running frame={frame} />
+              {/* Running Roblox Noob Player Character */}
+              <MiniCharacter kind="player" x={chaseX + 165} y={96} scale={1.15} running frame={frame} />
             </div>
           </div>
         </ExplainCard>
 
-        <MemeSticker
-          src="memes/ngejar_deadline.jpg"
-          x={680}
-          y={1145}
-          w={295}
-          h={260}
-          at={58}
-          rotate={3}
-          accent={C.red}
-        />
+        <MemeSticker src="memes/ngejar_deadline.jpg" x={875} y={1245} w={265} h={235} at={54} rotate={4} />
+        <MemeSticker src="memes/trauma_berat.jpg" x={205} y={1245} w={250} h={230} at={132} until={164} rotate={-5} />
 
         <DevtrineMascot
-          x={205}
-          y={1215 + (isChasing ? Math.abs(Math.sin(frame * 0.6)) * -20 : Math.sin(frame * 0.16) * 7)}
-          size={130}
+          x={mascotX}
+          y={1245 + mascotHop}
+          size={156}
           expression={isChasing ? "panic" : "laughing"}
-          tears={frame >= 132 ? 1 : 0}
+          sweat={isChasing ? 1 : 0}
+          tears={frame >= 136 ? 1 : 0}
           blink={autoBlink(frame, 15)}
-          lookX={0.5}
-          lookY={-0.3}
+          rotate={isChasing ? Math.sin(frame * 0.5) * 10 : Math.sin(frame * 0.2) * 4}
+          lookX={isChasing ? (Math.cos((frame - 45) * 0.22) >= 0 ? 0.5 : -0.5) : 0}
+          lookY={-0.25}
           frame={frame}
           shadow
         />
@@ -151,7 +161,8 @@ export const Scene09JourneyMeme: React.FC = () => {
       />
 
       <Sfx name="running" at={60} volume={0.75} duration={54} />
-      <Sfx name="meme_haha" at={176} volume={0.75} duration={26} />
+      <Sfx name="funny_fail" at={132} volume={0.85} duration={22} />
+      <Sfx name="meme_haha" at={172} volume={0.8} duration={30} />
     </Background>
   );
 };
