@@ -7,7 +7,7 @@ import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
 import { ExplainCard } from "../components/Explainers";
 import { IconMoon, IconSparkles } from "../components/Icons";
-import { Header, KineticText } from "../components/KineticTypography";
+import { Header } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
 import { Subtitles } from "../components/Subtitles";
@@ -17,15 +17,17 @@ export const Scene02LuaReveal: React.FC = () => {
   const frame = useCurrentFrame();
   const revealed = frame >= 104; // exact start of "adalah Lua!"
 
-  const shk = shake(frame, 104, 20, 12);
-  const camScale = keys(frame, [0, 95, 104, 118, 152], [1, 1.03, 1.09, 1.03, 1.04]);
-  const slideX = lerp(frame, [0, 20], [-140, 205], easeOut);
-  const revealPop = spr(frame, 104, { damping: 9, stiffness: 220 });
-  const orbitDeg = frame * 2.4;
+  const shk = shake(frame, 104, 18, 12);
+  const camScale = keys(frame, [0, 95, 104, 118, 152], [1, 1.03, 1.09, 1.03, 1.05]);
+  // Mascot slides from left -> hops up excitedly on Lua reveal!
+  const mascotX = keys(frame, [0, 22, 104, 122, 152], [-140, 590, 560, 480, 540]);
+  const hop = frame >= 104 && frame < 122 ? Math.sin(((frame - 104) / 18) * Math.PI) * -42 : 0;
+  const revealPop = spr(frame, 104, { damping: 10, stiffness: 210 });
+  const orbitDeg = frame * 2.2;
 
   return (
     <Background variant="luaNight" drift={1.1}>
-      <Camera scale={camScale} x={shk.x} y={shk.y} focusX={540} focusY={720}>
+      <Camera scale={camScale} x={shk.x} y={shk.y} focusX={540} focusY={725}>
         <Header
           kicker="PLAYER KUNCI DI DUNIA GAME"
           title="Perkenalkan: Bahasa Lua!"
@@ -35,29 +37,41 @@ export const Scene02LuaReveal: React.FC = () => {
 
         <ExplainCard
           at={6}
-          w={850}
-          h={460}
-          y={675}
-          bg="#0D1436"
-          accent={C.luaSky}
-          badge={revealed ? "LUA PROGRAMMING LANGUAGE" : "MEMUAT BAHASA GAME..."}
-          badgeIcon={<IconMoon size={20} color={C.charcoal} />}
-          badgeBg={revealed ? C.yellow : C.luaIce}
+          w={960}
+          h={630}
+          y={725}
+          badge={revealed ? "LUA · 1993" : "LOADING ENGINE"}
+          badgeIcon={<IconMoon size={18} color={C.charcoal} />}
+          watermark={revealed ? "LUA 1993" : "ENGINE"}
           dark
         >
           {!revealed ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}>
-              <div style={{ position: "relative", width: 210, height: 210, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <svg width={210} height={210} viewBox="-105 -105 210 210" style={{ transform: `rotate(${orbitDeg}deg)` }}>
-                  <circle r={88} fill="none" stroke={C.luaSky} strokeWidth={5} strokeDasharray="16 12" opacity={0.75} />
-                  <circle cx={88} cy={0} r={14} fill={C.yellow} />
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 26 }}>
+              <div style={{ position: "relative", width: 290, height: 290, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    width: 255,
+                    height: 255,
+                    borderRadius: "50%",
+                    border: "26px solid rgba(219,234,254,0.88)",
+                    boxShadow: "0 0 60px rgba(96, 165, 250, 0.55)",
+                  }}
+                />
+                <svg width={290} height={290} viewBox="-145 -145 290 290" style={{ transform: `rotate(${orbitDeg}deg)` }}>
+                  <circle cx={125} cy={0} r={18} fill={C.luaSky} />
                 </svg>
-                <div style={{ position: "absolute", fontFamily: FONT.mono, fontWeight: 900, fontSize: 64, color: C.white }}>
+                <div style={{ position: "absolute", fontFamily: FONT.sans, fontWeight: 900, fontSize: 96, color: C.white }}>
                   ?
                 </div>
               </div>
-              <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 24, color: C.luaIce, letterSpacing: "0.1em" }}>
-                ENGINE SCRIPTING LANGUAGE
+              <div style={{ textAlign: "center", lineHeight: 1.1 }}>
+                <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 24, color: C.luaSky, letterSpacing: "0.08em" }}>
+                  SCRIPTING ENGINE
+                </div>
+                <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 48, color: C.white, letterSpacing: "-0.03em" }}>
+                  Bahasa Rahasia Game
+                </div>
               </div>
             </div>
           ) : (
@@ -66,66 +80,72 @@ export const Scene02LuaReveal: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 18,
+                gap: 20,
                 transform: `scale(${revealPop})`,
               }}
             >
-              <div style={{ position: "relative", width: 250, height: 250, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <svg width={250} height={250} viewBox="-125 -125 250 250" style={{ position: "absolute", transform: `rotate(${orbitDeg}deg)` }}>
-                  <circle r={112} fill="none" stroke={C.luaSky} strokeWidth={3} strokeDasharray="10 10" opacity={0.5} />
+              <div style={{ position: "relative", width: 320, height: 320, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width={320} height={320} viewBox="-160 -160 320 320" style={{ position: "absolute", transform: `rotate(${orbitDeg}deg)` }}>
+                  <circle r={148} fill="none" stroke="rgba(219,234,254,0.4)" strokeWidth={3.5} strokeDasharray="12 12" />
                 </svg>
                 <Img
                   src={staticFile("image-vidio/lua/lua-logo.svg")}
-                  style={{ width: 210, height: 210, objectFit: "contain" }}
+                  style={{
+                    width: 270,
+                    height: 270,
+                    objectFit: "contain",
+                    filter: "drop-shadow(0 20px 38px rgba(0,0,0,0.45))",
+                  }}
                 />
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <IconSparkles size={28} color={C.yellow} />
-                <KineticText text="LUA (1993)" start={106} size={44} color={C.white} variant="pop" />
-                <IconSparkles size={28} color={C.yellow} />
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <IconSparkles size={32} color={C.luaSky} />
+                <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 54, color: C.white, letterSpacing: "-0.03em" }}>
+                  Bahasa <span style={{ color: C.luaSky }}>Lua!</span>
+                </div>
+                <IconSparkles size={32} color={C.luaSky} />
               </div>
             </div>
           )}
         </ExplainCard>
 
-        {/* Bottom Meme Cutaways */}
         <MemeSticker
           src="memes/let_him_cook.jpg"
-          x={575}
-          y={1145}
-          w={260}
-          h={245}
+          x={205}
+          y={1245}
+          w={250}
+          h={230}
           at={18}
           until={104}
-          rotate={-4}
-          accent={C.luaBlue}
+          rotate={-5}
         />
         <MemeSticker
           src="memes/chad_gojo.jpg"
-          x={745}
-          y={1145}
-          w={275}
-          h={265}
+          x={875}
+          y={1245}
+          w={265}
+          h={240}
           at={104}
-          rotate={4}
-          accent={C.luaSky}
+          until={136}
+          rotate={5}
         />
 
         <DevtrineMascot
-          x={slideX}
-          y={1215 + Math.sin(frame * 0.16) * 7}
-          size={130}
+          x={mascotX}
+          y={lerp(frame, [0, 18], [1540, 1245], easeOut) + hop + Math.sin(frame * 0.16) * 6}
+          size={156}
           expression={revealed ? "cool" : "amazed"}
           sunglasses={revealed}
           blink={autoBlink(frame, 14)}
-          lookX={0.5}
+          rotate={revealed ? Math.sin(frame * 0.2) * 6 : -4}
+          lookX={revealed ? 0.35 : -0.3}
           lookY={-0.3}
           frame={frame}
           shadow
         />
       </Camera>
 
-      <Flash at={104} color={C.luaIce} max={0.3} />
+      <Flash at={104} color={C.luaIce} max={0.32} />
 
       <Subtitles
         cues={[
@@ -134,9 +154,9 @@ export const Scene02LuaReveal: React.FC = () => {
         ]}
       />
 
-      <Sfx name="whoosh" at={6} volume={0.75} />
-      <Sfx name="thud" at={104} volume={0.95} />
-      <Sfx name="meme_wow" at={114} volume={0.7} duration={36} />
+      <Sfx name="whoosh" at={6} volume={0.8} />
+      <Sfx name="thud" at={104} volume={0.95} duration={44} />
+      <Sfx name="meme_wow" at={110} volume={0.75} duration={36} />
     </Background>
   );
 };

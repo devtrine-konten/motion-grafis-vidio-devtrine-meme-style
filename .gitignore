@@ -7,7 +7,6 @@ out
 
 # assets
 public/audio/bgm
-public/audio/sfx
 
 # Editor directories and files
 .vscode/*

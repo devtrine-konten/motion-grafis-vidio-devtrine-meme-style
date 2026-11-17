@@ -19,7 +19,7 @@ export const BlinkWipe: React.FC = () => {
   const pupilScale = frame < half ? lerp(frame, [half - 2, half], [0.3, 1]) : lerp(frame, [half, half + 3], [1, 0.2]);
 
   return (
-    <AbsoluteFill style={{ pointerEvents: "none" }}>
+    <AbsoluteFill style={{ pointerEvents: "none", zIndex: 85 }}>
       <svg width={W} height={H}>
         <path d={`M0,0 H${W} V${lid - curve} Q${W / 2},${lid + curve} 0,${lid - curve} Z`} fill={C.cyan} />
         <path d={`M0,${lid - curve} Q${W / 2},${lid + curve} ${W},${lid - curve}`} stroke={C.cyanLight} strokeWidth={28} fill="none" opacity={p > 0.02 ? 1 : 0} />
@@ -32,7 +32,11 @@ export const BlinkWipe: React.FC = () => {
 };
 
 /** RGB-split + slice displacement glitch overlay applied to children. */
-export const Glitch: React.FC<{ start: number; duration?: number; children: React.ReactNode }> = ({ start, duration = 10, children }) => {
+export const Glitch: React.FC<{ start: number; duration?: number; children: React.ReactNode }> = ({
+  start,
+  duration = 10,
+  children,
+}) => {
   const frame = useCurrentFrame();
   const t = frame - start;
   const active = t >= 0 && t < duration;
@@ -42,14 +46,27 @@ export const Glitch: React.FC<{ start: number; duration?: number; children: Reac
   const slices = 6;
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ transform: `translateX(${-off}px)`, opacity: 0.7, filter: "hue-rotate(160deg) saturate(3)", mixBlendMode: "multiply" }}>
+      <AbsoluteFill
+        style={{
+          transform: `translateX(${-off}px)`,
+          opacity: 0.7,
+          filter: "hue-rotate(160deg) saturate(3)",
+          mixBlendMode: "multiply",
+        }}
+      >
         {children}
       </AbsoluteFill>
       {Array.from({ length: slices }, (_, i) => {
         const y0 = (i / slices) * 100;
         const dx = (rand(frame * 7 + i) * 2 - 1) * 70 * k;
         return (
-          <AbsoluteFill key={i} style={{ clipPath: `inset(${y0}% 0 ${100 - y0 - 100 / slices}% 0)`, transform: `translateX(${dx}px)` }}>
+          <AbsoluteFill
+            key={i}
+            style={{
+              clipPath: `inset(${y0}% 0 ${100 - y0 - 100 / slices}% 0)`,
+              transform: `translateX(${dx}px)`,
+            }}
+          >
             {children}
           </AbsoluteFill>
         );
@@ -58,10 +75,15 @@ export const Glitch: React.FC<{ start: number; duration?: number; children: Reac
   );
 };
 
-/** Quick white flash (used on impacts). */
-export const Flash: React.FC<{ at: number; color?: string; duration?: number; max?: number }> = ({ at, color = C.white, duration = 8, max = 0.85 }) => {
+/** Quick soft light flash (used on impacts). */
+export const Flash: React.FC<{ at: number; color?: string; duration?: number; max?: number }> = ({
+  at,
+  color = C.white,
+  duration = 8,
+  max = 0.55,
+}) => {
   const frame = useCurrentFrame();
   const o = keys(frame, [at, at + 1, at + duration], [0, max, 0]);
   if (o <= 0) return null;
-  return <AbsoluteFill style={{ background: color, opacity: o, pointerEvents: "none" }} />;
+  return <AbsoluteFill style={{ background: color, opacity: o, pointerEvents: "none", zIndex: 75 }} />;
 };
