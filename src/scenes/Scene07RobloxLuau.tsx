@@ -32,7 +32,6 @@ export const Scene07RobloxLuau: React.FC = () => {
     <Background variant="voxPaper" drift={0.9} watermark="LUAU" polaroidMeme="memes/mode_on.jpg">
       <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
-          kicker="ROBLOX ENGINE · TURUNAN LUA"
           title="Roblox Pakai Bahasa Luau!"
           highlight={["Roblox", "Bahasa", "Luau!"]}
         />

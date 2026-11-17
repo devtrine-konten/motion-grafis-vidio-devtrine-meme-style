@@ -203,7 +203,7 @@ export const Pill: React.FC<{
  * Editorial Chapter Header — Bold Inter Tight Display Title + Space Grotesk Tag.
  */
 export const Header: React.FC<{
-  kicker: string;
+  kicker?: string;
   title: string;
   highlight?: string[];
   at?: number;
@@ -221,7 +221,7 @@ export const Header: React.FC<{
     <div
       style={{
         position: "absolute",
-        top: 104,
+        top: kicker ? 104 : 138,
         left: 56,
         right: 56,
         textAlign: align,
@@ -230,40 +230,42 @@ export const Header: React.FC<{
         zIndex: 30,
       }}
     >
-      <div
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 10,
-          background: tone === "dark" ? "rgba(255,255,255,0.10)" : "rgba(0, 0, 128, 0.08)",
-          border: tone === "dark" ? "1px solid rgba(255,255,255,0.18)" : "1px solid rgba(0, 0, 128, 0.16)",
-          padding: "5px 18px",
-          borderRadius: 999,
-          marginBottom: 10,
-          transform: `scale(${tagIn})`,
-          opacity: frame >= at ? 1 : 0,
-        }}
-      >
-        <span
+      {kicker && (
+        <div
           style={{
-            width: 9,
-            height: 9,
-            borderRadius: "50%",
-            background: tone === "dark" ? C.luaSky : C.luaBlue,
-          }}
-        />
-        <span
-          style={{
-            fontFamily: FONT.mono,
-            fontWeight: 800,
-            fontSize: 17,
-            letterSpacing: "0.08em",
-            color: tone === "dark" ? C.luaIce : C.luaNavy,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            background: tone === "dark" ? "rgba(255,255,255,0.10)" : "rgba(0, 0, 128, 0.08)",
+            border: tone === "dark" ? "1px solid rgba(255,255,255,0.18)" : "1px solid rgba(0, 0, 128, 0.16)",
+            padding: "5px 18px",
+            borderRadius: 999,
+            marginBottom: 10,
+            transform: `scale(${tagIn})`,
+            opacity: frame >= at ? 1 : 0,
           }}
         >
-          {kicker}
-        </span>
-      </div>
+          <span
+            style={{
+              width: 9,
+              height: 9,
+              borderRadius: "50%",
+              background: tone === "dark" ? C.luaSky : C.luaBlue,
+            }}
+          />
+          <span
+            style={{
+              fontFamily: FONT.mono,
+              fontWeight: 800,
+              fontSize: 17,
+              letterSpacing: "0.08em",
+              color: tone === "dark" ? C.luaIce : C.luaNavy,
+            }}
+          >
+            {kicker}
+          </span>
+        </div>
+      )}
 
       <KineticText
         text={title}

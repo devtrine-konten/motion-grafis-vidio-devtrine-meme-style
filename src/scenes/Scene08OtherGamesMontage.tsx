@@ -36,7 +36,6 @@ export const Scene08OtherGamesMontage: React.FC = () => {
     <Background variant="dotMatrix" drift={1.1}>
       <Camera scale={camScale} x={shk.x + shk2.x} y={shk.y + shk2.y} focusX={540} focusY={710}>
         <Header
-          kicker="BUKAN CUMA ROBLOX!"
           title="Game Legendaris Pakai Lua"
           highlight={["Game", "Legendaris", "Lua"]}
         />

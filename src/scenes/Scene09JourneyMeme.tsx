@@ -30,7 +30,6 @@ export const Scene09JourneyMeme: React.FC = () => {
     <Background variant="voxPaper" drift={1.0} watermark="93" polaroidMeme="memes/hontoni.jpg">
       <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
-          kicker="PLOT TWIST PERJALANAN"
           title="Jauh Juga Perjalanan Si Lua!"
           highlight={["Jauh", "Perjalanan", "Lua!"]}
         />

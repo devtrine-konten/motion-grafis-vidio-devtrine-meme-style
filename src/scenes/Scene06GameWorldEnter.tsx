@@ -29,7 +29,7 @@ export const Scene06GameWorldEnter: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 112,
+            top: 140,
             left: 56,
             right: 56,
             textAlign: "center",
@@ -38,24 +38,12 @@ export const Scene06GameWorldEnter: React.FC = () => {
         >
           <div
             style={{
-              fontFamily: FONT.mono,
-              fontWeight: 800,
-              fontSize: 28,
-              color: C.luaBlue,
-              letterSpacing: "0.1em",
-            }}
-          >
-            NEXT LEVEL
-          </div>
-          <div
-            style={{
               fontFamily: FONT.sans,
               fontWeight: 900,
               fontSize: 82,
               color: C.luaNavy,
               letterSpacing: "-0.04em",
               lineHeight: 0.98,
-              marginTop: 8,
             }}
           >
             Masuk ke Dunia Game!

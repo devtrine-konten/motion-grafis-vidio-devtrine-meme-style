@@ -29,7 +29,6 @@ export const Scene02LuaReveal: React.FC = () => {
     <Background variant="luaNight" drift={1.1}>
       <Camera scale={camScale} x={shk.x} y={shk.y} focusX={540} focusY={725}>
         <Header
-          kicker="PLAYER KUNCI DI DUNIA GAME"
           title="Perkenalkan: Bahasa Lua!"
           highlight={["Bahasa", "Lua!"]}
           tone="dark"
