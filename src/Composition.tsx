@@ -93,7 +93,6 @@ export const MainComposition: React.FC = () => {
           width: 80,
           height: 80,
           padding: 0,
-          boxShadow: `4px 4px 0 ${C.luaBlue}`,
           zIndex: 90,
         }}
       >
