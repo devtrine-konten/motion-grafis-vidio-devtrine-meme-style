@@ -73,8 +73,8 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
                 margin: "0 5px",
                 padding: isHi ? "1px 10px" : undefined,
                 borderRadius: isHi ? 10 : undefined,
-                background: isHi ? (isCurrent ? C.cyanLight : C.yellow) : undefined,
-                color: isHi ? C.charcoal : isCurrent ? C.yellow : C.white,
+                background: isHi ? (isCurrent ? C.luaSky : C.yellow) : undefined,
+                color: isHi ? C.black : isCurrent ? C.luaSky : C.white,
                 transform: `scale(${(0.85 + 0.15 * wPop) * (isCurrent ? 1.06 : 1)})`,
               }}
             >

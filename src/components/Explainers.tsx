@@ -4,8 +4,8 @@ import { C, FONT } from "../theme";
 import { lerp, spr } from "../lib/anim";
 
 /**
- * Clean neo-brutalist stage card for Episode 02 explanatory animations.
- * Enters with a crisp spring pop and exits cleanly before `until`.
+ * Vox + Neo-Brutalist Stage Card for Episode 03 explanatory animations.
+ * Supports optional masking-tape corners (`tape`) for Vox documentary collage vibe.
  */
 export const ExplainCard: React.FC<{
   title?: string;
@@ -21,6 +21,8 @@ export const ExplainCard: React.FC<{
   bg?: string;
   accent?: string;
   dark?: boolean;
+  tape?: boolean;
+  rotate?: number;
   children: React.ReactNode;
 }> = ({
   title,
@@ -34,8 +36,10 @@ export const ExplainCard: React.FC<{
   at = 0,
   until,
   bg = C.white,
-  accent = C.charcoal,
+  accent = C.luaNavy,
   dark = false,
+  tape = false,
+  rotate = 0,
   children,
 }) => {
   const frame = useCurrentFrame();
@@ -52,10 +56,10 @@ export const ExplainCard: React.FC<{
         top: y,
         width: w,
         height: h,
-        transform: `translate(-50%, -50%) scale(${pop * out})`,
+        transform: `translate(-50%, -50%) scale(${pop * out}) rotate(${rotate}deg)`,
         background: bg,
-        border: `6px solid ${C.charcoal}`,
-        borderRadius: 30,
+        border: `5px solid ${dark ? C.luaSky : C.charcoal}`,
+        borderRadius: 26,
         boxShadow: `10px 10px 0 ${accent}`,
         padding: "36px 34px 28px",
         display: "flex",
@@ -65,6 +69,38 @@ export const ExplainCard: React.FC<{
         zIndex: 18,
       }}
     >
+      {/* Vox editorial masking tape strips */}
+      {tape && (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              top: -14,
+              left: 34,
+              width: 96,
+              height: 28,
+              background: "rgba(250, 204, 21, 0.85)",
+              border: `2px solid ${C.charcoal}`,
+              transform: "rotate(-6deg)",
+              zIndex: 25,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: -14,
+              right: 34,
+              width: 96,
+              height: 28,
+              background: "rgba(96, 165, 250, 0.85)",
+              border: `2px solid ${C.charcoal}`,
+              transform: "rotate(5deg)",
+              zIndex: 25,
+            }}
+          />
+        </>
+      )}
+
       {badge && (
         <div
           style={{
@@ -83,6 +119,7 @@ export const ExplainCard: React.FC<{
             display: "flex",
             alignItems: "center",
             gap: 8,
+            zIndex: 26,
           }}
         >
           {badgeIcon}
@@ -116,6 +153,88 @@ export const ExplainCard: React.FC<{
       >
         {children}
       </div>
+    </div>
+  );
+};
+
+/** Vox-style paper-cutout photo card with tape + editorial caption strip. */
+export const VoxCutout: React.FC<{
+  children: React.ReactNode;
+  caption?: string;
+  subcaption?: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  at?: number;
+  until?: number;
+  rotate?: number;
+  accent?: string;
+  zIndex?: number;
+}> = ({
+  children,
+  caption,
+  subcaption,
+  x,
+  y,
+  w,
+  h,
+  at = 0,
+  until,
+  rotate = -2,
+  accent = C.luaBlue,
+  zIndex = 20,
+}) => {
+  const frame = useCurrentFrame();
+  if (frame < at) return null;
+  const pop = spr(frame, at, { damping: 12, stiffness: 200 });
+  const out = until !== undefined ? lerp(frame, [until - 5, until], [1, 0]) : 1;
+  if (out <= 0) return null;
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x,
+        top: y,
+        width: w,
+        transform: `translate(-50%, -50%) scale(${pop * out}) rotate(${rotate}deg)`,
+        background: C.white,
+        border: `4px solid ${C.charcoal}`,
+        borderRadius: 14,
+        boxShadow: `8px 8px 0 ${accent}`,
+        padding: 12,
+        zIndex,
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          top: -13,
+          left: "50%",
+          width: 82,
+          height: 22,
+          transform: "translateX(-50%) rotate(-2deg)",
+          background: C.yellow,
+          border: `2px solid ${C.charcoal}`,
+          opacity: 0.9,
+        }}
+      />
+      <div style={{ width: "100%", height: h, borderRadius: 8, overflow: "hidden", background: C.black }}>
+        {children}
+      </div>
+      {caption && (
+        <div style={{ marginTop: 10, textAlign: "center" }}>
+          <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 18.5, color: C.charcoal, lineHeight: 1.15, whiteSpace: "nowrap" }}>
+            {caption}
+          </div>
+          {subcaption && (
+            <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 14, color: C.luaBlue, marginTop: 2 }}>
+              {subcaption}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

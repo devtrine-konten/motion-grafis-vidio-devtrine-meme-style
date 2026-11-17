@@ -6,7 +6,7 @@ import { MainComposition, TOTAL_FRAMES } from "./Composition";
 export const RemotionRoot: React.FC = () => {
   return (
     <Composition
-      id="DevtrineHistory"
+      id="DevtrineLuaEp03"
       component={MainComposition}
       durationInFrames={TOTAL_FRAMES}
       fps={30}

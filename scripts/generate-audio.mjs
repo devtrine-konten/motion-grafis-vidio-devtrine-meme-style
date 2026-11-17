@@ -402,18 +402,17 @@ const STEP = 60 / BPM / 4; // 16th note
 const total = starts.end + 0.5;
 const music = makeBuf(total);
 
-// section map (seconds) — each scene gets its own flavour
+// section map (seconds) — scored to Episode 03 (Lua) scenes
 const sectionAt = (t) => {
-  if (t < starts.plotTwist) return t < 2 ? "intro" : "main";
-  if (t < starts.plotTwist + 1.5) return "silence"; // dramatic pause before "Plot twist"
-  if (t < starts.skillIssue) return "history";
-  if (t < starts.machine) return "main";
-  if (t >= starts.otp && t < starts.otp + 0.75) return "silence"; // record scratch freeze
-  if (t < starts.evolution) return "chip";
-  if (t < starts.ai) return "main";
-  if (t < starts.closing) return "future";
-  if (t < starts.end - 1.5) return "main";
-  if (t < starts.end - 1.0) return "outro-hit";
+  if (t < starts.luaReveal) return t < 1.2 ? "intro" : "main";
+  if (t < starts.luaReveal + 0.8) return "silence"; // dramatic beat before Lua reveal
+  if (t < starts.lightweightConfig) return "history"; // Brazil 1993 origin + creators
+  if (t < starts.moonName) return "main"; // Lightweight & embeddable
+  if (t < starts.gameWorldEnter) return "future"; // Lunar / Portuguese fun fact
+  if (t < starts.journeyMeme) return "chip"; // Game world: Roblox Luau + WoW/Factorio/GMod
+  if (t < starts.closing) return "main";
+  if (t < starts.end - 1.2) return "main";
+  if (t < starts.end - 0.7) return "outro-hit";
   return "silence";
 };
 

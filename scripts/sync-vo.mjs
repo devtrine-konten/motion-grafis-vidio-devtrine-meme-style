@@ -1,18 +1,17 @@
-// Voice-Over Synchronizer & Mixer for Devtrine Studio — Rust Meme Edition (84.0s)
-// Uses `public/audio/vo/sync-vo.wav` directly and keeps `vo-synced.wav` in sync.
+// Voice-Over Synchronizer for Devtrine Studio — Episode 03: Sejarah Lua (88.0s)
+// Uses `public/audio/vo/vo-synced.wav` directly as the master VO track.
 
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const VO_DIR = path.join(ROOT, "public/audio/vo");
-const SYNC_VO = path.join(VO_DIR, "sync-vo.wav");
-const LEGACY_VO = path.join(VO_DIR, "vo-synced.wav");
+const VO_FILE = path.join(ROOT, "public/audio/vo/vo-synced.wav");
 
-if (fs.existsSync(SYNC_VO)) {
-  fs.copyFileSync(SYNC_VO, LEGACY_VO);
-  console.log("Synced public/audio/vo/sync-vo.wav -> public/audio/vo/vo-synced.wav (84.0s)");
+if (fs.existsSync(VO_FILE)) {
+  const bytes = fs.statSync(VO_FILE).size;
+  console.log(`Master VO verified: public/audio/vo/vo-synced.wav (${(bytes / 1024).toFixed(1)} KB)`);
 } else {
-  console.log("Pastikan file public/audio/vo/sync-vo.wav tersedia.");
+  console.error("Missing public/audio/vo/vo-synced.wav!");
+  process.exit(1);
 }

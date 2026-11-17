@@ -1,15 +1,15 @@
 {
   "fps": 30,
   "scenes": [
-    { "id": "hook", "title": "Scene 01 — Rust vs Karat Pagar", "duration": 192 },
-    { "id": "plotTwist", "title": "Scene 02 — Graydon Hoare (2006)", "duration": 222 },
-    { "id": "ada", "title": "Scene 03 — Proyek Pribadi ke Mozilla & 2015", "duration": 360 },
-    { "id": "skillIssue", "title": "Scene 04 — Kenapa Rust Diciptakan?", "duration": 90 },
-    { "id": "machine", "title": "Scene 05 — C & C++ Risiko Error Memori", "duration": 294 },
-    { "id": "otp", "title": "Scene 06 — Ownership & Borrow Checker", "duration": 333 },
-    { "id": "evolution", "title": "Scene 07 — Cepat, Aman, Tanpa GC", "duration": 189 },
-    { "id": "ai", "title": "Scene 08 — Dilirik Developer (OS, Tools, Server)", "duration": 279 },
-    { "id": "aiStudio", "title": "Scene 09 — Diinterogasi Compiler!", "duration": 195 },
-    { "id": "closing", "title": "Scene 10 — Bug Mikir Dua Kali & Closing CTA", "duration": 366 }
+    { "id": "hook", "title": "Scene 01 — Roblox Noob Hook", "duration": 238 },
+    { "id": "luaReveal", "title": "Scene 02 — Kenalin Bahasa Lua", "duration": 152 },
+    { "id": "brazilOrigin", "title": "Scene 03 — Lahir 1993 di Brasil & Pencipta Lua", "duration": 400 },
+    { "id": "lightweightConfig", "title": "Scene 04 — Ringan, Fleksibel & Mudah Disisipkan", "duration": 350 },
+    { "id": "moonName", "title": "Scene 05 — Fun Fact: Lua Berarti Bulan", "duration": 340 },
+    { "id": "gameWorldEnter", "title": "Scene 06 — Masuk ke Dunia Game!", "duration": 90 },
+    { "id": "robloxLuau", "title": "Scene 07 — Roblox Studio & Script Luau", "duration": 264 },
+    { "id": "otherGames", "title": "Scene 08 — Montage WoW, Angry Birds, Factorio, GMod", "duration": 296 },
+    { "id": "journeyMeme", "title": "Scene 09 — Dari Proyek Teknik ke NPC Ngejar Player", "duration": 204 },
+    { "id": "closing", "title": "Scene 10 — Small But Powerful & Closing CTA", "duration": 306 }
   ]
 }

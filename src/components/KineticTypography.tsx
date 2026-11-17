@@ -198,7 +198,7 @@ export const Header: React.FC<{
 }> = ({ kicker, title, highlight = [], at = 0, pills = [], tone = "light", align = "left", exitAt }) => {
   const frame = useCurrentFrame();
   const kickerChars = Math.max(0, Math.floor((frame - at) * 1.6));
-  const ink = tone === "dark" ? C.white : tone === "sepia" ? C.sepiaInk : C.charcoal;
+  const ink = tone === "dark" ? C.white : tone === "sepia" ? C.sepiaInk : C.black;
   const exit = exitAt !== undefined ? lerp(frame, [exitAt, exitAt + 8], [1, 0]) : 1;
   return (
     <div
@@ -215,10 +215,10 @@ export const Header: React.FC<{
       <div
         style={{
           fontFamily: FONT.mono,
-          fontWeight: 700,
-          fontSize: 28,
-          letterSpacing: "0.16em",
-          color: tone === "dark" ? C.cyanLight : tone === "sepia" ? C.sepiaRed : C.cyan,
+          fontWeight: 800,
+          fontSize: 26,
+          letterSpacing: "0.14em",
+          color: tone === "dark" ? C.luaSky : C.luaBlue,
           marginBottom: 14,
           height: 36,
         }}
@@ -230,14 +230,14 @@ export const Header: React.FC<{
         text={title}
         start={at + 6}
         stagger={3}
-        size={76}
+        size={74}
         variant="rise"
         color={ink}
         align={align}
         highlight={highlight}
-        highlightColor={tone === "sepia" ? "#E9B9A0" : C.cyanLight}
+        highlightColor={tone === "dark" ? C.luaBlue : C.yellow}
         font={tone === "sepia" ? FONT.serif : FONT.sans}
-        weight={tone === "sepia" ? 700 : 800}
+        weight={tone === "sepia" ? 700 : 900}
         letterSpacing={tone === "sepia" ? 0 : -0.02}
         style={{ marginLeft: align === "left" ? "-0.12em" : 0 }}
       />
