@@ -53,9 +53,15 @@ scripts/
    npm install
    ```
 
-2. **Sinkronisasi Voice-Over (jika ada file baru di `public/audio/vo/`)**
+2. **Sinkronisasi Voice-Over dan Sound effect ( jika ada file baru di `public/audio/vo/` )**
+  Audio voice over
    ```bash
    npm run vo
+   ```
+
+  Audio generate sound effect
+   ```bash
+   npm run audio
    ```
 
 3. **Jalankan Remotion Studio (Live Preview)**
