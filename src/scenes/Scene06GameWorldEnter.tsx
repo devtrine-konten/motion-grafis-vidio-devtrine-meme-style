@@ -138,8 +138,8 @@ export const Scene06GameWorldEnter: React.FC = () => {
         ]}
       />
 
-      <Sfx name="level_up" at={12} volume={0.85} duration={54} />
-      <Sfx name="goofy_horn" at={44} volume={0.8} duration={36} />
+      <Sfx name="level_up" at={12} volume={0.85} duration={70} />
+      {/* <Sfx name="goofy_horn" at={44} volume={0.8} duration={36} /> */}
     </Background>
   );
 };

@@ -142,7 +142,7 @@ export const Scene01RobloxHook: React.FC = () => {
 
         {/* Sharp square meme stickers (rounded=0) */}
         <MemeSticker
-          src="memes/iki_opo.jpg"
+          src="memes/roblox.jpg"
           x={205}
           y={1245}
           w={255}

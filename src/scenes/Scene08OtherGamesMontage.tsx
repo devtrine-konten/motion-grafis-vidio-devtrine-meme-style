@@ -104,7 +104,7 @@ export const Scene08OtherGamesMontage: React.FC = () => {
         />
 
         <MemeSticker src="memes/shocked_pikachu.jpg" x={205} y={1245} w={250} h={230} at={14} until={46} rotate={-5} />
-        <MemeSticker src="memes/edan.jpg" x={875} y={1245} w={255} h={235} at={145} rotate={4} />
+        <MemeSticker src="memes/gacor.jpg" x={875} y={1245} w={255} h={235} at={145} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

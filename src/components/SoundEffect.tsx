@@ -35,6 +35,7 @@ export type SfxName =
   | "record_scratch"
   | "digital_sweep"
   | "running"
+  | "hahahaha"
   | "confirm";
 
 /** Natural / optimal frame length (@ 30fps) for each WAV clip in public/audio/sfx/. */
@@ -71,6 +72,7 @@ const DEFAULT_DURATION: Record<SfxName, number> = {
   digital_sweep: 20,
   running: 54,
   confirm: 14,
+  hahahaha: 17,
 };
 
 /**

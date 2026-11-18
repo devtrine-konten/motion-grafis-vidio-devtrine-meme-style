@@ -158,7 +158,7 @@ export const Scene05MoonName: React.FC = () => {
         <MemeSticker src="memes/coba_jelaskan.jpg" x={205} y={1245} w={245} h={225} at={35} until={67} rotate={-6} />
         <MemeSticker src="memes/shocked_pikachu.jpg" x={875} y={1245} w={255} h={230} at={108} until={220} rotate={5} />
         <MemeSticker src="memes/gak_beres.jpg" x={205} y={1245} w={250} h={230} at={250} until={282} rotate={-5} />
-        <MemeSticker src="memes/tertawa_terluka.jpg" x={875} y={1245} w={265} h={235} at={292} rotate={4} />
+        <MemeSticker src="memes/pura.jpg" x={875} y={1245} w={295} h={325} at={292} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Img, staticFile, useCurrentFrame } from "remotion";
+import { Img, OffthreadVideo, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
 import { autoBlink, keys, lerp, spr } from "../lib/anim";
 import { Background } from "../components/Background";
@@ -12,12 +12,9 @@ import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
 import { Subtitles } from "../components/Subtitles";
 
-const LUAU_SNIPPET = `local npc = script.Parent; npc:MoveTo(player.Position)`;
-
 export const Scene07RobloxLuau: React.FC = () => {
   const frame = useCurrentFrame();
   const camScale = keys(frame, [0, 80, 140, 264], [1, 1.03, 1.05, 1.02]);
-  const typed = LUAU_SNIPPET.slice(0, Math.max(0, Math.floor((frame - 42) * 0.72)));
 
   const npcProgress = (Math.max(0, frame - 130) % 60) / 60;
   const npcX = lerp(npcProgress, [0, 1], [35, 165]);
@@ -39,14 +36,14 @@ export const Scene07RobloxLuau: React.FC = () => {
         <ExplainCard
           at={6}
           w={960}
-          h={630}
+          h={660}
           y={725}
           badge="ROBLOX STUDIO · LUAU"
           badgeIcon={<IconCode size={18} color={C.charcoal} />}
           tape
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: 18, width: "100%", height: "100%", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 22 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14, width: "100%", height: "100%", paddingTop: 18, justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 22, flexShrink: 0 }}>
               <div
                 style={{
                   display: "flex",
@@ -88,36 +85,51 @@ export const Scene07RobloxLuau: React.FC = () => {
             <div
               style={{
                 width: "100%",
-                height: 285,
+                height: 365,
+                flexShrink: 0,
                 borderRadius: 16,
                 overflow: "hidden",
+                background: "#1E1E1E",
                 border: "1.5px solid rgba(0,0,128,0.18)",
                 boxShadow: "0 18px 36px rgba(5,9,41,0.16)",
                 position: "relative",
               }}
             >
-              <Img
-                src={staticFile("image-vidio/lua/roblox-studio-editor.png")}
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "left top" }}
-              />
+              <Sequence from={6} layout="none">
+                <OffthreadVideo
+                  src={staticFile("video/lua-coding.mp4")}
+                  muted
+                  playbackRate={1.32}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    // objectPosition: "center 80%",
+                  }}
+                />
+              </Sequence>
               <div
                 style={{
                   position: "absolute",
-                  bottom: 12,
-                  left: 14,
-                  right: 14,
-                  background: "rgba(5, 9, 41, 0.94)",
-                  border: "1.5px solid rgba(96,165,250,0.4)",
-                  borderRadius: 12,
-                  padding: "10px 16px",
+                  bottom: 10,
+                  left: 12,
+                  background: "rgba(5, 9, 41, 0.86)",
+                  border: "1px solid rgba(96, 165, 250, 0.38)",
+                  borderRadius: 999,
+                  padding: "5px 14px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
                   fontFamily: FONT.mono,
-                  fontSize: 20,
+                  fontSize: 15,
                   fontWeight: 700,
-                  color: C.luaSky,
+                  color: C.white,
+                  boxShadow: "0 6px 16px rgba(0, 0, 0, 0.35)",
+                  zIndex: 5,
                 }}
               >
-                {typed}
-                <span style={{ opacity: frame % 12 < 6 ? 1 : 0 }}>|</span>
+                <span style={{ opacity: 0.78 }}>Sumber:</span>
+                <span style={{ color: C.luaSky }}>TikTok @steasdarcinn</span>
               </div>
             </div>
 
@@ -150,8 +162,8 @@ export const Scene07RobloxLuau: React.FC = () => {
           </div>
         </ExplainCard>
 
-        <MemeSticker src="memes/dahsyat.jpg" x={205} y={1245} w={250} h={230} at={36} until={152} rotate={-5} />
-        <MemeSticker src="memes/omg.jpg" x={875} y={1245} w={250} h={230} at={152} until={184} rotate={5} />
+        <MemeSticker src="memes/ceval.jpg" x={205} y={1245} w={250} h={230} at={36} until={152} rotate={-5} />
+        <MemeSticker src="memes/walawe.jpg" x={875} y={1245} w={280} h={280} at={152} until={184} rotate={5} />
         <MemeSticker src="memes/reaksi_gue.jpg" x={875} y={1245} w={255} h={235} at={192} rotate={4} />
 
         <DevtrineMascot
@@ -177,7 +189,7 @@ export const Scene07RobloxLuau: React.FC = () => {
         ]}
       />
 
-      <Sfx name="typing" at={42} volume={0.65} duration={44} />
+      <Sfx name="typing" at={14} volume={0.65} duration={65} />
       <Sfx name="pop" at={126} volume={0.85} />
       <Sfx name="meme_wow" at={152} volume={0.75} duration={36} />
       <Sfx name="confirm" at={192} volume={0.85} />

@@ -178,8 +178,8 @@ export const Scene03BrazilOrigin: React.FC = () => {
         )}
 
         <MemeSticker src="memes/nerd_cat.jpg" x={205} y={1245} w={250} h={230} at={36} until={180} rotate={-5} />
-        <MemeSticker src="memes/kelas_king.jpg" x={875} y={1245} w={255} h={235} at={186} until={218} rotate={5} />
-        <MemeSticker src="memes/gigachad_draw.jpg" x={875} y={1245} w={260} h={240} at={287} rotate={4} />
+        <MemeSticker src="memes/sigmacat.jpg" x={825} y={1245} w={405} h={405} at={186} until={218} rotate={5} />
+        <MemeSticker src="memes/gigachad_draw.jpg" x={875} y={1245} w={305} h={305} at={287} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

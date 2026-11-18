@@ -38,7 +38,12 @@ export const TOTAL_FRAMES = cursor; // 2640 frames = 88.0s @ 30fps
 
 export const MainComposition: React.FC = () => {
   return (
-    <AbsoluteFill style={{ backgroundColor: C.black, overflow: "hidden" }}>
+    <AbsoluteFill
+      style={{
+        backgroundColor: C.black,
+        overflow: "hidden"
+      }}
+    >
       {/* Background Music with loop + automatic fade-in/out */}
       <Audio
         src={staticFile("audio/bgm/bgm.wav")}

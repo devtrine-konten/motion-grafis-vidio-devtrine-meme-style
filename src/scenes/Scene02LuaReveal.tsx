@@ -109,7 +109,7 @@ export const Scene02LuaReveal: React.FC = () => {
         </ExplainCard>
 
         <MemeSticker
-          src="memes/let_him_cook.jpg"
+          src="memes/kaget.jpg"
           x={205}
           y={1245}
           w={250}

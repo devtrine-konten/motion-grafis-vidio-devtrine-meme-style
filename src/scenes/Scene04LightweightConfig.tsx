@@ -164,10 +164,10 @@ export const Scene04LightweightConfig: React.FC = () => {
           </>
         )}
 
-        <MemeSticker src="memes/mode_on.jpg" x={205} y={1245} w={255} h={230} at={28} until={168} rotate={-5} />
-        <MemeSticker src="memes/let_him_cook.jpg" x={875} y={1245} w={250} h={230} at={173} until={205} rotate={5} />
+        <MemeSticker src="memes/lawliet_nerd.jpg" x={205} y={1245} w={255} h={230} at={28} until={168} rotate={-5} />
+        <MemeSticker src="memes/extra_joss.jpg" x={875} y={1245} w={250} h={230} at={173} until={205} rotate={5} />
         <MemeSticker src="memes/deal_cat.jpg" x={205} y={1245} w={250} h={230} at={242} until={274} rotate={-4} />
-        <MemeSticker src="memes/sudah_siap_suits.jpg" x={875} y={1245} w={265} h={235} at={275} rotate={4} />
+        <MemeSticker src="memes/rose_girl.jpg" x={875} y={1245} w={265} h={235} at={275} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

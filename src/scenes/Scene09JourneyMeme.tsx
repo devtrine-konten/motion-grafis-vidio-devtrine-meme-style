@@ -133,8 +133,8 @@ export const Scene09JourneyMeme: React.FC = () => {
           </div>
         </ExplainCard>
 
-        <MemeSticker src="memes/ngejar_deadline.jpg" x={875} y={1245} w={265} h={235} at={54} rotate={4} />
-        <MemeSticker src="memes/trauma_berat.jpg" x={205} y={1245} w={250} h={230} at={132} until={164} rotate={-5} />
+        <MemeSticker src="memes/run.jpg" x={875} y={1245} w={265} h={235} at={54} rotate={4} />
+        <MemeSticker src="memes/yaudah.jpg" x={205} y={1245} w={250} h={250} at={132} until={164} rotate={-5} />
 
         <DevtrineMascot
           x={mascotX}
@@ -160,8 +160,8 @@ export const Scene09JourneyMeme: React.FC = () => {
       />
 
       <Sfx name="running" at={60} volume={0.75} duration={54} />
-      <Sfx name="funny_fail" at={132} volume={0.85} duration={22} />
-      <Sfx name="meme_haha" at={172} volume={0.8} duration={30} />
+      <Sfx name="meme_bonk" at={132} volume={0.85} duration={22} />
+      <Sfx name="hahahaha" at={172} volume={0.8} duration={30} />
     </Background>
   );
 };
