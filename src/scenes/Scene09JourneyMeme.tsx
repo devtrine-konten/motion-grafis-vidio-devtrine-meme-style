@@ -40,7 +40,6 @@ export const Scene09JourneyMeme: React.FC = () => {
           h={630}
           y={725}
           badge="TIMELINE EVOLUSI · 1993 -> KINI"
-          badgeIcon={<IconTarget size={18} color={C.charcoal} />}
           tape
         >
           <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>

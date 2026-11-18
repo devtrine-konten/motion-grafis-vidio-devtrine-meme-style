@@ -45,10 +45,9 @@ export const Scene10SmallButPowerfulClosing: React.FC = () => {
         {!isOutro && (
           <>
             <Header
-              kicker="KESIMPULAN · EP.03"
               title="Kecil-Kecil Cabe Rawit!"
               highlight={["Kecil-Kecil", "Cabe", "Rawit!"]}
-              tone="dark"
+              tone="light"
             />
 
             <ExplainCard
@@ -58,7 +57,6 @@ export const Scene10SmallButPowerfulClosing: React.FC = () => {
               y={680}
               bg={C.paper}
               accent={C.luaBlue}
-              badge="SMALL BUT POWERFUL"
               badgeIcon={<IconFlame size={20} color={C.charcoal} />}
               badgeBg={C.yellow}
               tape
@@ -84,15 +82,11 @@ export const Scene10SmallButPowerfulClosing: React.FC = () => {
                       position: "absolute",
                       bottom: 8,
                       transform: `scale(${stampPop}) rotate(-2deg)`,
-                      background: C.luaNavy,
-                      color: C.white,
-                      border: `4px solid ${C.charcoal}`,
-                      borderRadius: 16,
+                      color: "#FF0000",
                       padding: "8px 26px",
                       fontFamily: FONT.sans,
                       fontWeight: 900,
-                      fontSize: 32,
-                      boxShadow: `6px 6px 0 ${C.yellow}`,
+                      fontSize: 50,
                     }}
                   >
                     SMALL BUT POWERFUL!

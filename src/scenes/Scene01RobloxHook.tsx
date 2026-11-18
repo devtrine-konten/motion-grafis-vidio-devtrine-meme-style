@@ -45,8 +45,6 @@ export const Scene01RobloxHook: React.FC = () => {
           w={960}
           h={630}
           y={725}
-          badge="MISTERI ENGINE"
-          badgeIcon={<IconGamepad size={18} color={C.charcoal} />}
           tape
         >
           <div style={{ textAlign: "center", marginBottom: 24 }}>
