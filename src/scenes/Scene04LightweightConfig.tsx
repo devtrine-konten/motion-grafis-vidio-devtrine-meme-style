@@ -33,7 +33,7 @@ export const Scene04LightweightConfig: React.FC = () => {
     (frame >= 312 && frame < 328 ? Math.sin(((frame - 312) / 16) * Math.PI) * -32 : 0);
 
   return (
-    <Background variant={isPillars ? "dotMatrix" : "voxPaper"} drift={1.0} polaroidMeme="memes/menggoda.jpg">
+    <Background variant={isPillars ? "dotMatrix" : "voxPaper"} drift={1.0} polaroidMeme="memes/ditawari.jpg">
       <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
           title="Ringan, Fleksibel & Embeddable"

@@ -39,7 +39,7 @@ export const Scene02LuaReveal: React.FC = () => {
           w={960}
           h={630}
           y={725}
-          badge={revealed ? "LUA · 1993" : "LOADING ENGINE"}
+          // badge={revealed ? "LUA · 1993" : "LOADING ENGINE"}
           badgeIcon={<IconMoon size={18} color={C.charcoal} />}
           watermark={revealed ? "LUA 1993" : "ENGINE"}
           dark
@@ -98,11 +98,9 @@ export const Scene02LuaReveal: React.FC = () => {
                 />
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <IconSparkles size={32} color={C.luaSky} />
                 <div style={{ fontFamily: FONT.sans, fontWeight: 900, fontSize: 54, color: C.white, letterSpacing: "-0.03em" }}>
                   Bahasa <span style={{ color: C.luaSky }}>Lua!</span>
                 </div>
-                <IconSparkles size={32} color={C.luaSky} />
               </div>
             </div>
           )}

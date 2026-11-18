@@ -31,7 +31,7 @@ export const Scene05MoonName: React.FC = () => {
   const hop = isJoke && frame >= 295 ? Math.abs(Math.sin(frame * 0.45)) * -24 : Math.sin(frame * 0.15) * 6;
 
   return (
-    <Background variant={isJoke ? "dotMatrix" : "voxPaper"} drift={0.85} watermark="LUA" polaroidMeme="memes/towewew.jpg">
+    <Background variant={isJoke ? "dotMatrix" : "voxPaper"} drift={0.85} watermark="LUA" polaroidMeme="memes/mengapa.jpg">
       <Camera scale={camScale} x={shk1.x + shk2.x} y={shk1.y + shk2.y} focusX={540} focusY={725}>
         <Header
           title={isMoon || isJoke ? "Lua = BULAN (Portugis)" : "Kenapa Namanya Lua?"}

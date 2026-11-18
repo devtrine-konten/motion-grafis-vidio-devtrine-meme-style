@@ -28,7 +28,7 @@ export const Scene03BrazilOrigin: React.FC = () => {
     (frame >= 351 && frame < 367 ? Math.sin(((frame - 351) / 16) * Math.PI) * -26 : 0);
 
   return (
-    <Background variant={isCreators ? "dotMatrix" : "voxPaper"} drift={0.9} watermark={isCreators ? undefined : "93"} polaroidMeme="memes/lawliet_nerd.jpg">
+    <Background variant={isCreators ? "dotMatrix" : "voxPaper"} drift={0.9} watermark={isCreators ? undefined : "93"} polaroidMeme="memes/maomao.jpg">
       <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
           title={isCreators ? "3 Pencipta Bahasa Lua" : "Lahir Tahun 1993 di Brasil"}
