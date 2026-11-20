@@ -1,15 +1,16 @@
 {
   "fps": 30,
   "scenes": [
-    { "id": "hook", "title": "Scene 01 — Roblox Noob Hook", "duration": 238 },
-    { "id": "luaReveal", "title": "Scene 02 — Kenalin Bahasa Lua", "duration": 152 },
-    { "id": "brazilOrigin", "title": "Scene 03 — Lahir 1993 di Brasil & Pencipta Lua", "duration": 400 },
-    { "id": "lightweightConfig", "title": "Scene 04 — Ringan, Fleksibel & Mudah Disisipkan", "duration": 350 },
-    { "id": "moonName", "title": "Scene 05 — Fun Fact: Lua Berarti Bulan", "duration": 340 },
-    { "id": "gameWorldEnter", "title": "Scene 06 — Masuk ke Dunia Game!", "duration": 90 },
-    { "id": "robloxLuau", "title": "Scene 07 — Roblox Studio & Script Luau", "duration": 264 },
-    { "id": "otherGames", "title": "Scene 08 — Montage WoW, Angry Birds, Factorio, GMod", "duration": 296 },
-    { "id": "journeyMeme", "title": "Scene 09 — Dari Proyek Teknik ke NPC Ngejar Player", "duration": 204 },
-    { "id": "closing", "title": "Scene 10 — Small But Powerful & Closing CTA", "duration": 306 }
+    { "id": "hook", "title": "Scene 01 — Bahasa Perl & Misteri Logo Onta", "duration": 279 },
+    { "id": "larryOrigin", "title": "Scene 02 — Larry Wall & Rilis 1987", "duration": 252 },
+    { "id": "textProblem", "title": "Scene 03 — Kesulitan Olah Teks & Laporan", "duration": 209 },
+    { "id": "makeOwnLang", "title": "Scene 04 — Kenapa Nggak Bikin Bahasa Sendiri?!", "duration": 121 },
+    { "id": "oldDevMeme", "title": "Scene 05 — Dev Zaman Dulu: Bikin Sendiri!", "duration": 186 },
+    { "id": "perlPowers", "title": "Scene 06 — Teks, Otomatisasi, Sysadmin & Web", "duration": 183 },
+    { "id": "enterpriseUsers", "title": "Scene 07 — Dipakai Amazon & Morgan Stanley", "duration": 144 },
+    { "id": "whyStrong", "title": "Scene 08 — Kuat, Fleksibel & Gabung Tools", "duration": 210 },
+    { "id": "camelBook", "title": "Scene 09 — Asal-Usul Maskot Onta 1991", "duration": 382 },
+    { "id": "programmerZoo", "title": "Scene 10 — Python Ular vs Perl Onta: Kebun Binatang!", "duration": 188 },
+    { "id": "closing", "title": "Scene 11 — Swiss Army Chainsaw & Closing CTA", "duration": 318 }
   ]
 }

@@ -12,7 +12,7 @@ export type CaptionCue = {
 };
 
 /**
- * Clean Motion-Graphics Burn-In Subtitles (Space Grotesk + Active Word Highlight).
+ * Clean Motion-Graphics Burn-In Subtitles (Space Grotesk + Perl Teal / Camel Gold Active Highlight).
  */
 export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
   const frame = useCurrentFrame();
@@ -47,7 +47,7 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
     >
       <div
         style={{
-          background: "rgba(5, 9, 41, 0.92)",
+          background: "rgba(4, 21, 39, 0.93)",
           color: C.white,
           fontFamily: FONT.display,
           fontWeight: 700,
@@ -57,8 +57,8 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
           textAlign: "center",
           padding: "16px 30px",
           borderRadius: 22,
-          border: "1.5px solid rgba(96, 165, 250, 0.28)",
-          boxShadow: "0 22px 48px rgba(5, 9, 41, 0.34)",
+          border: "1.5px solid rgba(56, 189, 248, 0.32)",
+          boxShadow: "0 22px 48px rgba(4, 21, 39, 0.38)",
           maxWidth: 940,
         }}
       >
@@ -75,15 +75,15 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
                 margin: "0 5px",
                 padding: isHi && isCurrent ? "1px 12px" : isHi ? "0 4px" : undefined,
                 borderRadius: isHi && isCurrent ? 10 : undefined,
-                background: isHi && isCurrent ? C.luaBlue : undefined,
+                background: isHi && isCurrent ? C.perlTeal : undefined,
                 fontFamily: FONT.display,
                 fontWeight: isHi ? 800 : 700,
                 color: isHi
                   ? isCurrent
-                    ? C.white
-                    : C.luaSky
+                    ? C.camelSand
+                    : C.camelGold
                   : isCurrent
-                    ? "#E2E8F0"
+                    ? C.perlSky
                     : "rgba(255,255,255,0.88)",
                 transform: `scale(${(0.88 + 0.12 * wPop) * (isCurrent ? 1.06 : 1)})`,
               }}

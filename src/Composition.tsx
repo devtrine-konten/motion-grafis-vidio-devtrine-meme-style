@@ -4,28 +4,30 @@ import timelineData from "./timeline-data.json";
 import { AUDIO, C } from "./theme";
 import { lerp } from "./lib/anim";
 import { BLINK_DURATION, BlinkWipe } from "./components/Transition";
-import { Scene01RobloxHook } from "./scenes/Scene01RobloxHook";
-import { Scene02LuaReveal } from "./scenes/Scene02LuaReveal";
-import { Scene03BrazilOrigin } from "./scenes/Scene03BrazilOrigin";
-import { Scene04LightweightConfig } from "./scenes/Scene04LightweightConfig";
-import { Scene05MoonName } from "./scenes/Scene05MoonName";
-import { Scene06GameWorldEnter } from "./scenes/Scene06GameWorldEnter";
-import { Scene07RobloxLuau } from "./scenes/Scene07RobloxLuau";
-import { Scene08OtherGamesMontage } from "./scenes/Scene08OtherGamesMontage";
-import { Scene09JourneyMeme } from "./scenes/Scene09JourneyMeme";
-import { Scene10SmallButPowerfulClosing } from "./scenes/Scene10SmallButPowerfulClosing";
+import { Scene01PerlHook } from "./scenes/Scene01PerlHook";
+import { Scene02LarryWall1987 } from "./scenes/Scene02LarryWall1987";
+import { Scene03TextReportProblem } from "./scenes/Scene03TextReportProblem";
+import { Scene04MakeOwnLanguage } from "./scenes/Scene04MakeOwnLanguage";
+import { Scene05OldDevRelateMeme } from "./scenes/Scene05OldDevRelateMeme";
+import { Scene06PerlCapabilities } from "./scenes/Scene06PerlCapabilities";
+import { Scene07AmazonMorganStanley } from "./scenes/Scene07AmazonMorganStanley";
+import { Scene08WhyPerlStrong } from "./scenes/Scene08WhyPerlStrong";
+import { Scene09CamelBookOrigin } from "./scenes/Scene09CamelBookOrigin";
+import { Scene10ProgrammerZooMeme } from "./scenes/Scene10ProgrammerZooMeme";
+import { Scene11SwissArmyChainsawClosing } from "./scenes/Scene11SwissArmyChainsawClosing";
 
 const SCENE_COMPONENTS: Record<string, React.FC> = {
-  hook: Scene01RobloxHook,
-  luaReveal: Scene02LuaReveal,
-  brazilOrigin: Scene03BrazilOrigin,
-  lightweightConfig: Scene04LightweightConfig,
-  moonName: Scene05MoonName,
-  gameWorldEnter: Scene06GameWorldEnter,
-  robloxLuau: Scene07RobloxLuau,
-  otherGames: Scene08OtherGamesMontage,
-  journeyMeme: Scene09JourneyMeme,
-  closing: Scene10SmallButPowerfulClosing,
+  hook: Scene01PerlHook,
+  larryOrigin: Scene02LarryWall1987,
+  textProblem: Scene03TextReportProblem,
+  makeOwnLang: Scene04MakeOwnLanguage,
+  oldDevMeme: Scene05OldDevRelateMeme,
+  perlPowers: Scene06PerlCapabilities,
+  enterpriseUsers: Scene07AmazonMorganStanley,
+  whyStrong: Scene08WhyPerlStrong,
+  camelBook: Scene09CamelBookOrigin,
+  programmerZoo: Scene10ProgrammerZooMeme,
+  closing: Scene11SwissArmyChainsawClosing,
 };
 
 let cursor = 0;
@@ -34,14 +36,14 @@ export const TIMELINE = timelineData.scenes.map((s) => {
   cursor += s.duration;
   return { ...s, from };
 });
-export const TOTAL_FRAMES = cursor; // 2640 frames = 88.0s @ 30fps
+export const TOTAL_FRAMES = cursor; // 2472 frames = 82.4s @ 30fps
 
 export const MainComposition: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
         backgroundColor: C.black,
-        overflow: "hidden"
+        overflow: "hidden",
       }}
     >
       {/* Background Music with loop + automatic fade-in/out */}
@@ -61,7 +63,7 @@ export const MainComposition: React.FC = () => {
         volume={AUDIO.vo}
       />
 
-      {/* 10 Modular Lua EP.03 Scenes (Vox + Meme + Devtrine Mascot) */}
+      {/* 11 Modular Perl EP.04 Scenes (Unix Blueprint + Camel Oasis + Meme + Devtrine Mascot) */}
       {TIMELINE.map((sc) => {
         const Comp = SCENE_COMPONENTS[sc.id];
         return (
@@ -83,7 +85,7 @@ export const MainComposition: React.FC = () => {
         </Sequence>
       ))}
 
-      {/* Persistent Devtrine Studio Brand Pill (Top-Right Safe Area — Ref 1 & 2 Soft Studio Badge) */}
+      {/* Persistent Devtrine Studio Brand Badge (Top-Right Safe Area) */}
       <div
         style={{
           position: "absolute",
@@ -92,9 +94,9 @@ export const MainComposition: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "rgba(255, 255, 255, 0.92)",
-          border: "1.5px solid rgba(20, 22, 28, 0.12)",
-          boxShadow: "0 14px 30px rgba(0, 0, 0, 0.16)",
+          background: "rgba(255, 255, 255, 0.94)",
+          border: "2px solid rgba(0, 115, 161, 0.22)",
+          boxShadow: "0 14px 30px rgba(4, 21, 39, 0.18)",
           borderRadius: "50%",
           width: 78,
           height: 78,

@@ -1,4 +1,4 @@
-// Voice-Over Synchronizer for Devtrine Studio — Episode 03: Sejarah Lua (88.0s)
+// Voice-Over Synchronizer for Devtrine Studio — Episode 04: Sejarah Bahasa Pemrograman Perl (82.4s / 2472 frames)
 // Uses `public/audio/vo/vo-synced.wav` directly as the master VO track.
 
 import fs from "node:fs";

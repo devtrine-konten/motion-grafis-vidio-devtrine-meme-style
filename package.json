@@ -8,8 +8,8 @@
     "audio": "node scripts/generate-audio.mjs",
     "vo": "node scripts/sync-vo.mjs",
     "build": "tsc --noEmit && remotion bundle --out-dir=build",
-    "render": "remotion render DevtrineLuaEp03 out/devtrine-sejarah-lua-ep03.mp4",
-    "still": "remotion still DevtrineLuaEp03 out/preview.png --frame=60"
+    "render": "remotion render DevtrinePerlEp04 out/devtrine-sejarah-perl-ep04.mp4",
+    "still": "remotion still DevtrinePerlEp04 out/preview.png --frame=60"
   },
   "dependencies": {
     "@remotion/cli": "4.0.542",

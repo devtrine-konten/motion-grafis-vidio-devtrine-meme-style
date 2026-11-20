@@ -13,7 +13,8 @@ export const FONT = {
 };
 
 /**
- * Devtrine Studio EP.03 Palette — Lua Official Colors (Deep Navy #000080, Cobalt Blue #1D4ED8, Moonlight Sky #60A5FA, Ice #DBEAFE).
+ * Devtrine Studio EP.04 Palette — Official Perl & O'Reilly "Camel Book" Colors
+ * (Perl Cerulean Teal #0073A1, Regex Sky #38BDF8, Unix Terminal Deep #041527, Camel Desert Gold #F59E0B).
  */
 export const C = {
   // Devtrine brand identity (for DevtrineMascot & logo)
@@ -21,33 +22,43 @@ export const C = {
   cyanLight: "#5EE1E6",
   cyanPale: "#D9F7F9",
 
-  // Lua Official Programming Language Palette
-  luaDeep: "#050929",     // Deep midnight Lua space
-  luaNavy: "#000080",     // Official Lua logo navy blue
-  luaBlue: "#1D4ED8",     // Vibrant Lua cobalt blue
-  luaSky: "#60A5FA",      // Moonlight sky blue accent
-  luaIce: "#DBEAFE",      // Pale ice blue tint
-  purple: "#000080",
-  purpleLight: "#DBEAFE",
+  // Official Perl Programming Language & Camel Book Palette
+  perlDeep: "#041527",     // Deep Unix terminal midnight
+  perlTeal: "#0073A1",     // Official O'Reilly "Programming Perl" Camel Book cerulean teal
+  perlBlue: "#0284C7",     // Vibrant Perl cyan-blue
+  perlSky: "#38BDF8",      // Electric regex sky blue
+  perlIce: "#E0F2FE",      // Pale ice blue tint
+  camelGold: "#F59E0B",    // Iconic Perl Camel mascot desert amber/gold
+  camelDark: "#B45309",    // Deep desert bronze
+  camelSand: "#FEF3C7",    // Warm desert oasis sand
 
-  // Crisp Cool Studio Desk & Dot-Matrix Neutrals
-  black: "#070B19",
-  charcoal: "#111827",
-  ink: "#0F172A",
+  // Compatibility aliases used by shared components
+  luaDeep: "#041527",
+  luaNavy: "#0073A1",
+  luaBlue: "#0284C7",
+  luaSky: "#38BDF8",
+  luaIce: "#E0F2FE",
+  purple: "#0073A1",
+  purpleLight: "#E0F2FE",
+
+  // Crisp Unix Terminal & Blueprint Studio Neutrals
+  black: "#030D1A",
+  charcoal: "#0F172A",
+  ink: "#091326",
   slate: "#475569",
-  paper: "#EEF2F7",
-  paperGrid: "#DCE3EE",
+  paper: "#F1F5F9",
+  paperGrid: "#DCE5F0",
   white: "#F8FAFC",
 
   // Functional Accents
-  yellow: "#FACC15",
+  yellow: "#F59E0B",
   red: "#E11D48",
-  green: "#16A34A",
-  kraft: "#C69C6D",
-  sepia: "#ECE8DF",
+  green: "#10B981",
+  kraft: "#D4A373",
+  sepia: "#EFECE6",
   sepiaDark: "#4B483F",
   sepiaInk: "#1B1A17",
-  sepiaRed: "#1D4ED8",
+  sepiaRed: "#0073A1",
 };
 
 export const W = 1080;

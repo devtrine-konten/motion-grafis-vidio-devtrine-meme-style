@@ -1,10 +1,10 @@
 import React from "react";
-import { Img, staticFile, useCurrentFrame } from "remotion";
+import { useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
 import { easeOut, lerp, spr } from "../lib/anim";
 
 /**
- * 3D Red Pushpin SVG.
+ * 3D Amber/Gold & Teal Pushpin SVG.
  */
 export const RedPushpin: React.FC<{ size?: number; style?: React.CSSProperties }> = ({ size = 44, style }) => (
   <svg
@@ -16,15 +16,15 @@ export const RedPushpin: React.FC<{ size?: number; style?: React.CSSProperties }
     <ellipse cx={16} cy={22} rx={12} ry={5} transform="rotate(32 16 22)" fill="rgba(0,0,0,0.28)" style={{ filter: "blur(2px)" }} />
     <line x1={0} y1={8} x2={16} y2={22} stroke="rgba(0,0,0,0.32)" strokeWidth={5} strokeLinecap="round" />
     <line x1={0} y1={4} x2={0} y2={15} stroke="#64748B" strokeWidth={3.5} strokeLinecap="round" />
-    <ellipse cx={0} cy={4} rx={11} ry={8} fill="#9F1239" />
-    <path d="M -9,-8 L -11,4 L 11,4 L 9,-8 Z" fill="#BE123C" />
-    <circle cx={0} cy={-9} r={12.5} fill={C.red} />
-    <ellipse cx={-4} cy={-13} rx={5} ry={3} transform="rotate(-20 -4 -13)" fill="rgba(255,255,255,0.55)" />
+    <ellipse cx={0} cy={4} rx={11} ry={8} fill="#B45309" />
+    <path d="M -9,-8 L -11,4 L 11,4 L 9,-8 Z" fill="#D97706" />
+    <circle cx={0} cy={-9} r={12.5} fill={C.camelGold} />
+    <ellipse cx={-4} cy={-13} rx={5} ry={3} transform="rotate(-20 -4 -13)" fill="rgba(255,255,255,0.6)" />
   </svg>
 );
 
 /**
- * Animated 2D Game Character (for NPC Chases, Programmer illustrations, etc.)
+ * Animated 2D Character (for Unix Coder, Sysadmin, etc.)
  */
 export const MiniCharacter: React.FC<{
   kind: "npc" | "player" | "coder";
@@ -39,34 +39,9 @@ export const MiniCharacter: React.FC<{
   const armSwing = running ? Math.cos(frame * 0.65) * 32 : 0;
   const bob = running ? Math.abs(Math.sin(frame * 0.65)) * -7 : Math.sin(frame * 0.14) * 3;
 
-  if (kind === "player") {
-    // Animated running Roblox Noob player character with swinging legs/sweat
-    return (
-      <div
-        style={{
-          position: "absolute",
-          left: x,
-          top: y + bob,
-          transform: `translate(-50%, -50%) scale(${scale * facing}, ${scale}) rotate(${running ? 10 : 0}deg)`,
-          width: 82,
-          height: 92,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          filter: "drop-shadow(0 10px 16px rgba(0,0,0,0.38))",
-        }}
-      >
-        <Img
-          src={staticFile("image-vidio/lua/roblox-noob.png")}
-          style={{ width: "100%", height: "100%", objectFit: "contain" }}
-        />
-      </div>
-    );
-  }
-
-  const headCol = kind === "npc" ? C.red : C.luaSky;
-  const bodyCol = kind === "npc" ? "#991B1B" : C.luaBlue;
-  const eyeCol = kind === "npc" ? "#FEF08A" : C.luaDeep;
+  const headCol = kind === "npc" ? C.red : C.perlSky;
+  const bodyCol = kind === "npc" ? "#991B1B" : C.perlTeal;
+  const eyeCol = kind === "npc" ? "#FEF08A" : C.perlDeep;
 
   return (
     <svg
@@ -82,22 +57,16 @@ export const MiniCharacter: React.FC<{
         filter: "drop-shadow(0 10px 16px rgba(0,0,0,0.35))",
       }}
     >
-      {/* Back Leg */}
       <line x1={-6} y1={14} x2={-6 - legSwing * 0.55} y2={42} stroke={C.white} strokeWidth={9} strokeLinecap="round" />
-      {/* Back Arm */}
       <line x1={-12} y1={-12} x2={-28 + armSwing * 0.5} y2={8} stroke={headCol} strokeWidth={8} strokeLinecap="round" />
-      {/* Torso */}
       <rect x={-18} y={-22} width={36} height={40} rx={10} fill={bodyCol} stroke={C.white} strokeWidth={2.5} />
-      {/* Head */}
       <rect x={-22} y={-58} width={44} height={38} rx={12} fill={headCol} stroke={C.white} strokeWidth={2.5} />
-      {/* Expressive Eyes */}
       {kind === "npc" ? (
         <>
           <polygon points="-14,-44 -2,-38 -14,-34" fill={eyeCol} />
           <polygon points="14,-44 2,-38 14,-34" fill={eyeCol} />
           <path d="M -10,-28 L 10,-28" stroke={C.white} strokeWidth={3} strokeLinecap="round" />
-          {/* Floating Alert ! */}
-          <text x={24} y={-50} fontFamily={FONT.sans} fontWeight={900} fontSize={26} fill={C.yellow}>!</text>
+          <text x={24} y={-50} fontFamily={FONT.sans} fontWeight={900} fontSize={26} fill={C.camelGold}>!</text>
         </>
       ) : (
         <>
@@ -106,16 +75,14 @@ export const MiniCharacter: React.FC<{
           <path d="M -6,-30 Q 0,-26 6,-30" fill="none" stroke={eyeCol} strokeWidth={3} strokeLinecap="round" />
         </>
       )}
-      {/* Front Leg */}
       <line x1={8} y1={14} x2={8 + legSwing * 0.55} y2={42} stroke={C.white} strokeWidth={9} strokeLinecap="round" />
-      {/* Front Arm */}
       <line x1={14} y1={-12} x2={34 - armSwing * 0.5} y2={-2} stroke={headCol} strokeWidth={8} strokeLinecap="round" />
     </svg>
   );
 };
 
 /**
- * Tactile Studio Paper Card & Lua Navy Hero Card.
+ * Perl Unix Blueprint Window & Cerulean Terminal Hero Card.
  */
 export const ExplainCard: React.FC<{
   title?: string;
@@ -164,8 +131,8 @@ export const ExplainCard: React.FC<{
   const cardBackground = dark
     ? bg && bg !== C.black && bg !== "#121622" && bg !== "#0D1436" && bg !== "#0C1333" && bg !== "#0E121D"
       ? bg
-      : "linear-gradient(145deg, #1E3A8A 0%, #000080 54%, #050929 100%)"
-    : "#F6F8FC";
+      : "linear-gradient(145deg, #03537B 0%, #0073A1 46%, #041527 100%)"
+    : "#F8FAFC";
 
   return (
     <div
@@ -178,14 +145,14 @@ export const ExplainCard: React.FC<{
         transform: `translate(-50%, -50%) scale(${(0.88 + 0.12 * pop) * out}) rotate(${rotate}deg)`,
         filter: blurAmt > 0.3 ? `blur(${blurAmt.toFixed(1)}px)` : undefined,
         background: cardBackground,
-        borderRadius: dark ? 32 : 18,
+        borderRadius: dark ? 30 : 22,
         border: dark
-          ? "1.5px solid rgba(96, 165, 250, 0.30)"
-          : "1.5px solid rgba(0, 0, 128, 0.14)",
+          ? "2px solid rgba(56, 189, 248, 0.36)"
+          : "2px solid rgba(0, 115, 161, 0.22)",
         boxShadow: dark
-          ? "0 34px 70px rgba(5, 9, 41, 0.45), 0 10px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(219,234,254,0.22)"
-          : "0 30px 60px rgba(5, 9, 41, 0.16), 0 8px 20px rgba(5, 9, 41, 0.08)",
-        padding: "42px 36px 32px",
+          ? "0 34px 70px rgba(4, 21, 39, 0.48), 0 10px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(224,242,254,0.25)"
+          : "0 28px 56px rgba(4, 21, 39, 0.15), 0 10px 0 rgba(0, 115, 161, 0.12)",
+        padding: "54px 36px 32px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -194,11 +161,55 @@ export const ExplainCard: React.FC<{
         overflow: "visible",
       }}
     >
+      {/* Minimal Top Window Bar (3 Dots only — zero text clutter) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 38,
+          borderTopLeftRadius: dark ? 28 : 20,
+          borderTopRightRadius: dark ? 28 : 20,
+          background: dark ? "rgba(4, 21, 39, 0.45)" : "rgba(0, 115, 161, 0.06)",
+          borderBottom: dark ? "1px solid rgba(56,189,248,0.18)" : "1px solid rgba(0,115,161,0.12)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 20px",
+          zIndex: 15,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ width: 11, height: 11, borderRadius: "50%", background: "#EF4444" }} />
+          <div style={{ width: 11, height: 11, borderRadius: "50%", background: "#F59E0B" }} />
+          <div style={{ width: 11, height: 11, borderRadius: "50%", background: "#10B981" }} />
+        </div>
+        {badge && (
+          <div
+            style={{
+              fontFamily: FONT.mono,
+              fontWeight: 700,
+              fontSize: 14,
+              color: dark ? "rgba(224,242,254,0.75)" : C.perlTeal,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            {badgeIcon}
+            <span>{badge}</span>
+          </div>
+        )}
+        <div style={{ width: 36 }} />
+      </div>
+
+      {/* Inner Blueprint Texture & Watermark */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          borderRadius: dark ? 32 : 18,
+          borderRadius: dark ? 30 : 22,
           overflow: "hidden",
           pointerEvents: "none",
           zIndex: 0,
@@ -211,99 +222,29 @@ export const ExplainCard: React.FC<{
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(rgba(0,0,128,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,128,0.05) 1px, transparent 1px)",
-                backgroundSize: "42px 42px",
+                  "linear-gradient(rgba(0,115,161,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,115,161,0.05) 1px, transparent 1px)",
+                backgroundSize: "40px 40px",
               }}
             />
             <svg width={w} height={h} style={{ position: "absolute", inset: 0 }}>
-              <line x1={0} y1={h * 0.18} x2={w} y2={h * 0.88} stroke="rgba(0,0,128,0.12)" strokeWidth={1.8} />
-              <line x1={w} y1={h * 0.22} x2={0} y2={h * 0.85} stroke="rgba(0,0,128,0.12)" strokeWidth={1.8} />
+              <line x1={0} y1={h * 0.22} x2={w} y2={h * 0.88} stroke="rgba(0,115,161,0.09)" strokeWidth={1.6} />
+              <line x1={w} y1={h * 0.24} x2={0} y2={h * 0.85} stroke="rgba(245,158,11,0.12)" strokeWidth={1.6} />
             </svg>
           </>
         ) : (
-          <>
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: "radial-gradient(circle at 75% 20%, rgba(96, 165, 250, 0.28) 0%, transparent 60%)",
-              }}
-            />
-            {(watermark || badge) && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  left: 28,
-                  right: 28,
-                  textAlign: "center",
-                  fontFamily: FONT.sans,
-                  fontWeight: 800,
-                  fontSize: 96,
-                  letterSpacing: "-0.05em",
-                  color: "rgba(255, 255, 255, 0.065)",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  lineHeight: 1,
-                }}
-              >
-                {watermark ?? badge?.split("·")[0]}
-              </div>
-            )}
-          </>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(circle at 75% 22%, rgba(56, 189, 248, 0.24) 0%, transparent 58%)",
+            }}
+          />
         )}
       </div>
 
       {usePaperStyle && (
         <div style={{ position: "absolute", top: -22, left: "50%", transform: "translateX(-50%)", zIndex: 30 }}>
-          <RedPushpin size={42} />
-        </div>
-      )}
-
-      {!dark && (
-        <svg
-          width={86}
-          height={86}
-          viewBox="0 0 86 86"
-          style={{ position: "absolute", right: -1, bottom: -1, pointerEvents: "none", zIndex: 25 }}
-        >
-          <defs>
-            <linearGradient id="curlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#FFFFFF" />
-              <stop offset="55%" stopColor="#E2E8F0" />
-              <stop offset="100%" stopColor="#CBD5E1" />
-            </linearGradient>
-          </defs>
-          <path d="M 8,86 Q 42,46 86,8 L 86,86 Z" fill="rgba(0,0,0,0.16)" />
-          <path d="M 14,86 Q 28,28 86,14 Q 52,52 14,86 Z" fill="url(#curlGrad)" stroke="rgba(0,0,0,0.12)" strokeWidth={1} />
-        </svg>
-      )}
-
-      {badge && (
-        <div
-          style={{
-            position: "absolute",
-            top: usePaperStyle ? 16 : -20,
-            left: usePaperStyle ? 24 : undefined,
-            background: dark ? C.white : "rgba(0, 0, 128, 0.07)",
-            color: C.charcoal,
-            fontFamily: FONT.mono,
-            fontWeight: 800,
-            fontSize: 17,
-            letterSpacing: "0.06em",
-            padding: "6px 16px",
-            borderRadius: 999,
-            boxShadow: dark ? "0 10px 24px rgba(0,0,0,0.25)" : "none",
-            border: dark ? "none" : "1px solid rgba(0,0,128,0.12)",
-            whiteSpace: "nowrap",
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            zIndex: 26,
-          }}
-        >
-          {badgeIcon}
-          <span>{badge}</span>
+          <RedPushpin size={40} />
         </div>
       )}
 
@@ -314,7 +255,7 @@ export const ExplainCard: React.FC<{
             fontWeight: 800,
             fontSize: 28,
             color: dark ? C.white : C.charcoal,
-            marginBottom: 16,
+            marginBottom: 14,
             textAlign: "center",
             zIndex: 5,
           }}
@@ -333,7 +274,6 @@ export const ExplainCard: React.FC<{
           justifyContent: "center",
           position: "relative",
           zIndex: 5,
-          marginTop: usePaperStyle && badge ? 18 : 0,
         }}
       >
         {children}
@@ -343,7 +283,7 @@ export const ExplainCard: React.FC<{
 };
 
 /**
- * Pinned Photo Cutout Card (Clean Space Grotesk + Inter Tight).
+ * Pinned Photo Cutout Card (Perl Teal & Camel Gold Accent).
  */
 export const VoxCutout: React.FC<{
   children: React.ReactNode;
@@ -388,9 +328,9 @@ export const VoxCutout: React.FC<{
         transform: `translate(-50%, -50%) scale(${(0.86 + 0.14 * pop) * out}) rotate(${rotate}deg)`,
         filter: blurAmt > 0.3 ? `blur(${blurAmt.toFixed(1)}px)` : undefined,
         background: "#F8FAFC",
-        border: "1px solid rgba(0, 0, 128, 0.14)",
-        borderRadius: 14,
-        boxShadow: "0 24px 48px rgba(5, 9, 41, 0.22), 0 6px 14px rgba(5, 9, 41, 0.10)",
+        border: "2px solid rgba(0, 115, 161, 0.24)",
+        borderRadius: 16,
+        boxShadow: "0 24px 48px rgba(4, 21, 39, 0.22), 0 6px 14px rgba(4, 21, 39, 0.10)",
         padding: "12px 12px 14px",
         zIndex,
       }}
@@ -399,7 +339,7 @@ export const VoxCutout: React.FC<{
         <RedPushpin size={34} />
       </div>
 
-      <div style={{ width: "100%", height: h, borderRadius: 8, overflow: "hidden", background: C.black }}>
+      <div style={{ width: "100%", height: h, borderRadius: 10, overflow: "hidden", background: C.perlDeep }}>
         {children}
       </div>
       {caption && (
@@ -423,7 +363,7 @@ export const VoxCutout: React.FC<{
                 fontFamily: FONT.mono,
                 fontWeight: 700,
                 fontSize: 14,
-                color: C.luaBlue,
+                color: C.perlTeal,
                 marginTop: 3,
               }}
             >
@@ -437,7 +377,7 @@ export const VoxCutout: React.FC<{
 };
 
 /**
- * Connected Vertical Node Tree in Lua Navy & Space Grotesk (zero AI-slop serif).
+ * Connected Vertical Pipeline Node Tree in Perl Teal & Camel Gold.
  */
 export const NodeTreeList: React.FC<{
   items: { label: string; sub?: string; at: number; highlight?: boolean }[];
@@ -446,16 +386,17 @@ export const NodeTreeList: React.FC<{
   color?: string;
   dotColor?: string;
   textColor?: string;
+  rowGap?: number;
 }> = ({
   items,
   x = 120,
   y = 780,
-  color = C.luaNavy,
-  dotColor = C.luaBlue,
+  color = C.perlTeal,
+  dotColor = C.perlBlue,
   textColor = C.charcoal,
+  rowGap = 70,
 }) => {
   const frame = useCurrentFrame();
-  const rowGap = 70;
 
   return (
     <div style={{ position: "absolute", left: x, top: y, zIndex: 24 }}>
@@ -494,8 +435,10 @@ export const NodeTreeList: React.FC<{
                 width: 26,
                 height: 26,
                 borderRadius: "50%",
-                background: item.highlight ? C.luaSky : dotColor,
-                boxShadow: "0 0 0 5px rgba(29, 78, 216, 0.16)",
+                background: item.highlight ? C.camelGold : dotColor,
+                boxShadow: item.highlight
+                  ? "0 0 0 5px rgba(245, 158, 11, 0.22)"
+                  : "0 0 0 5px rgba(0, 115, 161, 0.18)",
                 transform: `scale(${p})`,
                 flexShrink: 0,
               }}
@@ -514,7 +457,7 @@ export const NodeTreeList: React.FC<{
                 style={{
                   fontFamily: FONT.sans,
                   fontWeight: 800,
-                  fontSize: 34,
+                  fontSize: 33,
                   letterSpacing: "-0.03em",
                   color: textColor,
                 }}
@@ -526,8 +469,8 @@ export const NodeTreeList: React.FC<{
                   style={{
                     fontFamily: FONT.display,
                     fontWeight: 600,
-                    fontSize: 25,
-                    color: C.luaBlue,
+                    fontSize: 24,
+                    color: C.perlTeal,
                   }}
                 >
                   — {item.sub}
@@ -542,13 +485,13 @@ export const NodeTreeList: React.FC<{
 };
 
 /**
- * 4-Piece Interlocking Jigsaw Puzzle Assembly in Official Lua Navy (#000080).
+ * 4-Piece Interlocking Jigsaw Puzzle Assembly in Perl Teal (#0073A1).
  */
 export const PuzzleGrid: React.FC<{
   at?: number;
   letter?: string;
   sublabel?: string;
-}> = ({ at = 10, letter = "LUA", sublabel = "app_config = { auto = true }" }) => {
+}> = ({ at = 10, letter = "PERL", sublabel = "$report =~ s/raw/clean/g;" }) => {
   const frame = useCurrentFrame();
   const join = lerp(frame, [at, at + 36], [1, 0], easeOut);
   const rot = join * 18;
@@ -569,16 +512,16 @@ export const PuzzleGrid: React.FC<{
             <g
               key={i}
               transform={`translate(${p.dx}, ${p.dy}) rotate(${p.r} 150 150)`}
-              style={{ filter: "drop-shadow(0 18px 28px rgba(0, 0, 128, 0.28))" }}
+              style={{ filter: "drop-shadow(0 18px 28px rgba(0, 115, 161, 0.30))" }}
             >
-              <path d={p.path} fill="#07124A" stroke="rgba(96, 165, 250, 0.45)" strokeWidth={2.5} />
+              <path d={p.path} fill={C.perlTeal} stroke="rgba(245, 158, 11, 0.65)" strokeWidth={2.5} />
               <text
                 x={150}
                 y={182}
                 textAnchor="middle"
                 fontFamily={FONT.sans}
                 fontWeight={900}
-                fontSize={108}
+                fontSize={96}
                 fill={C.white}
                 letterSpacing="-0.04em"
               >
@@ -593,9 +536,9 @@ export const PuzzleGrid: React.FC<{
           fontFamily: FONT.mono,
           fontWeight: 700,
           fontSize: 22,
-          color: C.luaNavy,
-          background: "rgba(29, 78, 216, 0.09)",
-          border: "1.5px solid rgba(29, 78, 216, 0.25)",
+          color: C.perlDeep,
+          background: "rgba(0, 115, 161, 0.10)",
+          border: "1.5px solid rgba(0, 115, 161, 0.28)",
           padding: "10px 24px",
           borderRadius: 999,
         }}
