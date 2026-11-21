@@ -6,7 +6,7 @@ import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
 import { ExplainCard } from "../components/Explainers";
-import { IconHelp, IconSparkles } from "../components/Icons";
+import { IconHelp } from "../components/Icons";
 import { Header } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
@@ -109,15 +109,14 @@ export const Scene04MakeOwnLanguage: React.FC = () => {
                   gap: 14,
                 }}
               >
-                <IconSparkles size={42} color={C.perlDeep} />
                 <span>BIKIN SENDIRI!</span>
               </div>
             </div>
           )}
         </ExplainCard>
 
-        <MemeSticker src="memes/kesalahan_berpikir.jpg" x={205} y={1245} w={255} h={235} at={8} until={57} rotate={-5} />
-        <MemeSticker src="memes/let_him_cook.jpg" x={875} y={1245} w={270} h={245} at={58} rotate={4} />
+        <MemeSticker src="memes/berpikir.jpg" x={205} y={1245} w={255} h={235} at={8} until={57} rotate={-5} />
+        <MemeSticker src="memes/him-cook.jpg" x={875} y={1245} w={270} h={260} at={58} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

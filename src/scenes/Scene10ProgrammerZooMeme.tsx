@@ -6,7 +6,6 @@ import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
 import { ExplainCard } from "../components/Explainers";
-import { IconSparkles } from "../components/Icons";
 import { Header } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
@@ -66,7 +65,7 @@ export const Scene10ProgrammerZooMeme: React.FC = () => {
               {/* Right: Perl Camel Logo */}
               <div
                 style={{
-                  background: "linear-gradient(145deg, #041527 0%, #0073A1 65%, #03537B 100%)",
+                  background: C.perlDeep,
                   border: `3px solid ${C.camelGold}`,
                   borderRadius: 26,
                   padding: 24,
@@ -112,15 +111,14 @@ export const Scene10ProgrammerZooMeme: React.FC = () => {
                   zIndex: 30,
                 }}
               >
-                <IconSparkles size={36} color={C.perlDeep} />
                 <span>KEBUN BINATANG!</span>
               </div>
             )}
           </div>
         </ExplainCard>
 
-        <MemeSticker src="memes/walawe.jpg" x={205} y={1245} w={265} h={250} at={12} until={97} rotate={-5} />
-        <MemeSticker src="memes/pura.jpg" x={875} y={1245} w={275} h={285} at={98} rotate={4} />
+        <MemeSticker src="memes/walawe.jpg" x={205} y={1245} w={265} h={270} at={12} until={97} rotate={-5} />
+        <MemeSticker src="memes/edan.jpg" x={875} y={1320} w={290} h={285} at={98} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}
@@ -150,7 +148,7 @@ export const Scene10ProgrammerZooMeme: React.FC = () => {
       <Sfx name="pop" at={9} volume={0.85} />
       <Sfx name="boing" at={56} volume={0.85} />
       <Sfx name="goofy_horn" at={98} volume={0.85} duration={34} />
-      <Sfx name="meme_haha" at={154} volume={0.8} duration={30} />
+      <Sfx name="hahahaha" at={154} volume={0.8} duration={30} />
     </Background>
   );
 };

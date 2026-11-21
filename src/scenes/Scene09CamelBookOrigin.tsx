@@ -6,7 +6,6 @@ import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
 import { ExplainCard, RedPushpin } from "../components/Explainers";
-import { IconSparkles } from "../components/Icons";
 import { Header } from "../components/KineticTypography";
 import { MemeSticker } from "../components/MemeKit";
 import { Sfx } from "../components/SoundEffect";
@@ -32,7 +31,7 @@ export const Scene09CamelBookOrigin: React.FC = () => {
     (frame >= 302 && frame < 318 ? Math.sin(((frame - 302) / 16) * Math.PI) * -28 : 0);
 
   return (
-    <Background variant="voxPaper" drift={0.9} polaroidMeme="memes/mengapa.jpg">
+    <Background variant="voxPaper" drift={0.9}>
       <Camera scale={camScale} x={shk1.x + shk2.x} y={shk1.y + shk2.y} focusX={540} focusY={725}>
         <Header
           title={isBookReveal ? "Buku Programming Perl (1991)" : "Kenapa Maskotnya Onta?!"}
@@ -141,7 +140,6 @@ export const Scene09CamelBookOrigin: React.FC = () => {
                     fontSize: 40,
                   }}
                 >
-                  <IconSparkles size={36} color={C.perlDeep} />
                   <span>IKONIK!</span>
                 </div>
               )}
@@ -151,7 +149,7 @@ export const Scene09CamelBookOrigin: React.FC = () => {
 
         <MemeSticker src="memes/mengapa.jpg" x={205} y={1245} w={250} h={235} at={16} until={121} rotate={-5} />
         <MemeSticker src="memes/shocked_pikachu.jpg" x={875} y={1245} w={255} h={235} at={124} until={300} rotate={5} />
-        <MemeSticker src="memes/ditawari.jpg" x={875} y={1245} w={260} h={240} at={302} rotate={4} />
+        <MemeSticker src="memes/ok.jpg" x={875} y={1245} w={280} h={260} at={302} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

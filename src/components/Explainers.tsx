@@ -13,7 +13,7 @@ export const RedPushpin: React.FC<{ size?: number; style?: React.CSSProperties }
     viewBox="-30 -26 70 70"
     style={{ overflow: "visible", pointerEvents: "none", ...style }}
   >
-    <ellipse cx={16} cy={22} rx={12} ry={5} transform="rotate(32 16 22)" fill="rgba(0,0,0,0.28)" style={{ filter: "blur(2px)" }} />
+    <ellipse cx={16} cy={22} rx={12} ry={5} transform="rotate(32 16 22)" fill="rgba(0,0,0,0.28)" />
     <line x1={0} y1={8} x2={16} y2={22} stroke="rgba(0,0,0,0.32)" strokeWidth={5} strokeLinecap="round" />
     <line x1={0} y1={4} x2={0} y2={15} stroke="#64748B" strokeWidth={3.5} strokeLinecap="round" />
     <ellipse cx={0} cy={4} rx={11} ry={8} fill="#B45309" />
@@ -24,7 +24,7 @@ export const RedPushpin: React.FC<{ size?: number; style?: React.CSSProperties }
 );
 
 /**
- * Animated 2D Character (for Unix Coder, Sysadmin, etc.)
+ * Animated 2D Unix Programmer Character (solid flat colors, no blue robot reuse).
  */
 export const MiniCharacter: React.FC<{
   kind: "npc" | "player" | "coder";
@@ -35,48 +35,106 @@ export const MiniCharacter: React.FC<{
   facing?: 1 | -1;
   frame?: number;
 }> = ({ kind, x = 0, y = 0, scale = 1, running = true, facing = 1, frame = 0 }) => {
-  const legSwing = running ? Math.sin(frame * 0.65) * 28 : 0;
-  const armSwing = running ? Math.cos(frame * 0.65) * 32 : 0;
-  const bob = running ? Math.abs(Math.sin(frame * 0.65)) * -7 : Math.sin(frame * 0.14) * 3;
+  const legSwing = running ? Math.sin(frame * 0.65) * 20 : 0;
+  const armWave = running ? Math.sin(frame * 0.75) * 14 : Math.sin(frame * 0.18) * 3;
+  const bob = running ? Math.abs(Math.sin(frame * 0.65)) * -6 : Math.sin(frame * 0.14) * 2.5;
 
-  const headCol = kind === "npc" ? C.red : C.perlSky;
-  const bodyCol = kind === "npc" ? "#991B1B" : C.perlTeal;
-  const eyeCol = kind === "npc" ? "#FEF08A" : C.perlDeep;
+  const isNpc = kind === "npc";
+  const shirtCol = isNpc ? C.red : C.camelGold;
+  const shirtTrim = isNpc ? "#991B1B" : C.camelDark;
+  const hairCol = "#1E293B";
+  const skinCol = "#FDBA74";
+  const pantsCol = C.charcoal;
 
   return (
     <svg
-      width={110 * scale}
-      height={120 * scale}
-      viewBox="-55 -70 110 120"
+      width={116 * scale}
+      height={124 * scale}
+      viewBox="-58 -72 116 124"
       style={{
         position: "absolute",
         left: x,
         top: y + bob,
-        transform: `translate(-50%, -50%) scale(${facing}, 1) rotate(${running ? 12 : 0}deg)`,
+        transform: `translate(-50%, -50%) scale(${facing}, 1) rotate(${running ? Math.sin(frame * 0.45) * 6 : 0}deg)`,
         overflow: "visible",
-        filter: "drop-shadow(0 10px 16px rgba(0,0,0,0.35))",
       }}
     >
-      <line x1={-6} y1={14} x2={-6 - legSwing * 0.55} y2={42} stroke={C.white} strokeWidth={9} strokeLinecap="round" />
-      <line x1={-12} y1={-12} x2={-28 + armSwing * 0.5} y2={8} stroke={headCol} strokeWidth={8} strokeLinecap="round" />
-      <rect x={-18} y={-22} width={36} height={40} rx={10} fill={bodyCol} stroke={C.white} strokeWidth={2.5} />
-      <rect x={-22} y={-58} width={44} height={38} rx={12} fill={headCol} stroke={C.white} strokeWidth={2.5} />
-      {kind === "npc" ? (
+      {/* Flat solid ground shadow */}
+      <ellipse cx={0} cy={46} rx={24} ry={5} fill="#CBD5E1" />
+
+      {/* Legs & Sneakers */}
+      <line x1={-8} y1={14} x2={-10 - legSwing * 0.4} y2={38} stroke={pantsCol} strokeWidth={10} strokeLinecap="round" />
+      <line x1={8} y1={14} x2={10 + legSwing * 0.4} y2={38} stroke={pantsCol} strokeWidth={10} strokeLinecap="round" />
+      <rect x={-18 - legSwing * 0.4} y={35} width={14} height={8} rx={4} fill={C.red} />
+      <rect x={4 + legSwing * 0.4} y={35} width={14} height={8} rx={4} fill={C.red} />
+
+      {/* Back Arm */}
+      <path
+        d={`M -18,-10 L ${-32},${running ? -20 - armWave : 4 + armWave}`}
+        fill="none"
+        stroke={shirtTrim}
+        strokeWidth={9}
+        strokeLinecap="round"
+      />
+      <circle cx={-32} cy={running ? -20 - armWave : 4 + armWave} r={5} fill={skinCol} stroke={C.charcoal} strokeWidth={2} />
+
+      {/* Hoodie / Sweater Torso */}
+      <path
+        d="M -20,-18 Q 0,-24 20,-18 L 22,14 Q 22,18 16,18 L -16,18 Q -22,18 -22,14 Z"
+        fill={shirtCol}
+        stroke={C.charcoal}
+        strokeWidth={2.6}
+        strokeLinejoin="round"
+      />
+      {/* Hoodie Pocket & Collar */}
+      <path d="M -10,-18 L 0,-10 L 10,-18" fill="none" stroke={shirtTrim} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+      <rect x={-11} y={2} width={22} height={11} rx={4} fill={shirtTrim} />
+
+      {/* Front Arm */}
+      <path
+        d={`M 18,-10 L ${32},${running ? -22 + armWave : 4 - armWave}`}
+        fill="none"
+        stroke={shirtCol}
+        strokeWidth={9}
+        strokeLinecap="round"
+      />
+      <circle cx={32} cy={running ? -22 + armWave : 4 - armWave} r={5} fill={skinCol} stroke={C.charcoal} strokeWidth={2} />
+
+      {/* Head & Ears */}
+      <circle cx={-21} cy={-38} r={5.5} fill={skinCol} stroke={C.charcoal} strokeWidth={2.2} />
+      <circle cx={21} cy={-38} r={5.5} fill={skinCol} stroke={C.charcoal} strokeWidth={2.2} />
+      <circle cx={0} cy={-40} r={21} fill={skinCol} stroke={C.charcoal} strokeWidth={2.6} />
+
+      {/* Styled Programmer Hair */}
+      <path
+        d="M -22,-42 C -24,-62 -8,-68 6,-65 C 18,-63 24,-54 21,-40 C 16,-48 8,-52 -2,-50 C -11,-48 -17,-46 -22,-42 Z"
+        fill={hairCol}
+        stroke={C.charcoal}
+        strokeWidth={2}
+        strokeLinejoin="round"
+      />
+
+      {/* Rectangular Geek Glasses */}
+      <rect x={-17} y={-46} width={14} height={11} rx={3} fill={C.white} stroke={C.charcoal} strokeWidth={2.6} />
+      <rect x={3} y={-46} width={14} height={11} rx={3} fill={C.white} stroke={C.charcoal} strokeWidth={2.6} />
+      <line x1={-3} y1={-41} x2={3} y2={-41} stroke={C.charcoal} strokeWidth={2.6} />
+
+      {/* Eyes & Expression */}
+      {running ? (
         <>
-          <polygon points="-14,-44 -2,-38 -14,-34" fill={eyeCol} />
-          <polygon points="14,-44 2,-38 14,-34" fill={eyeCol} />
-          <path d="M -10,-28 L 10,-28" stroke={C.white} strokeWidth={3} strokeLinecap="round" />
-          <text x={24} y={-50} fontFamily={FONT.sans} fontWeight={900} fontSize={26} fill={C.camelGold}>!</text>
+          <circle cx={-10} cy={-40.5} r={2.3} fill={C.charcoal} />
+          <circle cx={10} cy={-40.5} r={2.3} fill={C.charcoal} />
+          <ellipse cx={0} cy={-26} rx={5.5} ry={4.5} fill={C.red} stroke={C.charcoal} strokeWidth={2} />
+          {/* Sweat Drop (solid flat) */}
+          <path d="M 27,-54 C 31,-48 33,-44 33,-41 A 5,5 0 0 1 23,-41 C 23,-44 25,-48 27,-54 Z" fill={C.camelSand} stroke={C.charcoal} strokeWidth={2} />
         </>
       ) : (
         <>
-          <circle cx={-8} cy={-40} r={4.5} fill={eyeCol} />
-          <circle cx={8} cy={-40} r={4.5} fill={eyeCol} />
-          <path d="M -6,-30 Q 0,-26 6,-30" fill="none" stroke={eyeCol} strokeWidth={3} strokeLinecap="round" />
+          <circle cx={-10} cy={-40.5} r={2.8} fill={C.charcoal} />
+          <circle cx={10} cy={-40.5} r={2.8} fill={C.charcoal} />
+          <path d="M -5,-27 Q 0,-23 5,-27" fill="none" stroke={C.charcoal} strokeWidth={2.6} strokeLinecap="round" />
         </>
       )}
-      <line x1={8} y1={14} x2={8 + legSwing * 0.55} y2={42} stroke={C.white} strokeWidth={9} strokeLinecap="round" />
-      <line x1={14} y1={-12} x2={34 - armSwing * 0.5} y2={-2} stroke={headCol} strokeWidth={8} strokeLinecap="round" />
     </svg>
   );
 };
@@ -131,7 +189,7 @@ export const ExplainCard: React.FC<{
   const cardBackground = dark
     ? bg && bg !== C.black && bg !== "#121622" && bg !== "#0D1436" && bg !== "#0C1333" && bg !== "#0E121D"
       ? bg
-      : "linear-gradient(145deg, #03537B 0%, #0073A1 46%, #041527 100%)"
+      : C.perlTeal
     : "#F8FAFC";
 
   return (
@@ -215,7 +273,7 @@ export const ExplainCard: React.FC<{
           zIndex: 0,
         }}
       >
-        {!dark ? (
+        {!dark && (
           <>
             <div
               style={{
@@ -231,14 +289,6 @@ export const ExplainCard: React.FC<{
               <line x1={w} y1={h * 0.24} x2={0} y2={h * 0.85} stroke="rgba(245,158,11,0.12)" strokeWidth={1.6} />
             </svg>
           </>
-        ) : (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "radial-gradient(circle at 75% 22%, rgba(56, 189, 248, 0.24) 0%, transparent 58%)",
-            }}
-          />
         )}
       </div>
 

@@ -39,7 +39,7 @@ export const Scene11SwissArmyChainsawClosing: React.FC = () => {
   const bounceY = Math.abs(Math.sin(frame * 0.22)) * -15;
 
   return (
-    <Background variant={isOutro ? "luaNight" : "voxPaper"} drift={1.0} polaroidMeme="memes/bahagia.jpg">
+    <Background variant={isOutro ? "luaNight" : "voxPaper"} drift={1.0}>
       <Camera scale={camScale} x={shk1.x + shk2.x + shkOutro.x} y={shk1.y + shk2.y + shkOutro.y} focusX={540} focusY={780}>
         {/* PART A (0..195): Clean Visual Knife -> Chainsaw */}
         {!isOutro && (
@@ -81,7 +81,7 @@ export const Scene11SwissArmyChainsawClosing: React.FC = () => {
                   style={{
                     width: 370,
                     height: 390,
-                    background: "linear-gradient(145deg, #041527 0%, #0073A1 60%, #03537B 100%)",
+                    background: C.perlDeep,
                     border: `3.5px solid ${C.camelGold}`,
                     borderRadius: 26,
                     padding: 24,
@@ -135,8 +135,8 @@ export const Scene11SwissArmyChainsawClosing: React.FC = () => {
               </div>
             </ExplainCard>
 
-            <MemeSticker src="memes/reaksi_gue.jpg" x={205} y={1245} w={255} h={235} at={18} until={128} rotate={-5} />
-            <MemeSticker src="memes/bahagia.jpg" x={875} y={1245} w={265} h={240} at={129} until={193} rotate={4} />
+            <MemeSticker src="memes/chainsaw.jpg" x={205} y={1245} w={255} h={235} at={18} until={128} rotate={-5} />
+            <MemeSticker src="memes/sigmacat.jpg" x={875} y={1245} w={275} h={260} at={129} until={193} rotate={4} />
 
             <DevtrineMascot
               x={540}

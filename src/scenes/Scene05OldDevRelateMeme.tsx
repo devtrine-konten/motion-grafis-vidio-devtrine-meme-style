@@ -55,9 +55,9 @@ export const Scene05OldDevRelateMeme: React.FC = () => {
                 transform: `scale(${card1Pop})`,
               }}
             >
-              <div style={{ width: 220, height: 220, borderRadius: 20, overflow: "hidden" }}>
+              <div style={{ width: 250, height: 250, overflow: "hidden" }}>
                 <Img
-                  src={staticFile("memes/gak_rispek.jpg")}
+                  src={staticFile("memes/well_well.jpg")}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>
@@ -73,7 +73,7 @@ export const Scene05OldDevRelateMeme: React.FC = () => {
               style={{
                 width: 360,
                 height: 390,
-                background: "linear-gradient(145deg, #041527 0%, #0073A1 65%, #03537B 100%)",
+                background: C.perlDeep,
                 border: `3px solid ${C.camelGold}`,
                 borderRadius: 26,
                 padding: 20,

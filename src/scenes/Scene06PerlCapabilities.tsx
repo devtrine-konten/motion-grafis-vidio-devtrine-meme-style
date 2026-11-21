@@ -82,8 +82,8 @@ export const Scene06PerlCapabilities: React.FC = () => {
           </div>
         </ExplainCard>
 
-        <MemeSticker src="memes/mode_on.jpg" x={205} y={1245} w={250} h={230} at={12} until={100} rotate={-5} />
-        <MemeSticker src="memes/extra_joss.jpg" x={875} y={1245} w={260} h={235} at={101} rotate={4} />
+        <MemeSticker src="memes/fungsi.jpg" x={225} y={1345} w={250} h={250} at={12} until={100} rotate={-5} />
+        <MemeSticker src="memes/well_well.jpg" x={875} y={1245} w={260} h={235} at={101} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

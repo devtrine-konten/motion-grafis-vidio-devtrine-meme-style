@@ -28,7 +28,7 @@ export const Scene07AmazonMorganStanley: React.FC = () => {
     (frame >= 56 && frame < 72 ? Math.sin(((frame - 56) / 16) * Math.PI) * -28 : 0);
 
   return (
-    <Background variant="voxPaper" drift={1.0} polaroidMeme="memes/dana_masuk.jpg">
+    <Background variant="voxPaper" drift={1.0}>
       <Camera scale={camScale} x={shk1.x + shk2.x} y={shk1.y + shk2.y} focusX={540} focusY={725}>
         <Header
           title="Dipakai Amazon & Morgan Stanley!"
@@ -81,8 +81,8 @@ export const Scene07AmazonMorganStanley: React.FC = () => {
           </div>
         </ExplainCard>
 
-        <MemeSticker src="memes/dana_masuk.jpg" x={205} y={1245} w={255} h={235} at={24} until={69} rotate={-5} />
-        <MemeSticker src="memes/sudah_siap_suits.jpg" x={875} y={1245} w={270} h={250} at={70} rotate={4} />
+        <MemeSticker src="memes/reaksi_gue.jpg" x={205} y={1245} w={255} h={235} at={24} until={69} rotate={-5} />
+        <MemeSticker src="memes/survei.jpg" x={875} y={1245} w={270} h={250} at={70} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}

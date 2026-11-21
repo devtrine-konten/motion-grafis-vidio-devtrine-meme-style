@@ -35,7 +35,7 @@ export const Scene03TextReportProblem: React.FC = () => {
   const jitter = frame >= 104 ? Math.sin(frame * 0.55) * 6 : Math.sin(frame * 0.16) * 5;
 
   return (
-    <Background variant="voxPaper" drift={1.0} polaroidMeme="memes/trauma_berat.jpg">
+    <Background variant="voxPaper" drift={1.0}>
       <Camera scale={camScale} x={shk.x} y={shk.y} focusX={540} focusY={725}>
         <Header
           title="Ribet Olah Teks & Laporan!"
@@ -131,7 +131,7 @@ export const Scene03TextReportProblem: React.FC = () => {
                           style={{
                             width: `${show ? fillW : 15}%`,
                             height: "100%",
-                            background: `linear-gradient(90deg, ${C.camelGold} 0%, ${C.red} 100%)`,
+                            background: C.red,
                           }}
                         />
                       </div>
@@ -152,8 +152,8 @@ export const Scene03TextReportProblem: React.FC = () => {
           </div>
         </ExplainCard>
 
-        <MemeSticker src="memes/trauma_berat.jpg" x={205} y={1245} w={255} h={235} at={22} until={103} rotate={-5} />
-        <MemeSticker src="memes/ngejar_deadline.jpg" x={875} y={1245} w={265} h={240} at={104} rotate={4} />
+        <MemeSticker src="memes/yare_yare.jpg" x={205} y={1245} w={255} h={250} at={22} until={103} rotate={-5} />
+        <MemeSticker src="memes/sing_sabar.jpg" x={875} y={1245} w={270} h={270} at={104} rotate={4} />
 
         <DevtrineMascot
           x={mascotX}
@@ -180,8 +180,7 @@ export const Scene03TextReportProblem: React.FC = () => {
       <Sfx name="paper" at={16} volume={0.8} />
       <Sfx name="pop" at={34} volume={0.8} />
       <Sfx name="pop" at={52} volume={0.8} />
-      <Sfx name="error_buzzer" at={106} volume={0.8} duration={20} />
-      <Sfx name="funny_fail" at={145} volume={0.85} duration={26} />
+      <Sfx name="bruh" at={106} volume={0.8} duration={20} />
     </Background>
   );
 };

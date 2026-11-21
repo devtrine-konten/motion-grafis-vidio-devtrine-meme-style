@@ -34,11 +34,11 @@ export const Scene01PerlHook: React.FC = () => {
   const pulse = 1 + Math.sin(frame * 0.22) * 0.035;
 
   return (
-    <Background variant="voxPaper" drift={1.0} polaroidMeme="memes/well_well.jpg">
+    <Background variant="voxPaper" drift={1.0}>
       <Camera scale={camScale} x={shk1.x + shk2.x} y={shk1.y + shk2.y} focusX={540} focusY={740}>
         <Header
-          kicker="SEJARAH BAHASA PEMROGRAMAN · EP.04"
-          title="Bahasa Perl & Logo Onta?!"
+          kicker="SEJARAH BAHASA PEMROGRAMAN · EP.END"
+          title="Sejarah Bahasa Perl"
           highlight={["Perl", "Logo", "Onta?!"]}
         />
 
@@ -86,9 +86,7 @@ export const Scene01PerlHook: React.FC = () => {
               style={{
                 width: 350,
                 height: 390,
-                background: isCamelRevealed
-                  ? "linear-gradient(145deg, #041527 0%, #0073A1 55%, #03537B 100%)"
-                  : "linear-gradient(145deg, #0073A1 0%, #041527 100%)",
+                background: isCamelRevealed ? C.perlDeep : C.perlTeal,
                 borderRadius: 28,
                 border: isCamelRevealed ? `3.5px solid ${C.camelGold}` : "2px solid rgba(56,189,248,0.35)",
                 padding: 24,
@@ -133,7 +131,7 @@ export const Scene01PerlHook: React.FC = () => {
           </div>
         </ExplainCard>
 
-        <MemeSticker src="memes/iki_opo.jpg" x={205} y={1245} w={250} h={230} at={22} until={130} rotate={-5} />
+        <MemeSticker src="memes/iki_opo.jpg" x={205} y={1245} w={250} h={250} at={22} until={130} rotate={-5} />
         <MemeSticker src="memes/kaget.jpg" x={875} y={1245} w={250} h={230} at={131} until={195} rotate={5} />
         <MemeSticker src="memes/wojak_point.jpg" x={875} y={1245} w={265} h={240} at={196} rotate={4} />
 
@@ -168,7 +166,7 @@ export const Scene01PerlHook: React.FC = () => {
       <Sfx name="vine_boom" at={52} volume={0.9} />
       <Sfx name="what_meme" at={131} volume={0.85} duration={32} />
       <Sfx name="thud" at={196} volume={0.95} duration={40} />
-      <Sfx name="meme_haha" at={248} volume={0.75} duration={28} />
+      <Sfx name="hahahaha" at={248} volume={0.75} duration={28} />
     </Background>
   );
 };

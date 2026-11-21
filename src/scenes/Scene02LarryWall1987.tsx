@@ -27,7 +27,7 @@ export const Scene02LarryWall1987: React.FC = () => {
     (frame >= 140 && frame < 158 ? Math.sin(((frame - 140) / 18) * Math.PI) * -32 : 0);
 
   return (
-    <Background variant="voxPaper" drift={0.9} polaroidMeme="memes/maomao.jpg">
+    <Background variant="voxPaper" drift={0.9}>
       <Camera scale={camScale} focusX={540} focusY={725}>
         <Header
           title="Larry Wall & Rilis 1987"
@@ -128,7 +128,7 @@ export const Scene02LarryWall1987: React.FC = () => {
                 style={{
                   width: "100%",
                   height: 225,
-                  background: "linear-gradient(145deg, #041527 0%, #0073A1 65%, #03537B 100%)",
+                  background: C.perlDeep,
                   borderRadius: 22,
                   border: `3px solid ${frame >= 140 ? C.camelGold : "rgba(56,189,248,0.3)"}`,
                   boxShadow: "0 20px 42px rgba(4, 21, 39, 0.28)",
@@ -157,7 +157,7 @@ export const Scene02LarryWall1987: React.FC = () => {
         </ExplainCard>
 
         <MemeSticker src="memes/nerd_cat.jpg" x={205} y={1245} w={250} h={230} at={18} until={138} rotate={-5} />
-        <MemeSticker src="memes/sigmacat.jpg" x={875} y={1245} w={285} h={285} at={140} rotate={5} />
+        <MemeSticker src="memes/ceval.jpg" x={875} y={1245} w={285} h={285} at={140} rotate={5} />
 
         <DevtrineMascot
           x={mascotX}
