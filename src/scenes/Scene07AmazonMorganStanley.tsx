@@ -88,11 +88,20 @@ export const Scene07AmazonMorganStanley: React.FC = () => {
           x={mascotX}
           y={1245 + hop + Math.sin(frame * 0.16) * 6}
           size={156}
-          expression="cool"
-          sunglasses
+          expression={
+            frame < 26
+              ? "curious"
+              : frame < 56
+                ? "shocked"
+                : frame < 96
+                  ? "amazed"
+                  : "cool"
+          }
+          sunglasses={frame >= 96}
+          hat={frame >= 96}
           blink={autoBlink(frame, 10)}
           rotate={Math.sin(frame * 0.14) * 5}
-          lookX={frame < 56 ? -0.3 : 0.3}
+          lookX={frame < 26 ? 0 : frame < 56 ? -0.35 : 0.35}
           lookY={-0.3}
           frame={frame}
           shadow

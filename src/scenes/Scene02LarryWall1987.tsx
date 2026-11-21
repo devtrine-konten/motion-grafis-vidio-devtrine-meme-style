@@ -163,12 +163,22 @@ export const Scene02LarryWall1987: React.FC = () => {
           x={mascotX}
           y={1245 + hop + Math.sin(frame * 0.15) * 6}
           size={156}
-          expression={frame >= 140 ? "salute" : "detective"}
-          magnifyingGlass={frame < 140}
+          expression={
+            frame < 87
+              ? "proud"
+              : frame < 140
+                ? "detective"
+                : frame < 178
+                  ? "amazed"
+                  : "salute"
+          }
+          mustache={frame < 87}
+          hat={frame < 87}
+          magnifyingGlass={frame >= 87 && frame < 140}
           blink={autoBlink(frame, 19)}
           rotate={frame >= 140 ? Math.sin(frame * 0.12) * 4 : -4}
-          lookX={frame >= 140 ? 0.3 : -0.25}
-          lookY={-0.35}
+          lookX={frame < 87 ? -0.35 : 0.35}
+          lookY={frame >= 87 && frame < 140 ? -0.45 : -0.3}
           frame={frame}
           shadow
         />

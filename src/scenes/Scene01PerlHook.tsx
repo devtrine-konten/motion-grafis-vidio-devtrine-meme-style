@@ -139,12 +139,23 @@ export const Scene01PerlHook: React.FC = () => {
           x={mascotX}
           y={jumpUp + hop + Math.sin(frame * 0.16) * 7}
           size={156}
-          expression={frame < 130 ? "curious" : frame < 196 ? "amazed" : "laughing"}
+          expression={
+            frame < 52
+              ? "happy"
+              : frame < 130
+                ? "curious"
+                : frame < 196
+                  ? "detective"
+                  : frame < 245
+                    ? "shocked"
+                    : "laughing"
+          }
           magnifyingGlass={frame >= 130 && frame < 196}
+          tears={frame >= 245 ? 1 : 0}
           blink={autoBlink(frame, 8)}
           rotate={flipRot}
-          lookX={frame < 130 ? -0.35 : 0.45}
-          lookY={-0.35}
+          lookX={frame < 52 ? 0 : frame < 130 ? -0.35 : 0.45}
+          lookY={frame < 52 ? 0 : -0.35}
           frame={frame}
           shadow
         />

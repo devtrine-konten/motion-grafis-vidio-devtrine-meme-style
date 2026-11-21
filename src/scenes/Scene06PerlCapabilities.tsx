@@ -89,12 +89,24 @@ export const Scene06PerlCapabilities: React.FC = () => {
           x={mascotX}
           y={1245 + hop + Math.sin(frame * 0.16) * 6}
           size={156}
-          expression="happy"
-          headband
+          expression={
+            frame < 65
+              ? "curious"
+              : frame < 101
+                ? "happy"
+                : frame < 140
+                  ? "salute"
+                  : "amazed"
+          }
+          magnifyingGlass={frame < 65}
+          headband={frame >= 65 && frame < 101}
+          helmet={frame >= 101 && frame < 140}
+          shield={frame >= 101 && frame < 140}
+          blush={frame >= 140}
           blink={autoBlink(frame, 12)}
           rotate={Math.sin(frame * 0.14) * 5}
-          lookX={frame < 101 ? -0.3 : 0.3}
-          lookY={-0.3}
+          lookX={frame < 65 || (frame >= 101 && frame < 140) ? -0.35 : 0.35}
+          lookY={frame < 101 ? -0.42 : -0.22}
           frame={frame}
           shadow
         />

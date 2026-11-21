@@ -1,7 +1,7 @@
 import React from "react";
 import { Img, staticFile, useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
-import { keys, rand, shake, spr } from "../lib/anim";
+import { autoBlink, keys, rand, shake, spr } from "../lib/anim";
 import { Background } from "../components/Background";
 import { Camera } from "../components/Camera";
 import { DevtrineMascot } from "../components/DevtrineMascot";
@@ -139,11 +139,30 @@ export const Scene11SwissArmyChainsawClosing: React.FC = () => {
             <MemeSticker src="memes/sigmacat.jpg" x={875} y={1245} w={275} h={260} at={129} until={193} rotate={4} />
 
             <DevtrineMascot
-              x={540}
-              y={1245 + Math.sin(frame * 0.18) * 7}
+              x={keys(frame, [0, 39, 129, 195], [540, 470, 560, 540])}
+              y={
+                1245 +
+                (frame >= 39 && frame < 55 ? Math.sin(((frame - 39) / 16) * Math.PI) * -32 : 0) +
+                (frame >= 129 && frame < 145 ? Math.sin(((frame - 129) / 16) * Math.PI) * -26 : 0) +
+                Math.sin(frame * 0.18) * 7
+              }
               size={152}
-              expression={frame >= 129 ? "cool" : "amazed"}
+              expression={
+                frame < 39
+                  ? "curious"
+                  : frame < 85
+                    ? "panic"
+                    : frame < 129
+                      ? "amazed"
+                      : "cool"
+              }
+              helmet={frame >= 39 && frame < 129}
+              sweat={frame >= 39 && frame < 85 ? 1 : 0}
               sunglasses={frame >= 129}
+              blink={autoBlink(frame, 9)}
+              rotate={frame >= 39 && frame < 85 ? Math.sin(frame * 0.45) * 7 : Math.sin(frame * 0.14) * 5}
+              lookX={frame < 39 ? -0.35 : 0.35}
+              lookY={-0.3}
               frame={frame}
               shadow
             />
@@ -196,9 +215,19 @@ export const Scene11SwissArmyChainsawClosing: React.FC = () => {
               x={540}
               y={630 + bounceY}
               size={195 * logoPop}
-              expression={frame < 262 ? "salute" : "happy"}
+              expression={
+                frame < 235
+                  ? "salute"
+                  : frame < 262
+                    ? "amazed"
+                    : frame < 288
+                      ? "proud"
+                      : "happy"
+              }
               headband
               blush
+              blink={autoBlink(frame, 16)}
+              lookY={frame >= 235 && frame < 262 ? 0.35 : 0}
               frame={frame}
               shadow
             />

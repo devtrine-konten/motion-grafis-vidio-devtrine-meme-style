@@ -159,8 +159,17 @@ export const Scene03TextReportProblem: React.FC = () => {
           x={mascotX}
           y={1245 + jitter}
           size={156}
-          expression={isToolsBeat ? "panic" : "confused"}
-          sweat={isToolsBeat ? 1 : 0}
+          expression={
+            frame < 52
+              ? "confused"
+              : frame < 104
+                ? "annoyed"
+                : frame < 145
+                  ? "panic"
+                  : "dizzy"
+          }
+          angerVein={frame >= 52 && frame < 104}
+          sweat={frame < 52 ? 0.3 : frame < 104 ? 0.6 : 1}
           blink={autoBlink(frame, 11)}
           rotate={isToolsBeat ? Math.sin(frame * 0.4) * 7 : -3}
           lookX={isToolsBeat ? 0.35 : -0.3}

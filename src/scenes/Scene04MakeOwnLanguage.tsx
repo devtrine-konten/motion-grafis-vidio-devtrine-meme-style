@@ -122,8 +122,18 @@ export const Scene04MakeOwnLanguage: React.FC = () => {
           x={mascotX}
           y={1245 + hop + Math.sin(frame * 0.18) * 6}
           size={156}
-          expression={isEureka ? "shocked" : "curious"}
+          expression={
+            frame < 34
+              ? "curious"
+              : frame < 58
+                ? "deadpan"
+                : frame < 82
+                  ? "shocked"
+                  : "proud"
+          }
+          magnifyingGlass={frame < 34}
           headband={isEureka}
+          blush={frame >= 82}
           blink={autoBlink(frame, 10)}
           rotate={isEureka ? Math.sin(frame * 0.25) * 6 : -4}
           lookX={isEureka ? 0.35 : -0.25}

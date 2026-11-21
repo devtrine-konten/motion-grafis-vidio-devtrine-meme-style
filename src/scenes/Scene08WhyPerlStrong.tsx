@@ -98,10 +98,24 @@ export const Scene08WhyPerlStrong: React.FC = () => {
           x={mascotX}
           y={1245 + hop + Math.sin(frame * 0.16) * 6}
           size={156}
-          expression={frame < 36 ? "curious" : "amazed"}
+          expression={
+            frame < 36
+              ? "confused"
+              : frame < 121
+                ? "proud"
+                : frame < 146
+                  ? "happy"
+                  : frame < 168
+                    ? "amazed"
+                    : "cool"
+          }
+          magnifyingGlass={frame < 36}
+          headband={frame >= 36 && frame < 121}
+          shield={frame >= 36 && frame < 121}
+          sunglasses={frame >= 168}
           blink={autoBlink(frame, 12)}
           rotate={Math.sin(frame * 0.14) * 5}
-          lookX={frame < 123 ? -0.3 : 0.3}
+          lookX={frame < 121 ? -0.35 : frame < 146 ? 0 : 0.35}
           lookY={-0.3}
           frame={frame}
           shadow

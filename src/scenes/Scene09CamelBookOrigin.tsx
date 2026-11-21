@@ -155,11 +155,28 @@ export const Scene09CamelBookOrigin: React.FC = () => {
           x={mascotX}
           y={1245 + hop + Math.sin(frame * 0.16) * 6}
           size={156}
-          expression={!isBookReveal ? "detective" : isIconic ? "happy" : "amazed"}
-          magnifyingGlass={!isBookReveal}
+          expression={
+            frame < 53
+              ? "deadpan"
+              : frame < 85
+                ? "confused"
+                : frame < 122
+                  ? "detective"
+                  : frame < 160
+                    ? "shocked"
+                    : frame < 230
+                      ? "curious"
+                      : frame < 302
+                        ? "amazed"
+                        : frame < 342
+                          ? "proud"
+                          : "salute"
+          }
+          magnifyingGlass={frame >= 85 && frame < 122}
+          blush={frame >= 302}
           blink={autoBlink(frame, 15)}
           rotate={Math.sin(frame * 0.14) * 5}
-          lookX={!isBookReveal ? -0.3 : 0.3}
+          lookX={!isBookReveal ? -0.3 : frame < 230 ? -0.25 : 0.35}
           lookY={-0.3}
           frame={frame}
           shadow

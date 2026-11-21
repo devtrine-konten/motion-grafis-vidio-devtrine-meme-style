@@ -124,11 +124,20 @@ export const Scene10ProgrammerZooMeme: React.FC = () => {
           x={mascotX}
           y={1245 + laughBounce}
           size={156}
-          expression={isZoo ? "laughing" : "happy"}
-          tears={isZoo ? 1 : 0}
+          expression={
+            frame < 56
+              ? "curious"
+              : frame < 98
+                ? "confused"
+                : frame < 148
+                  ? "dizzy"
+                  : "laughing"
+          }
+          sweat={frame >= 56 && frame < 98 ? 0.5 : 0}
+          tears={frame >= 148 ? 1 : 0}
           blink={autoBlink(frame, 13)}
           rotate={Math.sin(frame * 0.25) * 6}
-          lookX={frame < 56 ? -0.3 : 0.3}
+          lookX={frame < 56 ? -0.35 : 0.35}
           lookY={-0.3}
           frame={frame}
           shadow

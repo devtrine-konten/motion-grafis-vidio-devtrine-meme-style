@@ -146,12 +146,23 @@ export const Scene05OldDevRelateMeme: React.FC = () => {
           x={mascotX}
           y={1245 + laughBounce}
           size={156}
-          expression="laughing"
-          tears={isRelate ? 1 : 0}
+          expression={
+            frame < 66
+              ? "annoyed"
+              : frame < 135
+                ? "cool"
+                : frame < 160
+                  ? "happy"
+                  : "laughing"
+          }
+          angerVein={frame < 66}
+          sunglasses={frame >= 66 && frame < 135}
+          headband={frame >= 66 && frame < 135}
+          tears={frame >= 160 ? 1 : 0}
           blink={autoBlink(frame, 14)}
           rotate={Math.sin(frame * 0.25) * 6}
-          lookX={isRelate ? 0.3 : -0.3}
-          lookY={-0.3}
+          lookX={frame < 66 ? -0.35 : frame < 135 ? 0.35 : 0}
+          lookY={isRelate ? -0.15 : -0.3}
           frame={frame}
           shadow
         />
