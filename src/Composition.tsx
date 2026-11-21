@@ -44,6 +44,8 @@ export const MainComposition: React.FC = () => {
       style={{
         backgroundColor: C.black,
         overflow: "hidden",
+        WebkitFontSmoothing: "antialiased",
+        textRendering: "geometricPrecision",
       }}
     >
       {/* Background Music with loop + automatic fade-in/out */}

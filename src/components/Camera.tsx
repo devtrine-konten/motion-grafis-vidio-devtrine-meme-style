@@ -21,16 +21,19 @@ export const Camera: React.FC<{
   rotate = 0,
   focusX = 540,
   focusY = 960,
-  blur = 0,
   children,
-}) => (
-  <AbsoluteFill
-    style={{
-      transform: `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`,
-      transformOrigin: `${focusX}px ${focusY}px`,
-      filter: blur > 0.2 ? `blur(${blur}px)` : undefined,
-    }}
-  >
-    {children}
-  </AbsoluteFill>
-)
+}) => {
+  const isIdentity = Math.abs(scale - 1) < 0.002 && Math.abs(x) < 0.5 && Math.abs(y) < 0.5 && rotate === 0
+  return (
+    <AbsoluteFill
+      style={{
+        transform: isIdentity
+          ? undefined
+          : `translate(${Math.round(x)}px, ${Math.round(y)}px) rotate(${rotate}deg) scale(${scale.toFixed(4)})`,
+        transformOrigin: `${focusX}px ${focusY}px`,
+      }}
+    >
+      {children}
+    </AbsoluteFill>
+  )
+}

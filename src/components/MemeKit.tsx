@@ -1,7 +1,7 @@
 import React from "react";
 import { Img, staticFile, useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
-import { easeOut, lerp, spr } from "../lib/anim";
+import { lerp, spr } from "../lib/anim";
 
 /** Outlined meme impact text (for optional standalone overlays like Buff Doge vs Cheems). */
 export const MemeText: React.FC<{
@@ -70,19 +70,19 @@ export const MemeSticker: React.FC<{
   const out = until !== undefined ? lerp(frame, [until - 5, until], [1, 0]) : 1;
   if (out <= 0) return null;
 
-  const blurAmt = lerp(frame, [at, at + 6], [9, 0], easeOut);
   const tilt = rotate + (wobble ? Math.sin((frame - at) * 0.18) * 2.5 : 0);
+
+  const boxH = h ?? w;
 
   return (
     <div
       style={{
         position: "absolute",
-        left: x,
-        top: y,
+        left: Math.round(x - w / 2),
+        top: Math.round(y - boxH / 2),
         width: w,
-        height: h ?? w,
-        transform: `translate(-50%, -50%) scale(${pop * out}) rotate(${tilt}deg)`,
-        filter: blurAmt > 0.3 ? `blur(${blurAmt.toFixed(1)}px)` : undefined,
+        height: boxH,
+        transform: `scale(${(pop * out).toFixed(4)}) rotate(${tilt.toFixed(2)}deg)`,
         borderRadius: rounded,
         overflow: "hidden",
         boxShadow: "0 18px 38px rgba(5, 9, 41, 0.30)",

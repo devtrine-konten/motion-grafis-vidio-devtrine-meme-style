@@ -1,7 +1,7 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { C, FONT } from "../theme";
-import { easeOut, lerp, spr } from "../lib/anim";
+import { lerp, spr } from "../lib/anim";
 
 export type CaptionCue = {
   from: number;
@@ -21,7 +21,7 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
 
   const enter = spr(frame, cue.from, { damping: 14, stiffness: 210 });
   const exit = lerp(frame, [cue.to - 5, cue.to], [1, 0]);
-  const blurAmt = lerp(frame, [cue.from, cue.from + 6], [8, 0], easeOut);
+  const isSettled = Math.abs(1 - enter) < 0.002;
   const words = cue.text.split(" ");
   const activeIdx = Math.min(
     words.length - 1,
@@ -38,8 +38,9 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        transform: `translateY(${(1 - enter) * 22}px) scale(${0.94 + enter * 0.06})`,
-        filter: blurAmt > 0.3 ? `blur(${blurAmt.toFixed(1)}px)` : undefined,
+        transform: isSettled
+          ? undefined
+          : `translateY(${Math.round((1 - enter) * 22)}px) scale(${(0.94 + enter * 0.06).toFixed(3)})`,
         opacity: exit,
         pointerEvents: "none",
         zIndex: 80,
@@ -47,7 +48,7 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
     >
       <div
         style={{
-          background: "rgba(4, 21, 39, 0.93)",
+          background: "rgba(4, 21, 39, 0.95)",
           color: C.white,
           fontFamily: FONT.display,
           fontWeight: 700,
@@ -66,7 +67,8 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
           const clean = w.replace(/[?!.,…]/g, "").toLowerCase();
           const isHi = cue.hi?.some((h) => h.replace(/[?!.,…]/g, "").toLowerCase() === clean);
           const isCurrent = i === activeIdx;
-          const wPop = spr(frame, cue.from + i * 1.4, { damping: 14, stiffness: 240 });
+          const wPop = spr(frame, cue.from + i * 1.4, { damping: 16, stiffness: 260 });
+          const wordSettled = Math.abs(1 - wPop) < 0.003;
           return (
             <span
               key={i}
@@ -77,15 +79,19 @@ export const Subtitles: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
                 borderRadius: isHi && isCurrent ? 10 : undefined,
                 background: isHi && isCurrent ? C.perlTeal : undefined,
                 fontFamily: FONT.display,
-                fontWeight: isHi ? 800 : 700,
+                fontWeight: isHi || isCurrent ? 800 : 700,
                 color: isHi
                   ? isCurrent
                     ? C.camelSand
                     : C.camelGold
                   : isCurrent
                     ? C.perlSky
-                    : "rgba(255,255,255,0.88)",
-                transform: `scale(${(0.88 + 0.12 * wPop) * (isCurrent ? 1.06 : 1)})`,
+                    : "rgba(255,255,255,0.92)",
+                transform: wordSettled
+                  ? isCurrent
+                    ? "translateY(-2px)"
+                    : undefined
+                  : `translateY(${Math.round((1 - wPop) * 8)}px)`,
               }}
             >
               {w}

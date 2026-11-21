@@ -183,7 +183,6 @@ export const ExplainCard: React.FC<{
   const out = until !== undefined ? lerp(frame, [until - 6, until], [1, 0]) : 1;
   if (out <= 0) return null;
 
-  const blurAmt = lerp(frame, [at, at + 8], [10, 0], easeOut);
   const usePaperStyle = !dark || tape;
 
   const cardBackground = dark
@@ -192,16 +191,18 @@ export const ExplainCard: React.FC<{
       : C.perlTeal
     : "#F8FAFC";
 
+  const scaleVal = (0.88 + 0.12 * pop) * out;
+  const isSettled = Math.abs(1 - scaleVal) < 0.002 && rotate === 0;
+
   return (
     <div
       style={{
         position: "absolute",
-        left: x,
-        top: y,
+        left: Math.round(x - w / 2),
+        top: Math.round(y - h / 2),
         width: w,
         height: h,
-        transform: `translate(-50%, -50%) scale(${(0.88 + 0.12 * pop) * out}) rotate(${rotate}deg)`,
-        filter: blurAmt > 0.3 ? `blur(${blurAmt.toFixed(1)}px)` : undefined,
+        transform: isSettled ? undefined : `scale(${scaleVal.toFixed(4)}) rotate(${rotate}deg)`,
         background: cardBackground,
         borderRadius: dark ? 30 : 22,
         border: dark

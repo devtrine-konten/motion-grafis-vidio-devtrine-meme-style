@@ -61,35 +61,35 @@ export const KineticText: React.FC<{
         letterSpacing: `${letterSpacing}em`,
         fontStyle: italic ? "italic" : "normal",
         opacity: exit,
-        transform: `translateY(${(1 - exit) * -30}px)`,
+        transform: exit < 0.999 ? `translateY(${Math.round((1 - exit) * -30)}px)` : undefined,
         ...style,
       }}
     >
       {words.map((w, i) => {
         const d = start + i * stagger;
-        const s = spr(frame, d, variant === "slam" ? { damping: 14, stiffness: 260 } : { damping: 10, stiffness: 170 });
+        const s = spr(frame, d, variant === "slam" ? { damping: 14, stiffness: 260 } : { damping: 13, stiffness: 200 });
+        const settled = Math.abs(1 - s) < 0.002 && frame > d + 18;
         const cleanW = w.replace(/[?!.,…]/g, "");
         const isHi = highlight.some((h) => h.replace(/[?!.,…]/g, "") === cleanW);
         const bar = lerp(frame, [d + 5, d + 13], [0, 1], easeOut);
-        let transform = "";
+        let transform: string | undefined;
         let opacity = 1;
         let filter: string | undefined;
         let content: React.ReactNode = w;
 
         if (variant === "pop") {
-          transform = `scale(${s}) rotate(${(1 - s) * (i % 2 ? 12 : -12)}deg)`;
+          transform = settled ? undefined : `scale(${s.toFixed(4)}) rotate(${((1 - s) * (i % 2 ? 12 : -12)).toFixed(2)}deg)`;
           opacity = frame >= d ? 1 : 0;
         } else if (variant === "slam") {
           const sc = lerp(frame, [d, d + 6], [2.6, 1], easeOut);
-          transform = `scale(${sc})`;
+          transform = sc === 1 ? undefined : `scale(${sc.toFixed(4)})`;
           opacity = lerp(frame, [d, d + 3], [0, 1]);
-          filter = frame < d + 6 ? `blur(${lerp(frame, [d, d + 6], [8, 0])}px)` : undefined;
         } else if (variant === "rise") {
-          transform = `translateY(${(1 - s) * 110}%)`;
+          transform = settled ? undefined : `translateY(${Math.round((1 - s) * size * 1.1)}px)`;
         } else if (variant === "glitch") {
           const g = frame - d;
           const j = g >= 0 && g < 10 ? (rand(frame + i * 9) * 2 - 1) * 18 * (1 - g / 10) : 0;
-          transform = `translateX(${j}px)`;
+          transform = j === 0 ? undefined : `translateX(${Math.round(j)}px)`;
           opacity = g >= 0 ? (g < 6 && rand(frame * 3 + i) < 0.3 ? 0.2 : 1) : 0;
           if (g >= 0 && g < 10) filter = `drop-shadow(${-j * 0.6}px 0 0 ${C.red}) drop-shadow(${j * 0.6}px 0 0 ${C.cyan})`;
         } else if (variant === "type") {
@@ -209,7 +209,7 @@ export const Header: React.FC<{
         right: 90,
         textAlign: align,
         opacity: exit,
-        transform: `translateY(${(1 - exit) * -40}px)`,
+        transform: exit < 0.999 ? `translateY(${Math.round((1 - exit) * -40)}px)` : undefined,
       }}
     >
       {kicker && (
